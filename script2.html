@@ -149,7 +149,11 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 .log-table tr.locked .cell-text{display:inline}
 .log-table tr.locked input,.log-table tr.locked select{display:none}
 .log-table tr:not(.locked) .cell-text{display:none}
-.log-table tr.outcome-tookdemo td{background:#A6E3A1 !important;color:#0A0E1A}
+.log-table tr.outcome-tookdemo td{background:rgba(166,227,161,.2) !important}
+.log-table tr.outcome-noanswer td{background:rgba(150,160,180,.2) !important}
+.log-table tr.outcome-notinterested td,.log-table tr.outcome-wrongnumber td{background:rgba(239,68,68,.2) !important}
+.log-table tr.outcome-callback td{background:rgba(245,158,11,.2) !important}
+.log-table tr.outcome-gatekeeper td{background:rgba(10,10,30,.7) !important}
 .log-table tr[draggable]{cursor:grab}
 .log-table tr.dragging{opacity:.4}
 .note-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
