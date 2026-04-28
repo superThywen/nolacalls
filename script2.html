@@ -146,16 +146,16 @@ a{color:var(--v);text-decoration:none}
 a:hover{text-decoration:underline}
 
 /* ===== WORK MODE ===== */
-.work-btn{position:fixed;bottom:28px;left:28px;width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#39FF14,#22D3EE);color:#0A0E1A;border:none;cursor:pointer;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;z-index:100;letter-spacing:.05em;text-transform:uppercase;transition:transform .2s,box-shadow .2s}
-.work-btn::before{content:'';position:absolute;inset:-4px;border-radius:50%;background:linear-gradient(135deg,#39FF14,#22D3EE);filter:blur(12px);opacity:.5;z-index:-1;animation:work-glow 2.5s ease-in-out infinite}
-.work-btn::after{content:'';position:absolute;inset:-8px;border-radius:50%;border:2px solid rgba(57,255,20,.3);animation:work-ring 3s ease-out infinite}
-@keyframes work-glow{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.7;transform:scale(1.1)}}
-@keyframes work-ring{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.5);opacity:0}}
-.work-btn:hover{transform:scale(1.1);box-shadow:0 0 30px rgba(57,255,20,.5)}
-.work-btn.active{background:linear-gradient(135deg,#EF4444,#FF6B6B);color:#fff}
-.work-btn.active::before{background:linear-gradient(135deg,#EF4444,#FF6B6B);animation:work-glow-red 1.5s ease-in-out infinite}
-.work-btn.active::after{border-color:rgba(239,68,68,.3)}
-@keyframes work-glow-red{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.8;transform:scale(1.15)}}
+.work-btn{position:fixed;bottom:33px;left:33px;width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--v),#9B82FF);color:#fff;border:none;cursor:pointer;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;z-index:100;letter-spacing:.15em;text-transform:uppercase;transition:transform .2s,box-shadow .2s;font-family:'Inter',sans-serif}
+.work-btn::before{content:'';position:absolute;inset:-4px;border-radius:50%;background:linear-gradient(135deg,var(--v),#9B82FF);filter:blur(12px);opacity:.35;z-index:-1;animation:work-glow 3s ease-in-out infinite}
+.work-btn::after{content:'';position:absolute;inset:-8px;border-radius:50%;border:2px solid rgba(124,92,255,.25);animation:work-ring 3s ease-out infinite}
+@keyframes work-glow{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.5;transform:scale(1.08)}}
+@keyframes work-ring{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.5);opacity:0}}
+.work-btn:hover{transform:scale(1.1);box-shadow:0 0 30px rgba(124,92,255,.4)}
+.work-btn.active{background:linear-gradient(135deg,#39FF14,#22D3EE);color:#0A0E1A;font-weight:800}
+.work-btn.active::before{background:linear-gradient(135deg,#39FF14,#22D3EE);animation:work-glow-active 1.5s ease-in-out infinite}
+.work-btn.active::after{border-color:rgba(57,255,20,.3)}
+@keyframes work-glow-active{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.8;transform:scale(1.15)}}
 
 .caller-widget{position:fixed;top:70px;right:20px;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px 20px;display:none;align-items:center;gap:12px;z-index:100;box-shadow:0 8px 28px rgba(0,0,0,.3);min-width:200px}
 .caller-widget.active{display:flex}
