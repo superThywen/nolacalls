@@ -3,6 +3,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NolaCalls — Script</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='32' y2='32' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%239B82FF'/%3E%3Cstop offset='1' stop-color='%236849FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='url(%23g)'/%3E%3Ccircle cx='16' cy='16' r='5' fill='white'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -17,7 +20,7 @@ body.light{
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:auto}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--tx);line-height:1.55;max-width:700px;margin:0 auto;padding:80px 24px 120px;transition:background .3s,color .3s}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--tx);line-height:1.55;max-width:700px;margin:0 auto;padding:80px 24px 120px;transition:background .3s,color .3s}
 
 /* ===== TOP BAR ===== */
 .topbar{position:fixed;top:0;left:0;right:0;height:56px;background:var(--sf);border-bottom:1px solid var(--ln);display:flex;align-items:center;padding:0 20px;gap:12px;z-index:100;backdrop-filter:blur(12px)}
@@ -39,7 +42,7 @@ h2{font-size:22px;font-weight:700;margin:48px 0 20px;padding:14px 18px;backgroun
 h3{font-size:17px;font-weight:600;margin:20px 0 10px;color:var(--tx)}
 
 /* ===== SAY THIS (violet) ===== */
-.say{font-size:20px;font-weight:500;line-height:1.5;background:var(--sf);border-left:4px solid var(--v);padding:18px 20px;margin:10px 0;border-radius:0 12px 12px 0;color:var(--tx)}
+.say{font-size:20px;font-weight:500;line-height:1.5;background:var(--sf);border-left:4px solid rgba(124,92,255,0.4);padding:18px 20px;margin:10px 0;border-radius:0 12px 12px 0;color:var(--tx)}
 .say b{color:var(--v);font-weight:700}
 .say .placeholder{color:var(--c);font-weight:700}
 
@@ -80,10 +83,8 @@ body.light .card{box-shadow:0 2px 12px rgba(0,0,0,.05)}
 
 /* ===== HIGHLIGHT ANIMATION ===== */
 @keyframes highlight-border{
-0%{box-shadow:0 0 0 3px #39FF14}
-25%{box-shadow:0 0 0 3px #22D3EE}
-50%{box-shadow:0 0 0 3px #7C5CFF}
-75%{box-shadow:0 0 0 3px #22D3EE}
+0%{box-shadow:0 0 0 3px #EF4444}
+70%{box-shadow:0 0 0 3px #EF4444}
 100%{box-shadow:0 0 0 0 transparent}
 }
 .highlight-target{animation:highlight-border 2s ease-out;border-radius:12px}
