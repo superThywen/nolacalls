@@ -23,7 +23,7 @@ html{scroll-behavior:auto}
 body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--tx);line-height:1.55;max-width:700px;margin:0 auto;padding:80px 24px 120px;transition:background .3s,color .3s}
 
 /* ===== SUBTITLE ===== */
-.subtitle{font-size:clamp(28px,5vw,38px);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin:20px 0 32px;text-align:center;background:linear-gradient(120deg,var(--v),var(--c),var(--v));background-size:200% 200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:gs 6s ease-in-out infinite}
+.subtitle{font-size:clamp(28px,5vw,38px);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin:40px 0 32px;text-align:center;background:linear-gradient(120deg,var(--v),var(--c),var(--v));background-size:200% 200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:gs 6s ease-in-out infinite}
 @keyframes gs{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 
 /* ===== INTRO ===== */
@@ -125,8 +125,8 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 .side-logo-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#9B82FF,#6849FF);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .side-logo-mark::after{content:'';width:8px;height:8px;background:#fff;border-radius:50%}
 .side-logo-name{font-weight:700;font-size:14px;color:var(--tx)}
-.side{position:fixed;top:50%;left:14px;transform:translateY(-50%);display:flex;flex-direction:column;gap:0;z-index:99;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:6px 0 6px;box-shadow:0 8px 28px rgba(0,0,0,.25);width:190px}
-.side a{display:flex;align-items:center;gap:10px;color:var(--txm);padding:10px 16px;font-size:13px;font-weight:500;white-space:nowrap;transition:all .2s;text-decoration:none;border-bottom:1px solid var(--ln)}
+.side{position:fixed;top:50%;left:14px;transform:translateY(-50%);display:flex;flex-direction:column;gap:0;z-index:99;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:6px 0 6px;box-shadow:0 8px 28px rgba(0,0,0,.25);width:210px}
+.side a{display:flex;align-items:center;gap:10px;color:var(--txm);padding:10px 18px;font-size:14px;font-weight:500;white-space:nowrap;transition:all .2s;text-decoration:none;border-bottom:1px solid var(--ln)}
 .side a:last-child{border-bottom:none}
 .side a:hover{background:var(--vs);color:var(--v);text-decoration:none}
 .side .ic{font-size:14px;width:20px;text-align:center}
@@ -145,8 +145,8 @@ a{color:var(--v);text-decoration:none}
 a:hover{text-decoration:underline}
 
 /* ===== TIME BAR ===== */
-.timebar{position:fixed;top:0;left:0;right:0;background:var(--sf);border-bottom:1px solid var(--ln);z-index:100;font-size:12px;padding:8px 16px 10px;backdrop-filter:blur(12px)}
-.timebar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.timebar{position:fixed;top:0;left:0;right:0;background:var(--sf);border-bottom:1px solid var(--ln);z-index:100;font-size:12px;padding:6px 16px 6px;backdrop-filter:blur(12px)}
+.timebar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .timebar-clock{color:var(--tx);font-weight:700;font-size:15px;font-family:'Inter',monospace}
 .timebar-status{font-size:11px;color:#F59E0B;font-weight:600}
 .timebar-status.go{color:#39FF14;font-weight:700}
