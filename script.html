@@ -1,0 +1,459 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NolaCalls — Script</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='32' y2='32' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%239B82FF'/%3E%3Cstop offset='1' stop-color='%236849FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='url(%23g)'/%3E%3Ccircle cx='16' cy='16' r='5' fill='white'/%3E%3C/svg%3E">
+<style>
+:root{
+--bg:#0A0E1A;--sf:#13182A;--sf2:#1B2138;--tx:#E2E8F0;--txm:#94A3B8;--txd:#64748B;
+--v:#7C5CFF;--vs:rgba(124,92,255,.12);--c:#22D3EE;--cs:rgba(34,211,238,.1);
+--a:#F59E0B;--as:rgba(245,158,11,.1);--g:#10B981;--gs:rgba(16,185,129,.1);
+--r:#EF4444;--rs:rgba(239,68,68,.1);--ln:rgba(255,255,255,.08);
+}
+body.light{
+--bg:#FAFAFA;--sf:#FFF;--sf2:#F0EDFF;--tx:#1a1a2e;--txm:#555;--txd:#888;
+--ln:#e0e0e0;--vs:#f0edff;--cs:#e0f7fa;--as:#fff8e1;--gs:#e8f5e9;--rs:#fce4ec;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--tx);line-height:1.55;max-width:700px;margin:0 auto;padding:80px 24px 120px;transition:background .3s,color .3s}
+
+/* ===== TOP BAR ===== */
+.topbar{position:fixed;top:0;left:0;right:0;height:56px;background:var(--sf);border-bottom:1px solid var(--ln);display:flex;align-items:center;padding:0 20px;gap:12px;z-index:100;backdrop-filter:blur(12px)}
+.topbar-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#9B82FF,#6849FF);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.topbar-mark::after{content:'';width:10px;height:10px;background:#fff;border-radius:50%}
+.topbar-name{font-weight:700;font-size:16px;color:var(--tx)}
+
+/* ===== SUBTITLE ===== */
+.subtitle{font-size:clamp(28px,5vw,38px);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin:20px 0 32px;text-align:center;background:linear-gradient(120deg,var(--v),var(--c),var(--v));background-size:200% 200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:gs 6s ease-in-out infinite}
+@keyframes gs{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+/* ===== INTRO ===== */
+.intro{background:var(--vs);border:1.5px solid var(--v);border-radius:14px;padding:20px;margin:0 0 32px}
+.intro p{font-size:16px;margin:0;color:var(--tx)}
+.intro strong{color:var(--v)}
+
+/* ===== SECTION HEADS ===== */
+h2{font-size:22px;font-weight:700;margin:48px 0 20px;padding:14px 18px;background:var(--vs);border-left:4px solid var(--v);border-radius:0 12px 12px 0;color:var(--v)}
+h3{font-size:17px;font-weight:600;margin:20px 0 10px;color:var(--tx)}
+
+/* ===== SAY THIS (violet) ===== */
+.say{font-size:20px;font-weight:500;line-height:1.5;background:var(--sf);border-left:4px solid var(--v);padding:18px 20px;margin:10px 0;border-radius:0 12px 12px 0;color:var(--tx)}
+.say b{color:var(--v);font-weight:700}
+.say .placeholder{color:var(--c);font-weight:700}
+
+/* ===== INSTRUCTION (cyan) ===== */
+.inst{font-size:15px;color:var(--c);padding:8px 0 8px 24px;border-left:3px solid var(--c);margin:8px 0;opacity:.9;font-weight:500}
+
+/* ===== NOTE (amber) ===== */
+.note{font-size:14px;color:var(--a);background:var(--as);padding:10px 16px;border-radius:8px;margin:8px 0;font-style:italic}
+
+/* ===== STAT BOX ===== */
+.stat{display:inline-block;background:var(--vs);border:1px solid rgba(124,92,255,.25);padding:4px 12px;border-radius:8px;font-weight:700;font-size:18px;color:var(--v)}
+
+/* ===== CONVO CARD ===== */
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:24px 22px;margin:16px 0 24px;position:relative;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--v),var(--c));border-radius:16px 16px 0 0}
+.card-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--v);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card-label::before{content:'';width:7px;height:7px;background:var(--c);border-radius:50%;box-shadow:0 0 8px var(--c)}
+body.light .card{box-shadow:0 2px 12px rgba(0,0,0,.05)}
+
+/* ===== BRANCH LINK ===== */
+.go{display:inline-block;background:var(--vs);color:var(--v);padding:6px 14px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;border:1px solid rgba(124,92,255,.2);transition:all .2s;cursor:pointer}
+.go:hover{background:var(--v);color:#fff;text-decoration:none}
+
+/* ===== OBJECTION TABS ===== */
+.obj-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}
+.obj-tab{padding:8px 14px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;background:var(--sf);border:1px solid var(--ln);color:var(--txm);transition:all .2s;user-select:none}
+.obj-tab:hover,.obj-tab.active{background:var(--v);color:#fff;border-color:var(--v)}
+.obj-panel{display:none;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:22px 20px;margin:10px 0 20px;position:relative}
+.obj-panel.active{display:block}
+.obj-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--r);border-radius:14px 14px 0 0}
+.obj-header{font-size:15px;color:var(--r);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.obj-header::before{content:'🛡️';font-size:14px}
+
+/* ===== TABLE ===== */
+table{border-collapse:collapse;width:100%;margin:14px 0;border-radius:10px;overflow:hidden}
+th{background:var(--v);color:#fff;padding:10px 14px;text-align:left;font-size:13px;font-weight:600}
+td{padding:10px 14px;border-bottom:1px solid var(--ln);font-size:15px;background:var(--sf)}
+
+/* ===== TEMPLATE BOX ===== */
+.tpl{background:#0d1120;color:#e0e0e0;padding:20px;border-radius:12px;margin:14px 0;font-family:'Courier New',monospace;font-size:15px;line-height:1.8;border:1px solid var(--ln)}
+body.light .tpl{background:#1a1a2e;color:#f0f0f0}
+
+/* ===== RULES (collapsed) ===== */
+.rules-toggle{background:var(--vs);color:var(--v);padding:14px 18px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(124,92,255,.2);user-select:none;margin:16px 0 8px}
+.rules-toggle:hover{background:var(--v);color:#fff}
+.rules-toggle .arrow{transition:transform .2s}
+.rules-toggle.open .arrow{transform:rotate(180deg)}
+.rules-list{display:none;margin:0 0 20px}
+.rules-list.open{display:block}
+.rule{background:var(--sf);padding:10px 16px;margin:5px 0;border-radius:8px;border:1px solid var(--ln);font-size:15px}
+.rule b{color:var(--v)}
+
+/* ===== GOAL BOX ===== */
+.goal{background:linear-gradient(135deg,var(--v),var(--c));color:#fff;padding:28px;border-radius:16px;margin:36px 0;text-align:center}
+.goal h2{color:#fff;background:none;border:none;padding:0;margin:0 0 12px;font-size:22px}
+.goal p{font-size:17px;margin:6px 0}
+
+/* ===== DIVIDER ===== */
+.div{border:none;border-top:1px solid var(--ln);margin:40px 0}
+
+/* ===== SIDE NAV ===== */
+.side{position:fixed;top:50%;left:14px;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px;z-index:99;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:12px 8px;box-shadow:0 8px 28px rgba(0,0,0,.25)}
+.side a{display:flex;align-items:center;gap:8px;color:var(--txm);padding:8px 12px;border-radius:8px;font-size:12px;font-weight:500;white-space:nowrap;transition:all .2s;text-decoration:none;border:1px solid transparent}
+.side a:hover{background:var(--vs);color:var(--v);border-color:rgba(124,92,255,.2);text-decoration:none}
+.side .ic{font-size:14px;width:20px;text-align:center}
+body.light .side{background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.06)}
+@media(max-width:1200px){.side{display:none}}
+
+/* ===== THEME TOGGLE ===== */
+.tt{position:fixed;bottom:24px;right:24px;width:48px;height:48px;border-radius:50%;background:var(--v);color:#fff;border:none;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(124,92,255,.4);transition:transform .2s;z-index:100}
+.tt:hover{transform:scale(1.1)}
+
+/* ===== LISTS ===== */
+ul,ol{margin:8px 0 8px 22px;font-size:16px}
+li{margin-bottom:6px}
+p{margin:8px 0;font-size:16px}
+a{color:var(--v);text-decoration:none}
+a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<!-- SIDE NAV -->
+<nav class="side">
+<a href="#before"><span class="ic">📋</span>Before You Dial</a>
+<a href="#s1"><span class="ic">1️⃣</span>Verify Owner</a>
+<a href="#s2"><span class="ic">2️⃣</span>Opener + Pitch</a>
+<a href="#s3"><span class="ic">3️⃣</span>Responses</a>
+<a href="#obj"><span class="ic">🛡️</span>Objections</a>
+<a href="#fear"><span class="ic">😰</span>Change Fear</a>
+<a href="#txt"><span class="ic">📱</span>Text Template</a>
+<a href="#fu"><span class="ic">🔄</span>Follow-Up</a>
+<a href="#send"><span class="ic">📤</span>Send to John</a>
+<a href="#rules"><span class="ic">📌</span>Rules</a>
+<a href="#goals"><span class="ic">🎯</span>Goals</a>
+</nav>
+
+<!-- TOP BAR -->
+<div class="topbar">
+<div class="topbar-mark"></div>
+<span class="topbar-name">NolaCalls</span>
+</div>
+
+<!-- THEME -->
+<button class="tt" onclick="document.body.classList.toggle('light');this.textContent=document.body.classList.contains('light')?'🌙':'💡'" title="Toggle theme">💡</button>
+
+<!-- TITLE -->
+<div class="subtitle">Cold Call Script &<br>Operations Manual</div>
+
+<!-- INTRO -->
+<div class="intro">
+<p><strong>The pitch is ~150 words (Step 2).</strong> Everything else is reference. Read it once on day one, then use it when situations come up. You don't need to memorize this whole document.</p>
+</div>
+
+<hr class="div">
+
+<!-- BEFORE YOU DIAL -->
+<h2 id="before">📋 Before You Dial</h2>
+<p><strong>Your shift: 4:00 – 8:00 AM Philippines time, Wed / Thu / Fri</strong></p>
+<p class="inst">This lands on Tue / Wed / Thu in the US (time zone difference).</p>
+
+<table>
+<tr><th>Your Time (PHT)</th><th>Calling Plumbers In</th><th>Their Time</th></tr>
+<tr><td><b>4:00–5:00 AM</b></td><td>East Coast (NY, FL, GA)</td><td>4–5 PM</td></tr>
+<tr><td><b>5:00–6:00 AM</b></td><td>Central (TX, IL, OH)</td><td>4–5 PM</td></tr>
+<tr><td><b>6:00–7:00 AM</b></td><td>Mountain (CO, AZ)</td><td>4–5 PM</td></tr>
+<tr><td><b>7:00–8:00 AM</b></td><td>West Coast (CA, WA, OR)</td><td>4–5 PM</td></tr>
+</table>
+
+<ul>
+<li>Have plumber's <b>business name</b> ready</li>
+<li>No answer → try next shift. <b>Max 3 attempts</b>, then move on</li>
+<li>Never leave voicemail</li>
+<li>Dialer logs everything automatically</li>
+</ul>
+
+<hr class="div">
+
+<!-- STEP 1 -->
+<h2 id="s1">Step 1 — Verify the Owner</h2>
+<div class="card">
+<div class="card-label">Opening line</div>
+<div class="say"><b>Sarah:</b> "Hi, is this the owner of <span class="placeholder">[Business Name]</span>?"</div>
+
+<h3>If YES → <a href="#s2" class="go">Go to Step 2</a></h3>
+
+<h3>If NO (employee):</h3>
+<div class="say"><b>Sarah:</b> "Got it — is there a good time to reach them?"</div>
+<p class="inst">Log callback time. Move on.</p>
+
+<h3>If "Who's calling?"</h3>
+<div class="say"><b>Sarah:</b> "This is Sarah — I've got something important to discuss with the owner. Are they around?"</div>
+<p class="inst">Through → <a href="#s2">Step 2</a>. No → "No worries." Move on.</p>
+</div>
+
+<hr class="div">
+
+<!-- STEP 2 -->
+<h2 id="s2">Step 2 — Opener + Pitch <span class="stat" style="font-size:13px">MAIN SCRIPT</span></h2>
+
+<h3>Version A — First time reaching them:</h3>
+<div class="card">
+<div class="card-label">Live dialogue</div>
+
+<div class="say"><b>Sarah:</b> "Hey, how have you been?"</div>
+<p class="inst">⏸ PAUSE. Let them respond.</p>
+
+<div class="say"><b>Sarah:</b> "This is Sarah. I've got a quick question for you — when a call comes in while you're on a job, what usually happens to it?"</div>
+<p class="inst">⏸ PAUSE. Let them answer.</p>
+
+<div class="note">They'll say "voicemail" / "wife gets it" / "call back later." They just told YOU the problem.</div>
+
+<h3 style="margin-top:16px">If they dodge ("What is this about?")</h3>
+<div class="say"><b>Sarah:</b> "I work with plumbing companies. I've identified that <span class="placeholder">[Business Name]</span> has a big problem with missed calls — and I have a solution. But first, when calls come in while you're on a job, what usually happens to them?"</div>
+<p class="inst">Redirects back to the question. Now they answer.</p>
+
+<hr style="border:none;border-top:1px solid var(--ln);margin:20px 0">
+
+<div class="say"><b>Sarah:</b> "Yeah — that's actually why I'm calling. I'm going to give you a phone number. Call it, pretend you've got a plumbing problem, and see what happens. If it's not the best receptionist you've ever heard, I'll never bother you again. It picks up those missed calls, books the job, and texts you the details — and right now almost nobody in <span class="placeholder">[city]</span> is using this yet. And we'll install it on your line for free for the next 7 days."</div>
+<p class="inst">⏸ PAUSE. Let them respond. → <a href="#s3" class="go">Step 3</a></p>
+</div>
+
+<h3>Version B — After 1–2 missed attempts:</h3>
+<div class="card">
+<div class="card-label">Follow-up dialogue</div>
+
+<div class="say"><b>Sarah:</b> "Hey, how have you been? This is Sarah — I actually tried reaching you earlier this week. I know it's tough to get to the phone when you're on a job."</div>
+<p class="inst">⏸ PAUSE. They'll laugh or say "yeah, crazy week."</p>
+
+<div class="say"><b>Sarah:</b> "Yeah — that's actually why I'm calling. I've got a quick question for you. When calls come in while you're on a job, what usually happens to them?"</div>
+<p class="inst">⏸ PAUSE. Same dodge handler applies if needed.</p>
+
+<hr style="border:none;border-top:1px solid var(--ln);margin:20px 0">
+
+<div class="say"><b>Sarah:</b> "I'm going to give you a phone number. Call it, pretend you've got a plumbing problem, and see what happens. If it's not the best receptionist you've ever heard, I'll never bother you again. It picks up those missed calls, books the job, and texts you the details — and right now almost nobody in <span class="placeholder">[city]</span> is using this yet. And we'll install it on your line for free for the next 7 days."</div>
+<p class="inst">⏸ PAUSE. → <a href="#s3" class="go">Step 3</a></p>
+</div>
+
+<hr class="div">
+
+<!-- STEP 3 -->
+<h2 id="s3">Step 3 — Handle Their Response</h2>
+<div class="card">
+<div class="card-label">Response handling</div>
+
+<h3>✅ YES / "sure" / "send it"</h3>
+<div class="say"><b>Sarah:</b> "Great — the number is <span class="placeholder">(978) 391-6222</span>. Call it, pretend you're a customer with any plumbing issue — a leak, a clog, whatever. You'll hear exactly what your customers would hear. If you like it, we'll set it up on your business line free for 7 days. No card, nothing. I'll text it to you right now."</div>
+<p class="inst">📲 Text immediately. Hang up. Don't linger.</p>
+
+<h3>🤔 CURIOUS — "What is it?" / "How does it work?"</h3>
+<div class="say"><b>Sarah:</b> "You keep your same number. When a call comes in and you can't get to it, it forwards to us after a few rings. A receptionist picks up, finds out what's going on, gets their name and address, books an appointment, and texts you everything. Your customer never knew you weren't there. But honestly — just call the demo number, you'll get it in 30 seconds. Want me to text it to you?"</div>
+
+<h3>😏 SKEPTICAL — "Yeah right" / "Too good to be true"</h3>
+<div class="say"><b>Sarah:</b> "Call the number, you'll love it. 30 seconds, pretend you've got a plumbing problem, and hear it for yourself. Let me text it to you."</div>
+
+<h3>❌ "Not interested" → <a href="#obj" class="go">Objections</a></h3>
+</div>
+
+<hr class="div">
+
+<!-- OBJECTIONS — TABBED -->
+<h2 id="obj">🛡️ Objection Handling</h2>
+<p style="font-size:14px;color:var(--txm);margin-bottom:12px">Click an objection to see the response. Only one shows at a time.</p>
+
+<div class="obj-tabs">
+<div class="obj-tab active" onclick="showObj(0)">Not interested</div>
+<div class="obj-tab" onclick="showObj(1)">How much?</div>
+<div class="obj-tab" onclick="showObj(2)">Is it AI?</div>
+<div class="obj-tab" onclick="showObj(3)">Already have one</div>
+<div class="obj-tab" onclick="showObj(4)">Too busy</div>
+<div class="obj-tab" onclick="showObj(5)">Send info</div>
+<div class="obj-tab" onclick="showObj(6)">I call back</div>
+<div class="obj-tab" onclick="showObj(7)">My number?</div>
+<div class="obj-tab" onclick="showObj(8)">Rude / hostile</div>
+</div>
+
+<div class="obj-panel active" id="ob0">
+<div class="obj-header">"Not interested."</div>
+<div class="say"><b>Sarah:</b> "But you're losing money every month from calls you can't pick up while you're on a job. You already understand there's a problem."</div>
+<p class="inst">⏸ STOP. Say nothing. Let the silence sit.</p>
+<p class="note">If still no: "Fair enough. Have a good one." Never push a third time.</p>
+</div>
+
+<div class="obj-panel" id="ob1">
+<div class="obj-header">"How much?"</div>
+<div class="say"><b>Sarah:</b> "We'll set it up on your line for free for the first 7 days. If you like it, after that it's <span class="stat">$99/month</span>. No card, no commitment. But before we even talk about that — just call the demo number and hear it for yourself."</div>
+</div>
+
+<div class="obj-panel" id="ob2">
+<div class="obj-header">"Is it AI? Is it a real person?"</div>
+<div class="say"><b>Sarah:</b> "It's an AI receptionist — but that's exactly why I want you to call the demo. Most people can't tell. It handles emergencies, books jobs, the whole thing. Call it and see for yourself."</div>
+<p class="inst">Never dodge. Be honest. Redirect to demo.</p>
+</div>
+
+<div class="obj-panel" id="ob3">
+<div class="obj-header">"I already have an answering service."</div>
+<div class="say"><b>Sarah:</b> "We're actually cheaper than every answering service on the market right now. The demo line is free to call — might be worth 30 seconds to hear the difference."</div>
+</div>
+
+<div class="obj-panel" id="ob4">
+<div class="obj-header">"I'm too busy right now."</div>
+<div class="say"><b>Sarah:</b> "Totally get it. Can I just text you the number? Call it whenever, even from the truck. 30 seconds."</div>
+</div>
+
+<div class="obj-panel" id="ob5">
+<div class="obj-header">"Send me some info."</div>
+<div class="say"><b>Sarah:</b> "Sure — I'll text you the demo number. Give it a call when you get a chance."</div>
+</div>
+
+<div class="obj-panel" id="ob6">
+<div class="obj-header">"I don't need this. I call everyone back."</div>
+<div class="say"><b>Sarah:</b> "Yeah? And how many of those returned calls actually turn into a job? Because <span class="stat">85%</span> of people who don't get an answer hang up and call the next plumber on Google within 2 minutes. Our solution catches them instantly."</div>
+<p class="note">If they insist: "Fair enough. I'll text the number in case anything changes."</p>
+</div>
+
+<div class="obj-panel" id="ob7">
+<div class="obj-header">"How did you get my number?"</div>
+<div class="say"><b>Sarah:</b> "Your business is listed on Google. And we found out that <span class="placeholder">[Business Name]</span> has a big problem. When calls come in while you're on a job, what usually happens to them?"</div>
+<p class="inst">Loops back to the pitch question. They stop thinking about the number.</p>
+</div>
+
+<div class="obj-panel" id="ob8">
+<div class="obj-header">They're rude / hostile / swearing</div>
+<div class="say"><b>Sarah:</b> "Look, I get it — you probably get 10 of these calls a week from SEO companies and marketing guys. I'm not one of them. I've identified that <span class="placeholder">[Business Name]</span> has a big problem — when calls come in while you're on a job, what happens to them?"</div>
+<p class="inst">If they engage → back in the pitch. If not → one more push:</p>
+<div class="say"><b>Sarah:</b> "Sir, just answer me this and I'll leave you alone — when a call comes in while you're on a job, what happens to it?"</div>
+<p class="note">If "don't call again" / "take me off your list" → comply (legal). "Got it. Have a good one." DNC list.</p>
+</div>
+
+<hr class="div">
+
+<!-- CHANGE FEAR -->
+<h2 id="fear">😰 "I Don't Want to Change How I Do Things"</h2>
+<div class="card">
+<div class="card-label">Fear handler</div>
+<div class="say"><b>Sarah:</b> "You keep answering your phone exactly like you do now. Nothing changes. Nola only kicks in when YOU can't get to the phone — like when you're on a job, or at night, or on the weekend. If you pick up, she never touches the call. She's just the safety net for the ones that slip through."</div>
+
+<h3>If they only want after hours:</h3>
+<div class="say"><b>Sarah:</b> "That's actually how most plumbers start — just use it after hours and on weekends. During the day you answer like normal. The missed calls at night are the ones that were going to voicemail anyway."</div>
+</div>
+
+<hr class="div">
+
+<!-- TEXT TEMPLATE -->
+<h2 id="txt">📱 Text to Send After They Say Yes</h2>
+<div class="tpl">
+Hi [name], this is Sarah from NolaCalls. Here's the demo number:<br><br>
+<b>(978) 391-6222</b><br><br>
+Call it and pretend you're a customer with a plumbing issue. You'll hear exactly how it sounds.<br><br>
+I'll check in with you tomorrow to see what you thought.
+</div>
+
+<hr class="div">
+
+<!-- FOLLOW-UP -->
+<h2 id="fu">🔄 Follow-Up Call (Next Shift — Where You Close)</h2>
+<p><b>The plumber will NOT go to a website. They will NOT fill out a form. YOU close them and collect everything.</b></p>
+
+<div class="card">
+<div class="card-label">Follow-up dialogue</div>
+<div class="say"><b>Sarah:</b> "Hey [name], it's Sarah from NolaCalls. Did you get a chance to call that demo number?"</div>
+
+<h3>✅ YES + liked it:</h3>
+<div class="say"><b>Sarah:</b> "Great — so want me to set it up on your line? First 7 days are free, no card. Takes me about 2 minutes to get your info."</div>
+<p class="inst">Collect one at a time, conversationally:</p>
+<ol>
+<li>"Business name — exact name we say when we answer?"</li>
+<li>"Normal hours?"</li>
+<li>"What services do you offer?"</li>
+<li>"What area do you cover?"</li>
+<li>"Service call / dispatch fee?"</li>
+<li>"Phone carrier — AT&amp;T, T-Mobile, Verizon?"</li>
+<li>"Emergency contact — gas leak or flooding?"</li>
+<li>"Backup number?"</li>
+<li>"Best email?"</li>
+</ol>
+<div class="say"><b>Sarah:</b> "Perfect — I've got everything. We'll have Nola set up within 24 hours. I'll text you the exact code to turn on forwarding — one short code, 10 seconds. After that, you're live."</div>
+<p class="inst">Send info to John immediately after the call.</p>
+
+<h3>🤔 YES + concerns:</h3>
+<ul>
+<li><b>"How do I know it works?"</b> → "Set up on your real line for 7 days. Don't like it? I'll turn it off in 10 seconds."</li>
+<li><b>"Answer calls myself during day?"</b> → Use safety net pitch above.</li>
+<li><b>"Need to think about it"</b> → "Free for 7 days, no card. Want me to just set it up and you see for yourself?"</li>
+</ul>
+
+<h3>⏳ Haven't called demo yet:</h3>
+<div class="say"><b>Sarah:</b> "No worries — 30 seconds. I can wait while you call it right now. The number is (978) 391-6222."</div>
+<p class="inst">Won't call now → "I'll try you again next time."</p>
+
+<h3>👎 Called, didn't like it:</h3>
+<div class="say"><b>Sarah:</b> "Got it — what didn't you like about it?"</div>
+<p class="note">If fixable → note for John. If not → "Fair enough. You've got my number."</p>
+</div>
+
+<hr class="div">
+
+<!-- SEND TO JOHN -->
+<h2 id="send">📤 Send to John After Collecting Info</h2>
+<div class="tpl">
+<b>NEW SIGNUP:</b><br>
+Name: [name]<br>
+Business: [business name]<br>
+Email: [email]<br>
+Phone: [their number]<br>
+Carrier: [AT&amp;T / T-Mobile / Verizon]<br>
+Hours: [hours]<br>
+Services: [services]<br>
+Area: [area]<br>
+Dispatch fee: [fee]<br>
+Emergency #1: [number]<br>
+Emergency #2: [number]<br>
+Notes: [anything else]
+</div>
+<p style="font-size:14px;color:var(--txm)">John handles the rest — sets up the AI agent, buys the Twilio number, texts the plumber the forwarding code.</p>
+
+<hr class="div">
+
+<!-- RULES -->
+<h2 id="rules">📌 Rules</h2>
+<div class="rules-toggle" onclick="this.classList.toggle('open');document.getElementById('rl').classList.toggle('open')">
+13 Rules — Click to expand <span class="arrow">▼</span>
+</div>
+<div class="rules-list" id="rl">
+<div class="rule"><b>1. Never give up easy.</b> Every objection gets one strong push. They hang up — you don't. Exception: "don't call again" = legal, stop.</div>
+<div class="rule"><b>2. Never read word-for-word.</b> Talk like a real person.</div>
+<div class="rule"><b>3. Always push the demo number.</b> "Let me text you the number" = your default close.</div>
+<div class="rule"><b>4. Say "phone answering service."</b> Not AI. Unless they ask.</div>
+<div class="rule"><b>5. If they ask about AI, be honest.</b> Then redirect to demo.</div>
+<div class="rule"><b>6. After the pitch, STOP talking.</b> Silence is powerful.</div>
+<div class="rule"><b>7. Speak slowly and confidently.</b> Calm, direct. Like you know something they don't.</div>
+<div class="rule"><b>8. After they agree, text IMMEDIATELY and hang up.</b> Ending fast = confidence.</div>
+<div class="rule"><b>9. "Not interested" = don't soften.</b> Go straight to the problem. No "I hear you."</div>
+<div class="rule"><b>10. Log every call.</b> Answered/not, response, took number yes/no, notes.</div>
+<div class="rule"><b>11. Never call before 8 AM or after 5:30 PM</b> in their time zone.</div>
+<div class="rule"><b>12. Never call Monday or Friday.</b></div>
+<div class="rule"><b>13. You are not begging.</b> You have something that makes them money. Their loss if they can't see it.</div>
+</div>
+
+<hr class="div">
+
+<!-- GOALS -->
+<div class="goal" id="goals">
+<h2>🎯 YOUR TWO GOALS</h2>
+<p><b>Cold call:</b> Get the plumber to call (978) 391-6222.</p>
+<p><b>Follow-up:</b> Close them. Collect info. Send to John. Done.</p>
+<p style="margin-top:14px;font-size:14px;opacity:.85">The plumber never touches a website. Never fills out a form. You handle everything on the phone.</p>
+</div>
+
+<script>
+function showObj(n){
+document.querySelectorAll('.obj-tab').forEach((t,i)=>t.classList.toggle('active',i===n));
+document.querySelectorAll('.obj-panel').forEach((p,i)=>p.classList.toggle('active',i===n));
+}
+</script>
+</body>
+</html>
