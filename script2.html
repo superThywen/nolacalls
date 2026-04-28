@@ -682,7 +682,16 @@ recognition.onresult=function(e){
   }
 };
 
+recognition.onspeechstart=function(){
+  document.getElementById('callerStatus').textContent='🎙️ Speech detected...';
+};
+
+recognition.onnomatch=function(){
+  document.getElementById('callerStatus').textContent='🎙️ No match, still listening...';
+};
+
 recognition.onerror=function(e){
+  document.getElementById('callerStatus').textContent='❌ Error: '+e.error;
   console.log('Speech recognition error:',e.error);
   if(e.error==='not-allowed'){
     alert('Microphone access denied. Allow it in browser settings.');
@@ -702,7 +711,11 @@ recognition.onend=function(){
 };
 
 recognition.start();
+document.getElementById('callerStatus').textContent='🎙️ Recognition started...';
 }
+
+// Debug: show if recognition is even supported
+console.log('Speech Recognition available:', !!window.SpeechRecognition || !!window.webkitSpeechRecognition);
 
 function setName(name){
   // Capitalize first letter
