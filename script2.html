@@ -236,8 +236,8 @@ a:hover{text-decoration:underline}
 </div>
 </div>
 <div class="caller-input-row">
-<input class="caller-input" id="companyInput" type="text" placeholder="Company name..." onkeydown="if(event.key==='Enter'){var n=document.getElementById('callerName').textContent;var c=this.value.trim();if(c){document.getElementById('callerName').textContent=n.replace(/ — .*/,'')+' — '+c}this.blur()}">
-<button class="caller-clear" onclick="document.getElementById('companyInput').value='';document.getElementById('callerName').textContent='Listening...';document.getElementById('callerStatus').textContent='🎙️ Waiting for name...';detectedName=null" title="Clear all">✕</button>
+<input class="caller-input" id="companyInput" type="text" placeholder="Company name..." onkeydown="if(event.key==='Enter'){var n=document.getElementById('callerName').textContent;var c=this.value.trim();if(c){document.getElementById('callerName').textContent=n.replace(/ — .*/,'')+' — '+c;document.querySelectorAll('.biz-name').forEach(function(el){el.textContent=c})}this.blur()}">
+<button class="caller-clear" onclick="document.getElementById('companyInput').value='';document.getElementById('callerName').textContent='Listening...';document.getElementById('callerStatus').textContent='🎙️ Waiting for name...';detectedName=null;document.querySelectorAll('.biz-name').forEach(function(el){el.textContent='[Business Name]'});document.querySelectorAll('.owner-name').forEach(function(el){el.textContent='[Owner Name]'})" title="Clear all">✕</button>
 </div>
 </div>
 
@@ -268,10 +268,10 @@ a:hover{text-decoration:underline}
 <div class="card">
 <div class="card-label">Opening line</div>
 <div class="say-wrap">
-<div class="say"><b>Ryan:</b> "Hi, is this the owner of <span class="placeholder">[Business Name]</span>?"</div>
+<div class="say"><b>Ryan:</b> "Hi, is this the owner of <span class="placeholder biz-name">[Business Name]</span>?"</div>
 <div class="alt-side" style="top:0">
 <div style="font-size:12px;color:#F59E0B;font-weight:600;margin-bottom:6px;text-align:center">If "who is this?"</div>
-<div class="say" id="whoisthis-alt"><b>Ryan:</b> "So my name is Ryan, <span style="color:var(--a);font-size:14px;font-weight:600">— 1 sec —</span> and I started working with plumbing companies. I've identified that <span class="placeholder">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it, and it's completely free. I know it sounds too good to be true, but give me 30 seconds and I'll tell you about it."</div>
+<div class="say" id="whoisthis-alt"><b>Ryan:</b> "So my name is Ryan, <span style="color:var(--a);font-size:14px;font-weight:600">— 1 sec —</span> and I started working with plumbing companies. I've identified that <span class="placeholder biz-name">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it, and it's completely free. I know it sounds too good to be true, but give me 30 seconds and I'll tell you about it."</div>
 </div>
 </div>
 
@@ -302,7 +302,7 @@ a:hover{text-decoration:underline}
 <div class="card">
 <div class="card-label">Live dialogue — the opener</div>
 
-<div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[Owner First Name]</span>, this is Ryan calling. Are you on your way to a job right now?"</div>
+<div class="say"><b>Ryan:</b> "Hi <span class="placeholder owner-name">[Owner Name]</span>, this is Ryan calling. Are you on your way to a job right now?"</div>
 <div class="predict">They'll say <span class="pos">"yeah heading to one"</span> / <span class="pos">"just finished"</span> / <a class="neg" onclick="jumpTo('alt-whatdoyoumean')">→ "what's this about?"</a></div>
 
 <h3 class="h-green">If they say "yeah" / confirm:</h3>
@@ -321,14 +321,14 @@ a:hover{text-decoration:underline}
 <div class="predict">They'll say <span class="pos">"sure go ahead"</span> / <span class="pos">"yeah ok"</span>. If silence → <span class="neu">"Did you hear me, boss?"</span></div>
 
 <h3 class="h-orange" id="dodge-handler">If they dodge ("What is this about?" / "Who are you?")</h3>
-<div class="say"><b>Ryan:</b> "So my name is Ryan, <span style="color:var(--a);font-size:14px;font-weight:600">— 1 sec —</span> and I started working with plumbing companies. I've identified that <span class="placeholder">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it, and it's completely free. I know it sounds too good to be true, but give me 30 seconds and I'll tell you about it."</div>
+<div class="say"><b>Ryan:</b> "So my name is Ryan, <span style="color:var(--a);font-size:14px;font-weight:600">— 1 sec —</span> and I started working with plumbing companies. I've identified that <span class="placeholder biz-name">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it, and it's completely free. I know it sounds too good to be true, but give me 30 seconds and I'll tell you about it."</div>
 <div class="predict">They'll say <span class="pos">"ok go ahead"</span> / <a class="neg" onclick="jumpTo('obj')">→ "not interested"</a></div>
 
 <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0">
 
 <h3 class="h-green">THE PITCH (after they give you the 30 seconds):</h3>
 
-<div class="say"><b>Ryan:</b> "Well <span style="color:var(--txd);font-size:14px">/ ok so yeah</span> — it's pretty simple. I built an AI receptionist that works 24/7. It answers every call you miss, sounds completely natural, and can answer any questions, like pricing, services, and availability. But the best part is <span class="placeholder">[Owner Name]</span> — it books jobs directly into your calendar without you lifting a finger. Is that something you'd find useful?"</div>
+<div class="say"><b>Ryan:</b> "Well <span style="color:var(--txd);font-size:14px">/ ok so yeah</span> — it's pretty simple. I built an AI receptionist that works 24/7. It answers every call you miss, sounds completely natural, and can answer any questions, like pricing, services, and availability. But the best part is <span class="placeholder owner-name">[Owner Name]</span> — it books jobs directly into your calendar without you lifting a finger. Is that something you'd find useful?"</div>
 <div class="predict">They'll say <span class="pos">"yeah that sounds great"</span> / <span class="neu">"how much?"</span> / <a class="neg" onclick="jumpTo('obj')">→ "I don't know..."</a></div>
 
 <h3 class="h-green">If they say "yeah" / interested:</h3>
@@ -344,7 +344,7 @@ a:hover{text-decoration:underline}
 <div class="card">
 <div class="card-label">Follow-up dialogue</div>
 
-<div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[Owner Name]</span>, this is Ryan — I tried reaching you earlier this week. I know it's tough to get to the phone when you're on a job."</div>
+<div class="say"><b>Ryan:</b> "Hi <span class="placeholder owner-name">[Owner Name]</span>, this is Ryan — I tried reaching you earlier this week. I know it's tough to get to the phone when you're on a job."</div>
 <div class="predict">They'll say <span class="pos">"yeah, it's been crazy"</span> or similar.</div>
 
 <div class="say"><b>Ryan:</b> "That's actually why I'm calling. I know you take a lot of calls and it pulls you away from jobs. Give me 30 seconds — I built something that fixes that."</div>
@@ -431,13 +431,13 @@ a:hover{text-decoration:underline}
 
 <div class="obj-panel" id="ob7">
 <div class="obj-header">"How did you get my number?"</div>
-<div class="say"><b>Ryan:</b> "Your business is listed on Google. And we found out that <span class="placeholder">[Business Name]</span> has a big problem. When calls come in while you're on a job, what usually happens to them?"</div>
+<div class="say"><b>Ryan:</b> "Your business is listed on Google. And we found out that <span class="placeholder biz-name">[Business Name]</span> has a big problem. When calls come in while you're on a job, what usually happens to them?"</div>
 <p class="inst">Loops back to the pitch question. They stop thinking about the number.</p>
 </div>
 
 <div class="obj-panel" id="ob8">
 <div class="obj-header">They're rude / hostile / swearing</div>
-<div class="say"><b>Ryan:</b> "Look, I get it — you probably get 10 of these calls a week from SEO companies and marketing guys. I'm not one of them. I've identified that <span class="placeholder">[Business Name]</span> has a big problem — when calls come in while you're on a job, what happens to them?"</div>
+<div class="say"><b>Ryan:</b> "Look, I get it — you probably get 10 of these calls a week from SEO companies and marketing guys. I'm not one of them. I've identified that <span class="placeholder biz-name">[Business Name]</span> has a big problem — when calls come in while you're on a job, what happens to them?"</div>
 <p class="inst">If they engage → back in the pitch. If not → one more push:</p>
 <div class="say"><b>Ryan:</b> "Sir, just answer me this and I'll leave you alone — when a call comes in while you're on a job, what happens to it?"</div>
 <p class="note">If "don't call again" / "take me off your list" → comply (legal). "Got it. Have a good one." DNC list.</p>
@@ -782,10 +782,10 @@ document.getElementById('callerStatus').textContent='🎙️ Recognition started
 console.log('Speech Recognition available:', !!window.SpeechRecognition || !!window.webkitSpeechRecognition);
 
 function setName(name){
-  // Capitalize first letter
   name=name.charAt(0).toUpperCase()+name.slice(1).toLowerCase();
   detectedName=name;
   document.getElementById('callerName').textContent=name;
+  document.querySelectorAll('.owner-name').forEach(function(el){el.textContent=name});
   document.getElementById('callerStatus').textContent='✅ Name detected';
   // Flash the widget
   var widget=document.getElementById('callerWidget');
