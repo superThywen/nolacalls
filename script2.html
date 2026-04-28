@@ -146,10 +146,13 @@ a:hover{text-decoration:underline}
 
 /* ===== TIME BAR ===== */
 .timebar{position:fixed;top:0;left:0;right:0;background:var(--sf);border-bottom:1px solid var(--ln);z-index:100;font-size:12px;padding:8px 16px 10px;backdrop-filter:blur(12px)}
-.timebar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.timebar-clock{color:var(--txm);font-weight:700;font-size:13px;font-family:'Inter',monospace}
+.timebar-top{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:8px}
+.timebar-clock{color:var(--tx);font-weight:700;font-size:15px;font-family:'Inter',monospace}
 .timebar-status{font-size:11px;color:var(--txd);font-weight:500}
 .timebar-status.go{color:#39FF14;font-weight:700}
+.state-select{background:var(--bg);border:1px solid var(--ln);border-radius:6px;color:var(--tx);font-size:11px;font-family:'Inter',sans-serif;padding:3px 8px;cursor:pointer;font-weight:600;outline:none}
+.state-select:focus{border-color:rgba(124,92,255,.4)}
+.state-label{font-size:10px;color:var(--txd);font-weight:500}
 .meter-wrap{position:relative;height:28px;background:var(--bg);border-radius:14px;border:1px solid var(--ln);overflow:hidden}
 .meter-window{position:absolute;top:0;bottom:0;background:rgba(57,255,20,.08);border-left:2px solid rgba(57,255,20,.3);border-right:2px solid rgba(57,255,20,.3);transition:all .3s}
 .meter-window.active{background:rgba(57,255,20,.2);box-shadow:inset 0 0 20px rgba(57,255,20,.15)}
@@ -194,6 +197,18 @@ a:hover{text-decoration:underline}
 <!-- TIME BAR -->
 <div class="timebar">
 <div class="timebar-top">
+<div>
+<span class="state-label">Targeting:</span>
+<select class="state-select" id="stateSelect" onchange="updateTimeBar()">
+<option value="America/New_York">Georgia (ET)</option>
+<option value="America/New_York">South Carolina (ET)</option>
+<option value="America/New_York">West Virginia (ET)</option>
+<option value="America/New_York">Delaware (ET)</option>
+<option value="America/New_York">Ohio (ET)</option>
+<option value="America/Chicago">Texas (CT)</option>
+<option value="America/Los_Angeles">California (PT)</option>
+</select>
+</div>
 <div class="timebar-clock" id="myClock">--:--</div>
 <div class="timebar-status" id="meterStatus">Outside calling hours</div>
 </div>
@@ -820,7 +835,9 @@ var hrMin=function(tz){
   return h+m/60;
 };
 
-document.getElementById('myClock').textContent=now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true});
+var selectedTz=document.getElementById('stateSelect').value;
+var stateLabel=document.getElementById('stateSelect').options[document.getElementById('stateSelect').selectedIndex].text;
+document.getElementById('myClock').textContent=now.toLocaleTimeString('en-US',{timeZone:selectedTz,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
 
 var etH=hrMin('America/New_York');
 var status=document.getElementById('meterStatus');
