@@ -278,13 +278,20 @@ a:hover{text-decoration:underline}
 <h3 class="h-green">If YES → <a href="#s2" class="go">Go to Step 2</a> <span style="color:var(--txd);margin:0 8px">│</span> <a style="color:#F59E0B;font-weight:600;cursor:pointer;text-decoration:none" onclick="jumpTo('whoisthis-alt')">"who is this?"</a></h3>
 
 <h3 class="h-red">If NO:</h3>
+<div class="say-wrap">
 <div class="say"><b>Ryan:</b> "Got it — is there any way you can transfer me to him?"</div>
-<div class="predict">They'll say <span class="pos">"yeah hold on"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neg">"no he's out"</span> — if out, ask "when's he usually back?" Log it, move on.</div>
+<div class="alt-side" style="top:0">
+<div style="font-size:12px;color:#EF4444;font-weight:600;margin-bottom:6px;text-align:center">If "no he's out":</div>
+<div class="say" id="hes-out-alt"><b>Ryan:</b> "When's he usually back?"
+<div class="predict" style="margin-top:10px;border:none">They say a time → Log it, call back then.</div></div>
+</div>
+</div>
+<div class="predict">They'll say <span class="pos">"yeah hold on"</span><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('hes-out-alt')">"no he's out"</a></div>
 
 <h3 class="h-orange" id="whos-calling">If "Who's calling?"</h3>
 <div class="say-wrap">
 <div class="say"><b>Ryan:</b> "This is Ryan — I've got something important to discuss with the owner. Are they around?"</div>
-<div class="alt-side" style="top:0">
+<div class="alt-side" style="top:-27px">
 <div style="font-size:12px;color:#F59E0B;font-weight:600;margin-bottom:6px;text-align:center">If they say NO or ask more questions:</div>
 <div class="say" id="gatekeeper-alt"><b>Ryan:</b> "What's your name, darling?"
 <div class="predict" style="margin-top:10px;border:none">They say their name → <span class="placeholder">[their name]</span></div>
