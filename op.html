@@ -143,6 +143,9 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 .leads-table tr{cursor:pointer;transition:background .15s}
 .leads-table tr:hover td{background:rgba(124,92,255,.08)}
 .leads-table tr.used td{opacity:.4;text-decoration:line-through}
+.leads-table tr.dead td{opacity:.25;text-decoration:line-through;background:rgba(239,68,68,.05)}
+.leads-dead{background:#EF4444;color:#fff;border:none;padding:4px 8px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;transition:all .15s;margin-left:4px}
+.leads-dead:hover{background:#DC2626}
 .leads-use{background:var(--v);color:#fff;border:none;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s}
 .leads-use:hover{background:#9B82FF}
 .leads-size-s{color:#A6E3A1;font-weight:600}
@@ -956,6 +959,7 @@ function setName(name){
 
 // ===== LEADS =====
 var usedLeads=JSON.parse(localStorage.getItem('nola-usedleads')||'[]');
+var deadLeads=JSON.parse(localStorage.getItem('nola-deadleads')||'[]');
 
 function openLeads(){
 document.getElementById('leadsOverlay').classList.add('open');
@@ -990,9 +994,12 @@ if(city&&l.c!==city)continue;
 if(size&&l.s!==size)continue;
 
 var used=usedLeads.indexOf(i)!==-1;
+var dead=deadLeads.indexOf(i)!==-1;
+if(dead&&!search){continue}
 var sizeClass=l.s==='Small'?'leads-size-s':l.s==='Medium'?'leads-size-m':'leads-size-l';
 var tr=document.createElement('tr');
-if(used)tr.className='used';
+if(dead)tr.className='dead';
+else if(used)tr.className='used';
 tr.innerHTML='<td>'+(count+1)+'</td>'+
 '<td><b>'+l.n+'</b></td>'+
 '<td>'+l.p+'</td>'+
@@ -1000,11 +1007,11 @@ tr.innerHTML='<td>'+(count+1)+'</td>'+
 '<td>'+l.r+'</td>'+
 '<td>'+(l.rt>0?l.rt+'/5':'—')+'</td>'+
 '<td><span class="'+sizeClass+'">'+l.s+'</span></td>'+
-'<td>'+(used?'<span style="color:var(--txd)">Done</span>':'<button class="leads-use" onclick="useLead('+i+',event)">Call</button>')+'</td>';
+'<td>'+(dead?'<span style="color:#EF4444;font-size:11px">Closed</span>':used?'<span style="color:var(--txd)">Done</span>':'<button class="leads-use" onclick="useLead('+i+',event)">Call</button><button class="leads-dead" onclick="markDead('+i+',event)">Dead</button>')+'</td>';
 b.appendChild(tr);
 count++;
 }
-document.getElementById('leadsCount').textContent=LEADS.length-usedLeads.length;
+document.getElementById('leadsCount').textContent=LEADS.length-usedLeads.length-deadLeads.length;
 }
 
 function useLead(i,e){
@@ -1024,7 +1031,13 @@ logData.unshift({date:d,time:t,biz:l.n,owner:'',phone:l.p,state:'Georgia',attemp
 saveLog();
 }
 
-if(typeof LEADS!=='undefined'){document.getElementById('leadsCount').textContent=LEADS.length-usedLeads.length}
+function markDead(i,e){
+if(e)e.stopPropagation();
+if(deadLeads.indexOf(i)===-1){deadLeads.push(i);localStorage.setItem('nola-deadleads',JSON.stringify(deadLeads))}
+renderLeads();
+}
+
+if(typeof LEADS!=='undefined'){document.getElementById('leadsCount').textContent=LEADS.length-usedLeads.length-deadLeads.length}
 
 // ===== CALL LOG =====
 var logData=JSON.parse(localStorage.getItem('nola-calllog')||'[]');
