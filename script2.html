@@ -73,7 +73,7 @@ body.light .card{box-shadow:0 2px 12px rgba(0,0,0,.05)}
 
 .say-wrap{position:relative}
 .alt-side{position:absolute;right:-340px;top:0;width:320px;background:transparent;border:none;padding:0}
-.alt-side .say{font-size:20px;padding:18px 20px;margin:0;border-left:4px solid var(--a)}
+.alt-side .say{font-size:20px;padding:18px 20px;margin:0;border-left:4px solid rgba(124,92,255,0.4)}
 .predict{font-size:14px;color:var(--txd);padding:6px 0 6px 24px;border-left:3px solid rgba(255,255,255,0.06);margin:8px 0}
 .predict .pos{color:#39FF14;font-weight:600}
 .predict .neg{color:#EF4444;font-weight:600;cursor:pointer;text-decoration:underline;text-decoration-style:dotted}
@@ -83,8 +83,8 @@ body.light .card{box-shadow:0 2px 12px rgba(0,0,0,.05)}
 
 /* ===== HIGHLIGHT ANIMATION ===== */
 @keyframes highlight-border{
-0%{box-shadow:0 0 0 3px #EF4444}
-70%{box-shadow:0 0 0 3px #EF4444}
+0%{box-shadow:0 0 0 5px #EF4444}
+70%{box-shadow:0 0 0 5px #EF4444}
 100%{box-shadow:0 0 0 0 transparent}
 }
 .highlight-target{animation:highlight-border 2s ease-out;border-radius:12px}
