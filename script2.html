@@ -144,9 +144,36 @@ li{margin-bottom:6px}
 p{margin:8px 0;font-size:16px}
 a{color:var(--v);text-decoration:none}
 a:hover{text-decoration:underline}
+
+/* ===== WORK MODE ===== */
+.work-btn{position:fixed;bottom:24px;left:24px;width:48px;height:48px;border-radius:50%;background:var(--sf);color:var(--txm);border:1px solid var(--ln);cursor:pointer;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(0,0,0,.3);transition:all .2s;z-index:100;letter-spacing:.02em}
+.work-btn:hover{background:var(--v);color:#fff;border-color:var(--v)}
+.work-btn.active{background:#EF4444;color:#fff;border-color:#EF4444;box-shadow:0 4px 18px rgba(239,68,68,.4)}
+
+.caller-widget{position:fixed;top:70px;right:20px;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px 20px;display:none;align-items:center;gap:12px;z-index:100;box-shadow:0 8px 28px rgba(0,0,0,.3);min-width:200px}
+.caller-widget.active{display:flex}
+.caller-dot{width:10px;height:10px;background:#39FF14;border-radius:50%;box-shadow:0 0 8px #39FF14;flex-shrink:0;animation:live-dot 2s ease-out infinite}
+@keyframes live-dot{0%{box-shadow:0 0 0 0 rgba(57,255,20,.5)}70%{box-shadow:0 0 0 8px rgba(57,255,20,0)}100%{box-shadow:0 0 0 0 rgba(57,255,20,0)}}
+.caller-label{font-size:12px;color:var(--txd);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.caller-name{font-size:20px;font-weight:700;color:var(--tx);margin-top:2px}
+.caller-listening{font-size:11px;color:var(--txd);margin-top:4px;font-style:italic}
 </style>
+<script src="https://unpkg.com/compromise"></script>
 </head>
 <body>
+
+<!-- WORK MODE BUTTON -->
+<button class="work-btn" id="workBtn" onclick="toggleWork()" title="Start/stop listening">WORK</button>
+
+<!-- CALLER WIDGET -->
+<div class="caller-widget" id="callerWidget">
+<div class="caller-dot"></div>
+<div>
+<div class="caller-label">Currently talking to</div>
+<div class="caller-name" id="callerName">Listening...</div>
+<div class="caller-listening" id="callerStatus">🎙️ Waiting for name...</div>
+</div>
+</div>
 
 <!-- SIDE NAV -->
 <nav class="side">
@@ -554,6 +581,139 @@ target.classList.remove('highlight-target');
 void target.offsetWidth;
 target.classList.add('highlight-target');
 setTimeout(function(){target.classList.remove('highlight-target')},2200);
+}
+
+// ===== WORK MODE — SPEECH RECOGNITION + NAME DETECTION =====
+var workActive=false;
+var recognition=null;
+var silenceTimer=null;
+var detectedName=null;
+
+function toggleWork(){
+var btn=document.getElementById('workBtn');
+var widget=document.getElementById('callerWidget');
+if(workActive){
+  // Stop
+  workActive=false;
+  btn.classList.remove('active');
+  btn.textContent='WORK';
+  widget.classList.remove('active');
+  if(recognition){recognition.stop();recognition=null}
+  if(silenceTimer){clearTimeout(silenceTimer);silenceTimer=null}
+  detectedName=null;
+  document.getElementById('callerName').textContent='Listening...';
+  document.getElementById('callerStatus').textContent='🎙️ Waiting for name...';
+} else {
+  // Start
+  if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){
+    alert('Speech recognition not supported in this browser. Use Chrome or Brave.');
+    return;
+  }
+  workActive=true;
+  btn.classList.add('active');
+  btn.textContent='STOP';
+  widget.classList.add('active');
+  detectedName=null;
+  startListening();
+}
+}
+
+function startListening(){
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+recognition=new SR();
+recognition.continuous=true;
+recognition.interimResults=true;
+recognition.lang='en-US';
+
+recognition.onresult=function(e){
+  // Reset silence timer on any speech
+  if(silenceTimer){clearTimeout(silenceTimer)}
+  silenceTimer=setTimeout(function(){
+    // 30 seconds silence = auto stop
+    if(workActive){toggleWork()}
+  },30000);
+
+  // Get latest transcript
+  var transcript='';
+  for(var i=e.resultIndex;i<e.results.length;i++){
+    transcript+=e.results[i][0].transcript;
+  }
+  transcript=transcript.trim();
+  if(!transcript)return;
+
+  // Update status
+  document.getElementById('callerStatus').textContent='🎙️ Hearing: "'+transcript.slice(-40)+'"';
+
+  // If we already found a name, don't keep searching
+  if(detectedName)return;
+
+  // Method 1: Compromise NLP — extract person names
+  var doc=nlp(transcript);
+  var people=doc.people().out('array');
+  if(people.length>0){
+    var name=people[0].replace(/^(hi|hey|hello|so|okay|ok|yeah|perfect|well|man|sir|mister|mr)\s+/i,'').trim();
+    name=name.split(' ')[0]; // First name only
+    if(name.length>=2 && name.length<=15){
+      setName(name);
+      return;
+    }
+  }
+
+  // Method 2: Pattern matching fallback
+  var patterns=[
+    /\b(?:hi|hey|hello)\s+([A-Z][a-z]{1,14})/,
+    /this is\s+([A-Z][a-z]{1,14})/,
+    /name(?:'s| is)\s+([A-Z][a-z]{1,14})/,
+    /(?:yeah|yes|yep),?\s*(?:this is\s+)?([A-Z][a-z]{1,14})\s+(?:here|speaking)/,
+    /(?:it's|its)\s+([A-Z][a-z]{1,14})/,
+    /(?:ok|okay|perfect)\s+([A-Z][a-z]{1,14})/
+  ];
+  for(var p=0;p<patterns.length;p++){
+    var m=transcript.match(patterns[p]);
+    if(m&&m[1]){
+      var n=m[1];
+      // Filter out common false positives
+      var skip=['The','This','That','What','When','Where','How','Yes','Yeah','Well','But','And','Not','Just'];
+      if(skip.indexOf(n)===-1){
+        setName(n);
+        return;
+      }
+    }
+  }
+};
+
+recognition.onerror=function(e){
+  console.log('Speech recognition error:',e.error);
+  if(e.error==='not-allowed'){
+    alert('Microphone access denied. Allow it in browser settings.');
+    toggleWork();
+  }
+  // Auto-restart on other errors
+  if(workActive&&e.error!=='not-allowed'){
+    setTimeout(function(){if(workActive)startListening()},1000);
+  }
+};
+
+recognition.onend=function(){
+  // Auto-restart if still in work mode (recognition stops periodically)
+  if(workActive){
+    setTimeout(function(){if(workActive)startListening()},500);
+  }
+};
+
+recognition.start();
+}
+
+function setName(name){
+  // Capitalize first letter
+  name=name.charAt(0).toUpperCase()+name.slice(1).toLowerCase();
+  detectedName=name;
+  document.getElementById('callerName').textContent=name;
+  document.getElementById('callerStatus').textContent='✅ Name detected';
+  // Flash the widget
+  var widget=document.getElementById('callerWidget');
+  widget.style.boxShadow='0 0 0 5px #39FF14';
+  setTimeout(function(){widget.style.boxShadow='0 8px 28px rgba(0,0,0,.3)'},1500);
 }
 
 // Make all .go links also use highlight animation
