@@ -214,7 +214,7 @@ a:hover{text-decoration:underline}
 </div>
 </div>
 <div class="caller-input-row">
-<input class="caller-input" id="companyInput" type="text" placeholder="Company name...">
+<input class="caller-input" id="companyInput" type="text" placeholder="Company name..." onkeydown="if(event.key==='Enter'){var n=document.getElementById('callerName').textContent;var c=this.value.trim();if(c){document.getElementById('callerName').textContent=n.replace(/ — .*/,'')+' — '+c}this.blur()}">
 <button class="caller-clear" onclick="document.getElementById('companyInput').value='';document.getElementById('callerName').textContent='Listening...';document.getElementById('callerStatus').textContent='🎙️ Waiting for name...';detectedName=null" title="Clear all">✕</button>
 </div>
 </div>
