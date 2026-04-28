@@ -654,6 +654,13 @@ recognition.onresult=function(e){
   // If we already found a name, don't keep searching
   if(detectedName)return;
 
+  // Only process final results (not interim) to get the full name
+  var isFinal=false;
+  for(var i=e.resultIndex;i<e.results.length;i++){
+    if(e.results[i].isFinal)isFinal=true;
+  }
+  if(!isFinal)return;
+
   // Method 1: Compromise NLP — extract person names
   var doc=nlp(transcript);
   var people=doc.people().out('array');
