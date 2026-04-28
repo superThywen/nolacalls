@@ -69,9 +69,9 @@ body.light .card{box-shadow:0 2px 12px rgba(0,0,0,.05)}
 .say-wrap{position:relative}
 .alt-side{position:absolute;right:-340px;top:0;width:320px;background:transparent;border:none;padding:0}
 .alt-side .say{font-size:20px;padding:18px 20px;margin:0;border-left:4px solid rgba(124,92,255,0.4);background:var(--sf)}
-.predict{font-size:14px;color:var(--txd);padding:6px 0 6px 24px;border-left:3px solid rgba(255,255,255,0.06);margin:8px 0}
+.predict{font-size:14px;color:var(--txd);padding:6px 0 6px 24px;border-left:3px solid rgba(255,255,255,0.06);margin:0;border-bottom:1px solid var(--ln)}
 .predict .pos{color:#39FF14;font-weight:600}
-.predict .neg{color:#EF4444;font-weight:600;cursor:pointer;text-decoration:underline;text-decoration-style:dotted}
+.predict .neg{color:#EF4444;font-weight:600;cursor:pointer;text-decoration:none}
 .predict .neg:hover{opacity:.8}
 .predict .neu{color:#F59E0B;font-weight:600}
 @media(max-width:1400px){.alt-side{position:static;width:100%;right:auto;margin:10px 0;border-left:3px solid var(--a);border-radius:10px}}
@@ -273,7 +273,7 @@ a:hover{text-decoration:underline}
 </div>
 </div>
 
-<h3 class="h-green">If YES → <a href="#s2" class="go">Go to Step 2</a> <span style="color:var(--txd);margin:0 8px">│</span> <a style="color:#F59E0B;font-weight:600;cursor:pointer;text-decoration:underline;text-decoration-style:dotted" onclick="jumpTo('whoisthis-alt')">"who is this?"</a></h3>
+<h3 class="h-green">If YES → <a href="#s2" class="go">Go to Step 2</a> <span style="color:var(--txd);margin:0 8px">│</span> <a style="color:#F59E0B;font-weight:600;cursor:pointer;text-decoration:none" onclick="jumpTo('whoisthis-alt')">"who is this?"</a></h3>
 
 <h3 class="h-red">If NO (employee):</h3>
 <div class="say"><b>Ryan:</b> "Got it — is there a good time to reach them?"</div>
