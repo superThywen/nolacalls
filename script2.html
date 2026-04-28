@@ -121,7 +121,7 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 .div{border:none;border-top:1px solid var(--ln);margin:40px 0}
 
 /* ===== SIDE NAV ===== */
-.side-logo{display:flex;align-items:center;gap:8px;padding:10px 16px 12px;border-bottom:1px solid var(--ln);margin-bottom:0}
+.side-logo{display:flex;align-items:center;gap:8px;padding:10px 16px 12px;border-bottom:1px solid var(--ln);margin-bottom:0;justify-content:space-between}
 .side-logo-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#9B82FF,#6849FF);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .side-logo-mark::after{content:'';width:8px;height:8px;background:#fff;border-radius:50%}
 .side-logo-name{font-weight:700;font-size:14px;color:var(--tx)}
@@ -166,7 +166,7 @@ a:hover{text-decoration:underline}
 .meter-needle::after{content:'';position:absolute;top:-4px;left:-3px;width:9px;height:9px;background:#EF4444;border-radius:50%;box-shadow:0 0 6px rgba(239,68,68,.5)}
 
 /* ===== WORK MODE ===== */
-.work-btn{width:auto;height:auto;padding:5px 14px;border-radius:8px;background:linear-gradient(135deg,var(--v),#9B82FF);color:#fff;border:none;cursor:pointer;font-size:10px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;letter-spacing:.12em;text-transform:uppercase;transition:transform .2s,box-shadow .2s;font-family:'Inter',sans-serif;position:relative}
+.work-btn{width:auto;height:auto;padding:6px 18px;border-radius:8px;background:linear-gradient(135deg,var(--v),#9B82FF);color:#fff;border:none;cursor:pointer;font-size:10px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;letter-spacing:.12em;text-transform:uppercase;transition:transform .2s,box-shadow .2s;font-family:'Inter',sans-serif;position:relative}
 .work-btn::before{content:'';position:absolute;inset:-3px;border-radius:10px;background:linear-gradient(135deg,var(--v),#9B82FF);filter:blur(8px);opacity:.3;z-index:-1;animation:work-glow 3s ease-in-out infinite}
 .work-btn::after{display:none}
 @keyframes work-glow{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.4;transform:scale(1.05)}}
