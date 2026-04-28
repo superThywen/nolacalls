@@ -230,13 +230,13 @@ a:hover{text-decoration:underline}
 <div class="card-label">Live dialogue — the opener</div>
 
 <div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[Owner First Name]</span>, this is Ryan calling. Are you on the way to a job right now?"</div>
-<div class="predict">They'll say <span class="pos">"yeah heading to one"</span> / <span class="pos">"just finished"</span> / <a class="neg" onclick="jumpTo('dodge-handler')">→ "what's this about?"</a></div>
+<div class="predict">They'll say <span class="pos">"yeah heading to one"</span> / <span class="pos">"just finished"</span> / <a class="neg" onclick="jumpTo('alt-whatdoyoumean')">→ "what's this about?"</a></div>
 
 <h3 class="h-green">If they say "yeah" / confirm:</h3>
 <div class="say-wrap">
 <div class="say"><b>Ryan:</b> "I see. I know that there are some plumbers that take a lot of calls and it takes time away from jobs. Is that something you're dealing with too?"</div>
-<div class="alt-side">
-<div class="say" style="border-left-color:var(--a)"><b>Ryan:</b> "Yeah so uhm, basically what I'm saying is — you know when you're on a job and calls keep coming in and you can't pick up? I'm just asking if that happens to you too."</div>
+<div class="alt-side" style="top:-45px">
+<div class="say" id="alt-whatdoyoumean" style="border-left-color:var(--a)"><b>Ryan:</b> "Yeah so uhm, basically what I'm saying is — you know when you're on a job and calls keep coming in and you can't pick up? I'm just asking if that happens to you too."</div>
 </div>
 </div>
 <div class="predict">They'll say <span class="pos">"yeah"</span> / <span class="pos">"yes sir"</span> / <a class="neg" onclick="jumpTo('dodge-handler')">→ "who is this"</a></div>
