@@ -68,11 +68,15 @@ body.light .card{box-shadow:0 2px 12px rgba(0,0,0,.05)}
 .go{display:inline-block;background:var(--vs);color:var(--v);padding:6px 14px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;border:1px solid rgba(124,92,255,.2);transition:all .2s;cursor:pointer}
 .go:hover{background:var(--v);color:#fff;text-decoration:none}
 
-.split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
-.split .say{margin:0}
-.alt-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--a);font-weight:700;margin-bottom:6px}
-.main-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--c);font-weight:700;margin-bottom:6px}
-@media(max-width:700px){.split{grid-template-columns:1fr}}
+.say-wrap{position:relative}
+.alt-side{position:absolute;right:-290px;top:0;width:260px;background:var(--sf);border:1px solid var(--ln);border-left:3px solid var(--a);border-radius:0 10px 10px 0;padding:14px 16px;font-size:13px}
+.alt-side-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--a);font-weight:700;margin-bottom:8px}
+.alt-side .say{font-size:14px;padding:10px 12px;margin:6px 0}
+.predict{font-size:14px;color:var(--txd);padding:6px 0 6px 24px;border-left:3px solid rgba(255,255,255,0.06);margin:8px 0}
+.predict .pos{color:#39FF14;font-weight:600}
+.predict .neg{color:#EF4444;font-weight:600}
+.predict .neu{color:#F59E0B;font-weight:600}
+@media(max-width:1300px){.alt-side{position:static;width:100%;right:auto;margin:10px 0;border-left:3px solid var(--a);border-radius:10px}}
 
 /* ===== OBJECTION TABS ===== */
 .obj-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}
@@ -216,17 +220,20 @@ a:hover{text-decoration:underline}
 <div class="card-label">Live dialogue — the opener</div>
 
 <div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[Owner First Name]</span>, this is Ryan calling. Are you on the way to a job right now?" <span style="color:#39FF14;font-weight:700">⏸ PAUSE</span></div>
-<p class="inst-green">They'll say "yeah heading to one" / "just finished" / "what's this about?" — doesn't matter, you're showing you understand their world.</p>
+<div class="predict">They'll say <span class="pos">"yeah heading to one"</span> / <span class="pos">"just finished"</span> / <span class="neg">"what's this about?"</span> — doesn't matter, you're showing you understand their world.</div>
 
-<div class="split">
-<div><div class="main-label">▶ Primary</div><div class="say"><b>Ryan:</b> "I know that there are some plumbers that take a lot of calls and it takes time away from jobs. Is that something you're dealing with too?" <span style="color:#39FF14;font-weight:700">⏸ PAUSE</span></div></div>
-<div><div class="alt-label">🔄 If "what do you mean?"</div><div class="say" style="border-left-color:var(--a)"><b>Ryan:</b> "Yeah so uhm, basically what I'm saying is — you know when you're on a job and calls keep coming in and you can't pick up? I'm just asking if that happens to you too."</div></div>
+<div class="say-wrap">
+<div class="say"><b>Ryan:</b> "I know that there are some plumbers that take a lot of calls and it takes time away from jobs. Is that something you're dealing with too?" <span style="color:#39FF14;font-weight:700">⏸ PAUSE</span></div>
+<div class="alt-side">
+<div class="alt-side-label">🔄 If "what do you mean?"</div>
+<div class="say" style="border-left-color:var(--a)"><b>Ryan:</b> "Yeah so uhm, basically what I'm saying is — you know when you're on a job and calls keep coming in and you can't pick up? I'm just asking if that happens to you too."</div>
 </div>
-<p class="inst-green">They'll say "yeah" or "who is this" — either way they just confirmed the problem.</p>
+</div>
+<div class="predict">They'll say <span class="pos">"yeah"</span> or <span class="neg">"who is this"</span> — either way they just confirmed the problem.</div>
 
 <h3 class="h-green" style="margin-top:16px">If they say "yeah" / confirm:</h3>
 <div class="say"><b>Ryan:</b> "This is exactly why I'm calling. I think you're going to love this. Give me 30 seconds, I can explain how it works and you tell me what you think." <span style="color:#39FF14;font-weight:700">⏸ PAUSE</span></div>
-<p class="inst-green">Wait for the go-ahead. If silence → "Did you hear me, boss?"</p>
+<div class="predict">Wait for the <span class="pos">go-ahead</span>. If silence → <span class="neu">"Did you hear me, boss?"</span></div>
 
 <h3 class="h-orange">If they dodge ("What is this about?" / "Who are you?")</h3>
 <div class="say"><b>Ryan:</b> "I work with plumbing companies. I've identified that <span class="placeholder">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it. Give me 30 seconds?"</div>
@@ -236,7 +243,7 @@ a:hover{text-decoration:underline}
 <h3 class="h-green">THE PITCH (after they give you the 30 seconds):</h3>
 
 <div class="say"><b>Ryan:</b> "It's pretty simple. I built an AI receptionist that works 24/7. It answers every call you miss, sounds completely natural, and can answer common questions like pricing, services, and availability. But the best part is <span class="placeholder">[Owner Name]</span> — it books jobs directly without you lifting a finger. Is that something you'd find useful?" <span style="color:#39FF14;font-weight:700">⏸ PAUSE</span></div>
-<p class="inst-green">Let them react.</p>
+<div class="predict">Let them react. <span class="pos">"Yeah that sounds great"</span> / <span class="neu">"How much?"</span> / <span class="neg">"I don't know..."</span></div>
 
 <h3 class="h-green">If they're interested:</h3>
 <div class="say"><b>Ryan:</b> "I want you to hear a demo I created. I'll have you call a number and act like a customer — it's pretty insane. We'll set it up on your line for free for the first 7 days. After that it's $99 a month. And you'll never have to answer calls again — the jobs just show up and you go do the work."</div>
@@ -252,7 +259,7 @@ a:hover{text-decoration:underline}
 <div class="card-label">Follow-up dialogue</div>
 
 <div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[Owner Name]</span>, this is Ryan — I tried reaching you earlier this week. I know it's tough to get to the phone when you're on a job." <span style="color:#39FF14;font-weight:700">⏸ PAUSE</span></div>
-<p class="inst-green">They'll say "yeah, it's been crazy" or similar.</p>
+<div class="predict">They'll say <span class="pos">"yeah, it's been crazy"</span> or similar.</div>
 
 <div class="say"><b>Ryan:</b> "That's actually why I'm calling. I know you take a lot of calls and it pulls you away from jobs. Give me 30 seconds — I built something that fixes that." <span style="color:#39FF14;font-weight:700">⏸ PAUSE</span></div>
 <p class="inst">Then deliver THE PITCH from above.</p>
