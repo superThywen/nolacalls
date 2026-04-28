@@ -16,7 +16,7 @@ body.light{
 --ln:#e0e0e0;--vs:#f0edff;--cs:#e0f7fa;--as:#fff8e1;--gs:#e8f5e9;--rs:#fce4ec;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:auto}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--tx);line-height:1.55;max-width:700px;margin:0 auto;padding:80px 24px 120px;transition:background .3s,color .3s}
 
 /* ===== TOP BAR ===== */
@@ -201,42 +201,47 @@ a:hover{text-decoration:underline}
 <!-- STEP 2 -->
 <h2 id="s2">Step 2 — Opener + Pitch <span class="stat" style="font-size:13px">MAIN SCRIPT</span></h2>
 
-<h3>Version A — First time reaching them:</h3>
 <div class="card">
-<div class="card-label">Live dialogue</div>
+<div class="card-label">Live dialogue — the opener</div>
 
-<div class="say"><b>Ryan:</b> "Hey, how have you been?"</div>
-<p class="inst">⏸ PAUSE. Let them respond.</p>
+<div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[Owner First Name]</span>, this is Ryan calling. Are you on the way to a job or wrapping up?"</div>
+<p class="inst">⏸ PAUSE. They'll say "yeah heading to one" / "just finished" / "what's this about?" — doesn't matter what they say, you're showing you understand their world.</p>
 
-<div class="say"><b>Ryan:</b> "This is Ryan. I've got a quick question for you — when a call comes in while you're on a job, what usually happens to it?"</div>
-<p class="inst">⏸ PAUSE. Let them answer.</p>
+<div class="say"><b>Ryan:</b> "I know you take a lot of calls and it takes time away from jobs. Is that something you're dealing with too?"</div>
+<p class="inst">⏸ PAUSE. They'll say "yeah" or "who is this" — either way they just confirmed the problem.</p>
 
-<div class="note">They'll say "voicemail" / "wife gets it" / "call back later." They just told YOU the problem.</div>
+<h3 style="margin-top:16px">If they say "yeah" / confirm:</h3>
+<div class="say"><b>Ryan:</b> "Perfect. Well man, I think you're going to love that I'm calling. Give me 30 seconds, I can explain how it works and you tell me what you think."</div>
+<p class="inst">⏸ PAUSE. Wait for the go-ahead. If silence → "Did you hear me, boss?"</p>
 
-<h3 style="margin-top:16px">If they dodge ("What is this about?")</h3>
-<div class="say"><b>Ryan:</b> "I work with plumbing companies. I've identified that <span class="placeholder">[Business Name]</span> has a big problem with missed calls — and I have a solution. But first, when calls come in while you're on a job, what usually happens to them?"</div>
-<p class="inst">Redirects back to the question. Now they answer.</p>
+<h3>If they dodge ("What is this about?" / "Who are you?")</h3>
+<div class="say"><b>Ryan:</b> "I work with plumbing companies. I've identified that <span class="placeholder">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it. Give me 30 seconds?"</div>
 
 <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0">
 
-<div class="say"><b>Ryan:</b> "Yeah — that's actually why I'm calling. I'm going to give you a phone number. Call it, pretend you've got a plumbing problem, and see what happens. If it's not the best receptionist you've ever heard, I'll never bother you again. It picks up those missed calls, books the job, and texts you the details — and right now almost nobody in <span class="placeholder">[city]</span> is using this yet. And we'll install it on your line for free for the next 7 days."</div>
-<p class="inst">⏸ PAUSE. Let them respond. → <a href="#s3" class="go">Step 3</a></p>
+<h3>THE PITCH (after they give you the 30 seconds):</h3>
+
+<div class="say"><b>Ryan:</b> "It's pretty simple. I built an AI receptionist that works 24/7. It answers every call you miss, sounds completely natural, and can answer common questions like pricing, services, and availability. But the best part is <span class="placeholder">[Owner Name]</span> — it books jobs directly without you lifting a finger. Is that something you'd find useful?"</div>
+<p class="inst">⏸ PAUSE. Let them react.</p>
+
+<h3>If they're interested:</h3>
+<div class="say"><b>Ryan:</b> "I want you to hear a demo I created. I'll have you call a number and act like a customer — it's pretty insane. We'll set it up on your line for free for the first 7 days. After that it's $99 a month. And you'll never have to answer calls again — the jobs just show up and you go do the work."</div>
+<p class="inst">→ <a href="#s3" class="go">Step 3</a></p>
+
+<h3>If they ask for price immediately:</h3>
+<div class="say"><b>Ryan:</b> "First 7 days free, after that $99 a month. But before we talk price — let me send you the demo number. Call it, act like a customer, hear it for yourself. I'll text it to you right now."</div>
+<p class="inst">→ <a href="#s3" class="go">Step 3</a></p>
 </div>
 
 <h3>Version B — After 1–2 missed attempts:</h3>
 <div class="card">
 <div class="card-label">Follow-up dialogue</div>
 
-<div class="say"><b>Ryan:</b> "Hey, how have you been? This is Ryan — I actually tried reaching you earlier this week. I know it's tough to get to the phone when you're on a job."</div>
-<p class="inst">⏸ PAUSE. They'll laugh or say "yeah, crazy week."</p>
+<div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[Owner Name]</span>, this is Ryan — I tried reaching you earlier this week. I know it's tough to get to the phone when you're on a job."</div>
+<p class="inst">⏸ PAUSE. They'll say "yeah, it's been crazy" or similar.</p>
 
-<div class="say"><b>Ryan:</b> "Yeah — that's actually why I'm calling. I've got a quick question for you. When calls come in while you're on a job, what usually happens to them?"</div>
-<p class="inst">⏸ PAUSE. Same dodge handler applies if needed.</p>
-
-<hr style="border:none;border-top:1px solid var(--ln);margin:20px 0">
-
-<div class="say"><b>Ryan:</b> "I'm going to give you a phone number. Call it, pretend you've got a plumbing problem, and see what happens. If it's not the best receptionist you've ever heard, I'll never bother you again. It picks up those missed calls, books the job, and texts you the details — and right now almost nobody in <span class="placeholder">[city]</span> is using this yet. And we'll install it on your line for free for the next 7 days."</div>
-<p class="inst">⏸ PAUSE. → <a href="#s3" class="go">Step 3</a></p>
+<div class="say"><b>Ryan:</b> "That's actually why I'm calling. I know you take a lot of calls and it pulls you away from jobs. Give me 30 seconds — I built something that fixes that."</div>
+<p class="inst">⏸ Then deliver THE PITCH from above.</p>
 </div>
 
 <hr class="div">
