@@ -1012,6 +1012,14 @@ document.getElementById('companyInput').value=l.n;
 document.querySelectorAll('.biz-name').forEach(function(el){el.textContent=l.n});
 if(usedLeads.indexOf(i)===-1){usedLeads.push(i);localStorage.setItem('nola-usedleads',JSON.stringify(usedLeads))}
 closeLeads();
+// Auto-start Work mode if not already active
+if(!workActive){toggleWork()}
+// Auto-add a log entry
+var now=new Date();
+var d=now.toISOString().slice(0,10);
+var t=now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false});
+logData.unshift({date:d,time:t,biz:l.n,owner:'',phone:l.p,state:'Georgia',attempt:'1',outcome:'',objection:'',callback:'',notes:'',locked:false});
+saveLog();
 }
 
 if(typeof LEADS!=='undefined'){document.getElementById('leadsCount').textContent=LEADS.length-usedLeads.length}
