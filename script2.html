@@ -120,6 +120,33 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 .goal h2{color:#fff;background:none;border:none;padding:0;margin:0 0 12px;font-size:22px}
 .goal p{font-size:17px;margin:6px 0}
 
+/* ===== LEADS MODAL ===== */
+.leads-btn{position:fixed;bottom:75px;left:14px;width:210px;padding:12px 0;border-radius:10px;background:var(--sf);border:1px solid var(--ln);color:var(--txm);font-size:13px;font-weight:600;cursor:pointer;z-index:99;font-family:'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;transition:all .2s;text-align:center}
+.leads-btn:hover{background:var(--c);color:#0A0E1A;border-color:var(--c)}
+.leads-count{background:var(--c);color:#0A0E1A;font-size:10px;padding:2px 7px;border-radius:10px;margin-left:6px}
+@media(max-width:1200px){.leads-btn{display:none}}
+.leads-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.leads-overlay.open{display:flex}
+.leads-modal{background:var(--sf);border:1px solid var(--ln);border-radius:18px;width:90vw;max-width:900px;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden}
+.leads-header{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid var(--ln);gap:10px}
+.leads-header h3{font-size:18px;font-weight:700;color:var(--tx);margin:0;white-space:nowrap}
+.leads-search{flex:1;background:var(--bg);border:1px solid var(--ln);border-radius:8px;padding:7px 12px;color:var(--tx);font-size:13px;font-family:'Inter',sans-serif;outline:none}
+.leads-search:focus{border-color:rgba(124,92,255,.4)}
+.leads-search::placeholder{color:var(--txd)}
+.leads-filter{background:var(--bg);border:1px solid var(--ln);border-radius:6px;color:var(--tx);font-size:12px;padding:6px 8px;font-family:'Inter',sans-serif;cursor:pointer}
+.leads-body{overflow-y:auto;padding:0}
+.leads-table{width:100%;border-collapse:collapse;font-size:13px}
+.leads-table th{background:var(--sf2);color:var(--txm);padding:8px 12px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em;position:sticky;top:0;border-bottom:1px solid var(--ln)}
+.leads-table td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--tx)}
+.leads-table tr{cursor:pointer;transition:background .15s}
+.leads-table tr:hover td{background:rgba(124,92,255,.08)}
+.leads-table tr.used td{opacity:.4;text-decoration:line-through}
+.leads-use{background:var(--v);color:#fff;border:none;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s}
+.leads-use:hover{background:#9B82FF}
+.leads-size-s{color:#A6E3A1;font-weight:600}
+.leads-size-m{color:#F59E0B;font-weight:600}
+.leads-size-l{color:#EF4444;font-weight:600}
+
 /* ===== DIVIDER ===== */
 .div{border:none;border-top:1px solid var(--ln);margin:40px 0}
 
@@ -243,6 +270,7 @@ a:hover{text-decoration:underline}
 .caller-listening{font-size:11px;color:var(--txd);margin-top:4px;font-style:italic}
 </style>
 <script src="https://unpkg.com/compromise"></script>
+<script src="leads.js"></script>
 </head>
 <body>
 
@@ -270,6 +298,33 @@ a:hover{text-decoration:underline}
 <div class="meter-window" id="meterWindow"></div>
 <div class="meter-needle" id="meterNeedle" style="left:0%"></div>
 <div class="meter-markers" id="meterMarkers"></div>
+</div>
+</div>
+
+<!-- LEADS BUTTON -->
+<button class="leads-btn" onclick="openLeads()">LEADS <span class="leads-count" id="leadsCount">0</span></button>
+
+<!-- LEADS MODAL -->
+<div class="leads-overlay" id="leadsOverlay" onclick="if(event.target===this)closeLeads()">
+<div class="leads-modal">
+<div class="leads-header">
+<h3>LEADS</h3>
+<input class="leads-search" id="leadsSearch" type="text" placeholder="Search name, city, phone..." oninput="renderLeads()">
+<select class="leads-filter" id="leadsCity" onchange="renderLeads()"><option value="">All cities</option></select>
+<select class="leads-filter" id="leadsSize" onchange="renderLeads()">
+<option value="">All sizes</option>
+<option value="Small">Small</option>
+<option value="Medium">Medium</option>
+<option value="Large">Large</option>
+</select>
+<button class="log-close" onclick="closeLeads()">&#10005;</button>
+</div>
+<div class="leads-body">
+<table class="leads-table">
+<thead><tr><th>#</th><th>Business</th><th>Phone</th><th>City</th><th>Reviews</th><th>Rating</th><th>Size</th><th></th></tr></thead>
+<tbody id="leadsBody"></tbody>
+</table>
+</div>
 </div>
 </div>
 
@@ -883,6 +938,70 @@ function setName(name){
   widget.style.boxShadow='0 0 0 5px #39FF14';
   setTimeout(function(){widget.style.boxShadow='0 8px 28px rgba(0,0,0,.3)'},1500);
 }
+
+// ===== LEADS =====
+var usedLeads=JSON.parse(localStorage.getItem('nola-usedleads')||'[]');
+
+function openLeads(){
+document.getElementById('leadsOverlay').classList.add('open');
+populateCityFilter();
+renderLeads();
+}
+function closeLeads(){document.getElementById('leadsOverlay').classList.remove('open')}
+
+function populateCityFilter(){
+var cities={};
+LEADS.forEach(function(l){if(l.c)cities[l.c]=1});
+var sel=document.getElementById('leadsCity');
+sel.innerHTML='<option value="">All cities</option>';
+Object.keys(cities).sort().forEach(function(c){
+sel.innerHTML+='<option value="'+c+'">'+c+'</option>';
+});
+}
+
+function renderLeads(){
+var search=(document.getElementById('leadsSearch').value||'').toLowerCase();
+var city=document.getElementById('leadsCity').value;
+var size=document.getElementById('leadsSize').value;
+var b=document.getElementById('leadsBody');
+b.innerHTML='';
+var count=0;
+var max=200;
+
+for(var i=0;i<LEADS.length&&count<max;i++){
+var l=LEADS[i];
+if(search&&l.n.toLowerCase().indexOf(search)===-1&&l.p.indexOf(search)===-1&&l.c.toLowerCase().indexOf(search)===-1)continue;
+if(city&&l.c!==city)continue;
+if(size&&l.s!==size)continue;
+
+var used=usedLeads.indexOf(i)!==-1;
+var sizeClass=l.s==='Small'?'leads-size-s':l.s==='Medium'?'leads-size-m':'leads-size-l';
+var tr=document.createElement('tr');
+if(used)tr.className='used';
+tr.innerHTML='<td>'+(count+1)+'</td>'+
+'<td><b>'+l.n+'</b></td>'+
+'<td>'+l.p+'</td>'+
+'<td>'+l.c+'</td>'+
+'<td>'+l.r+'</td>'+
+'<td>'+(l.rt>0?l.rt+'/5':'—')+'</td>'+
+'<td><span class="'+sizeClass+'">'+l.s+'</span></td>'+
+'<td>'+(used?'<span style="color:var(--txd)">Done</span>':'<button class="leads-use" onclick="useLead('+i+',event)">Call</button>')+'</td>';
+b.appendChild(tr);
+count++;
+}
+document.getElementById('leadsCount').textContent=LEADS.length-usedLeads.length;
+}
+
+function useLead(i,e){
+if(e)e.stopPropagation();
+var l=LEADS[i];
+document.getElementById('companyInput').value=l.n;
+document.querySelectorAll('.biz-name').forEach(function(el){el.textContent=l.n});
+if(usedLeads.indexOf(i)===-1){usedLeads.push(i);localStorage.setItem('nola-usedleads',JSON.stringify(usedLeads))}
+closeLeads();
+}
+
+if(typeof LEADS!=='undefined'){document.getElementById('leadsCount').textContent=LEADS.length-usedLeads.length}
 
 // ===== CALL LOG =====
 var logData=JSON.parse(localStorage.getItem('nola-calllog')||'[]');
