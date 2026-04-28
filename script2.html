@@ -45,6 +45,7 @@ h3{font-size:17px;font-weight:600;margin:20px 0 10px;color:var(--tx)}
 
 /* ===== INSTRUCTION (cyan) ===== */
 .inst{font-size:15px;color:var(--c);padding:8px 0 8px 24px;border-left:3px solid var(--c);margin:8px 0;opacity:.9;font-weight:500}
+.inst-green{font-size:15px;color:var(--g);padding:8px 0 8px 24px;border-left:3px solid var(--g);margin:8px 0;opacity:.9;font-weight:500}
 
 /* ===== NOTE (amber) ===== */
 .note{font-size:14px;color:var(--a);background:var(--as);padding:10px 16px;border-radius:8px;margin:8px 0;font-style:italic}
@@ -211,17 +212,17 @@ a:hover{text-decoration:underline}
 <div class="card-label">Live dialogue — the opener</div>
 
 <div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[Owner First Name]</span>, this is Ryan calling. Are you on the way to a job right now?"</div>
-<p class="inst">⏸ PAUSE. They'll say "yeah heading to one" / "just finished" / "what's this about?" — doesn't matter what they say, you're showing you understand their world.</p>
+<p class="inst-green">⏸ PAUSE. They'll say "yeah heading to one" / "just finished" / "what's this about?" — doesn't matter what they say, you're showing you understand their world.</p>
 
 <div class="split">
 <div><div class="main-label">▶ Primary</div><div class="say"><b>Ryan:</b> "I know that there are some plumbers that take a lot of calls and it takes time away from jobs. Is that something you're dealing with too?"</div></div>
 <div><div class="alt-label">🔄 If "what do you mean?"</div><div class="say" style="border-left-color:var(--a)"><b>Ryan:</b> "Yeah so uhm, basically what I'm saying is — you know when you're on a job and calls keep coming in and you can't pick up? I'm just asking if that happens to you too."</div></div>
 </div>
-<p class="inst">⏸ PAUSE. They'll say "yeah" or "who is this" — either way they just confirmed the problem.</p>
+<p class="inst-green">⏸ PAUSE. They'll say "yeah" or "who is this" — either way they just confirmed the problem.</p>
 
 <h3 style="margin-top:16px">If they say "yeah" / confirm:</h3>
 <div class="say"><b>Ryan:</b> "This is exactly why I'm calling. I think you're going to love this. Give me 30 seconds, I can explain how it works and you tell me what you think."</div>
-<p class="inst">⏸ PAUSE. Wait for the go-ahead. If silence → "Did you hear me, boss?"</p>
+<p class="inst-green">⏸ PAUSE. Wait for the go-ahead. If silence → "Did you hear me, boss?"</p>
 
 <h3>If they dodge ("What is this about?" / "Who are you?")</h3>
 <div class="say"><b>Ryan:</b> "I work with plumbing companies. I've identified that <span class="placeholder">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it. Give me 30 seconds?"</div>
@@ -231,7 +232,7 @@ a:hover{text-decoration:underline}
 <h3>THE PITCH (after they give you the 30 seconds):</h3>
 
 <div class="say"><b>Ryan:</b> "It's pretty simple. I built an AI receptionist that works 24/7. It answers every call you miss, sounds completely natural, and can answer common questions like pricing, services, and availability. But the best part is <span class="placeholder">[Owner Name]</span> — it books jobs directly without you lifting a finger. Is that something you'd find useful?"</div>
-<p class="inst">⏸ PAUSE. Let them react.</p>
+<p class="inst-green">⏸ PAUSE. Let them react.</p>
 
 <h3>If they're interested:</h3>
 <div class="say"><b>Ryan:</b> "I want you to hear a demo I created. I'll have you call a number and act like a customer — it's pretty insane. We'll set it up on your line for free for the first 7 days. After that it's $99 a month. And you'll never have to answer calls again — the jobs just show up and you go do the work."</div>
@@ -247,7 +248,7 @@ a:hover{text-decoration:underline}
 <div class="card-label">Follow-up dialogue</div>
 
 <div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[Owner Name]</span>, this is Ryan — I tried reaching you earlier this week. I know it's tough to get to the phone when you're on a job."</div>
-<p class="inst">⏸ PAUSE. They'll say "yeah, it's been crazy" or similar.</p>
+<p class="inst-green">⏸ PAUSE. They'll say "yeah, it's been crazy" or similar.</p>
 
 <div class="say"><b>Ryan:</b> "That's actually why I'm calling. I know you take a lot of calls and it pulls you away from jobs. Give me 30 seconds — I built something that fixes that."</div>
 <p class="inst">⏸ Then deliver THE PITCH from above.</p>
