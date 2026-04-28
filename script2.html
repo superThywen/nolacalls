@@ -137,7 +137,8 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 .log-body{overflow-y:auto;padding:0}
 .log-table{width:100%;border-collapse:collapse;font-size:12px}
 .log-table th{background:var(--sf2);color:var(--txm);padding:8px 10px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em;position:sticky;top:0;border-bottom:1px solid var(--ln)}
-.log-table td{padding:7px 10px;border-bottom:1px solid var(--ln);color:var(--tx);vertical-align:top}
+.log-table td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.04);border-right:1px solid rgba(255,255,255,.04);color:var(--tx);vertical-align:top}
+.log-table td:last-child{border-right:none}
 .log-table tr:hover td{background:rgba(124,92,255,.04)}
 .log-table input,.log-table select{background:var(--bg);border:1px solid var(--ln);border-radius:5px;color:var(--tx);font-size:12px;padding:4px 6px;width:100%;font-family:'Inter',sans-serif}
 .log-table input:focus,.log-table select:focus{border-color:rgba(124,92,255,.4);outline:none}
@@ -148,12 +149,11 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 .log-table tr.locked .cell-text{display:inline}
 .log-table tr.locked input,.log-table tr.locked select{display:none}
 .log-table tr:not(.locked) .cell-text{display:none}
-.log-table tr.outcome-noanswer td{border-left:3px solid #64748B}
-.log-table tr.outcome-notinterested td,.log-table tr.outcome-wrongnumber td{border-left:3px solid #EF4444}
-.log-table tr.outcome-callback td{border-left:3px solid #F59E0B}
-.log-table tr.outcome-gatekeeper td{border-left:3px solid #1a1a2e}
-.log-table tr.outcome-tookdemo td{border-left:3px solid #A6E3A1}
-.log-table td:first-child{border-left:none!important}
+.log-table tr.outcome-noanswer td{background:rgba(100,116,139,.08)}
+.log-table tr.outcome-notinterested td,.log-table tr.outcome-wrongnumber td{background:rgba(239,68,68,.06)}
+.log-table tr.outcome-callback td{background:rgba(245,158,11,.06)}
+.log-table tr.outcome-gatekeeper td{background:rgba(30,30,50,.3)}
+.log-table tr.outcome-tookdemo td{background:rgba(166,227,161,.08)}
 .log-table tr[draggable]{cursor:grab}
 .log-table tr.dragging{opacity:.4}
 .note-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
@@ -948,7 +948,7 @@ saveLog();renderLog();
 
 function updateLog(i,k,v){logData[i][k]=v;saveLog()}
 function deleteLog(i){logData.splice(i,1);saveLog();renderLog()}
-function lockAllRows(){logData.forEach(function(r){r.locked=true});saveLog();renderLog()}
+function lockAllRows(){logData.forEach(function(r){r.locked=true});logData.sort(function(a,b){return(b.date+b.time).localeCompare(a.date+a.time)});saveLog();renderLog()}
 function unlockRow(i){logData[i].locked=false;saveLog();renderLog()}
 function saveLog(){localStorage.setItem('nola-calllog',JSON.stringify(logData));document.getElementById('logCount').textContent=logData.length}
 
