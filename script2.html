@@ -141,11 +141,35 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 .log-table tr:hover td{background:rgba(124,92,255,.04)}
 .log-table input,.log-table select{background:var(--bg);border:1px solid var(--ln);border-radius:5px;color:var(--tx);font-size:12px;padding:4px 6px;width:100%;font-family:'Inter',sans-serif}
 .log-table input:focus,.log-table select:focus{border-color:rgba(124,92,255,.4);outline:none}
-.log-table .del-row{background:none;border:none;color:var(--txd);cursor:pointer;font-size:14px;padding:2px 6px;border-radius:4px}
-.log-table .del-row:hover{color:#EF4444;background:rgba(239,68,68,.1)}
-.log-btn{position:fixed;bottom:33px;left:115px;padding:6px 14px;border-radius:8px;background:var(--sf);border:1px solid var(--ln);color:var(--txm);font-size:11px;font-weight:600;cursor:pointer;z-index:100;font-family:'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;transition:all .2s}
+.log-table .row-btn{background:none;border:none;color:var(--txd);cursor:pointer;font-size:14px;padding:2px 6px;border-radius:4px;transition:all .15s}
+.log-table .row-btn:hover{color:#EF4444;background:rgba(239,68,68,.1)}
+.log-table .edit-btn:hover{color:var(--v);background:rgba(124,92,255,.1)}
+.log-table tr.locked td{opacity:.85}
+.log-table tr.locked .cell-text{display:inline}
+.log-table tr.locked input,.log-table tr.locked select{display:none}
+.log-table tr:not(.locked) .cell-text{display:none}
+.log-table tr.outcome-noanswer td{border-left:3px solid #64748B}
+.log-table tr.outcome-notinterested td,.log-table tr.outcome-wrongnumber td{border-left:3px solid #EF4444}
+.log-table tr.outcome-callback td{border-left:3px solid #F59E0B}
+.log-table tr.outcome-gatekeeper td{border-left:3px solid #1a1a2e}
+.log-table tr.outcome-tookdemo td{border-left:3px solid #A6E3A1}
+.log-table td:first-child{border-left:none!important}
+.log-table tr[draggable]{cursor:grab}
+.log-table tr.dragging{opacity:.4}
+.note-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.note-overlay.open{display:flex}
+.note-modal{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:24px;width:500px;max-width:90vw;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.note-modal h4{font-size:16px;margin:0 0 12px;color:var(--tx)}
+.note-modal textarea{width:100%;height:150px;background:var(--bg);border:1px solid var(--ln);border-radius:8px;color:var(--tx);font-size:14px;padding:12px;font-family:'Inter',sans-serif;resize:vertical}
+.note-modal textarea:focus{border-color:rgba(124,92,255,.4);outline:none}
+.note-modal-btns{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+.note-modal-btns button{padding:6px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none}
+.note-save{background:var(--v);color:#fff}
+.note-cancel{background:var(--sf2);color:var(--txm)}
+.log-btn{position:fixed;bottom:110px;left:14px;width:210px;padding:12px 0;border-radius:10px;background:var(--sf);border:1px solid var(--ln);color:var(--txm);font-size:13px;font-weight:600;cursor:pointer;z-index:99;font-family:'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;transition:all .2s;text-align:center}
 .log-btn:hover{background:var(--v);color:#fff;border-color:var(--v)}
-.log-count{background:var(--v);color:#fff;font-size:9px;padding:1px 5px;border-radius:10px;margin-left:6px}
+.log-count{background:var(--v);color:#fff;font-size:10px;padding:2px 7px;border-radius:10px;margin-left:6px}
+@media(max-width:1200px){.log-btn{display:none}}
 
 /* ===== SIDE NAV ===== */
 .side-logo{display:flex;align-items:center;gap:8px;padding:10px 16px 12px;border-bottom:1px solid var(--ln);margin-bottom:0;justify-content:space-between}
@@ -258,18 +282,31 @@ a:hover{text-decoration:underline}
 <div class="log-header">
 <h3>📋 Call Log</h3>
 <div class="log-header-btns">
+<button class="log-add" style="background:#A6E3A1;color:#0A0E1A" onclick="lockAllRows()">✓ Save All</button>
 <button class="log-add" onclick="addLogRow()">+ New Call</button>
-<button class="log-add" style="background:var(--c)" onclick="exportLog()">⬇ Export CSV</button>
+<button class="log-add" style="background:var(--c);color:#0A0E1A" onclick="exportLog()">⬇ Export</button>
 <button class="log-close" onclick="closeLog()">✕</button>
 </div>
 </div>
 <div class="log-body">
 <table class="log-table">
 <thead><tr>
-<th>Date</th><th>Time</th><th>Business</th><th>Owner</th><th>Phone</th><th>State</th><th>#</th><th>Outcome</th><th>Demo?</th><th>Objection</th><th>Callback</th><th>Notes</th><th></th>
+<th style="width:30px">#</th><th>Date</th><th>Time</th><th>Business</th><th>Owner</th><th>Phone</th><th>State</th><th>Outcome</th><th>Objection</th><th>Callback</th><th>Notes</th><th style="width:50px"></th>
 </tr></thead>
 <tbody id="logBody"></tbody>
 </table>
+</div>
+</div>
+</div>
+
+<!-- NOTE MODAL -->
+<div class="note-overlay" id="noteOverlay" onclick="if(event.target===this)closeNote()">
+<div class="note-modal">
+<h4>📝 Notes</h4>
+<textarea id="noteText"></textarea>
+<div class="note-modal-btns">
+<button class="note-cancel" onclick="closeNote()">Cancel</button>
+<button class="note-save" onclick="saveNote()">Save</button>
 </div>
 </div>
 </div>
@@ -849,37 +886,49 @@ function setName(name){
 
 // ===== CALL LOG =====
 var logData=JSON.parse(localStorage.getItem('nola-calllog')||'[]');
+var editingNote=-1;
+var dragIdx=null;
 
 function openLog(){document.getElementById('logOverlay').classList.add('open');renderLog()}
 function closeLog(){document.getElementById('logOverlay').classList.remove('open')}
+
+function outcomeClass(o){
+var map={'No Answer':'noanswer','Not Interested':'notinterested','Callback':'callback','Gatekeeper':'gatekeeper','Wrong Number':'wrongnumber','Took Demo':'tookdemo'};
+return map[o]?'outcome-'+map[o]:'';
+}
 
 function renderLog(){
 var b=document.getElementById('logBody');
 b.innerHTML='';
 logData.forEach(function(r,i){
+if(!r.locked)r.locked=false;
+var cls=(r.locked?'locked ':'')+outcomeClass(r.outcome);
 var tr=document.createElement('tr');
-tr.innerHTML='<td><input value="'+esc(r.date)+'" onchange="updateLog('+i+',\'date\',this.value)"></td>'+
-'<td><input value="'+esc(r.time)+'" onchange="updateLog('+i+',\'time\',this.value)" style="width:60px"></td>'+
-'<td><input value="'+esc(r.biz)+'" onchange="updateLog('+i+',\'biz\',this.value)"></td>'+
-'<td><input value="'+esc(r.owner)+'" onchange="updateLog('+i+',\'owner\',this.value)" style="width:70px"></td>'+
-'<td><input value="'+esc(r.phone)+'" onchange="updateLog('+i+',\'phone\',this.value)"></td>'+
-'<td><input value="'+esc(r.state)+'" onchange="updateLog('+i+',\'state\',this.value)" style="width:50px"></td>'+
-'<td><input value="'+esc(r.attempt)+'" onchange="updateLog('+i+',\'attempt\',this.value)" style="width:30px"></td>'+
-'<td><select onchange="updateLog('+i+',\'outcome\',this.value)">'+
+tr.className=cls;
+tr.draggable=true;
+tr.dataset.idx=i;
+tr.ondragstart=function(e){dragIdx=i;tr.classList.add('dragging')};
+tr.ondragend=function(){tr.classList.remove('dragging')};
+tr.ondragover=function(e){e.preventDefault()};
+tr.ondrop=function(e){e.preventDefault();if(dragIdx!==null&&dragIdx!==i){var item=logData.splice(dragIdx,1)[0];logData.splice(i,0,item);dragIdx=null;saveLog();renderLog()}};
+
+tr.innerHTML='<td style="text-align:center;color:var(--txd)">'+(i+1)+'</td>'+
+'<td><span class="cell-text">'+esc(r.date)+'</span><input value="'+esc(r.date)+'" onchange="updateLog('+i+',\'date\',this.value)" style="width:90px"></td>'+
+'<td><span class="cell-text">'+esc(r.time)+'</span><input value="'+esc(r.time)+'" onchange="updateLog('+i+',\'time\',this.value)" style="width:50px"></td>'+
+'<td><span class="cell-text">'+esc(r.biz)+'</span><input value="'+esc(r.biz)+'" onchange="updateLog('+i+',\'biz\',this.value)"></td>'+
+'<td><span class="cell-text">'+esc(r.owner)+'</span><input value="'+esc(r.owner)+'" onchange="updateLog('+i+',\'owner\',this.value)" style="width:60px"></td>'+
+'<td><span class="cell-text">'+esc(r.phone)+'</span><input value="'+esc(r.phone)+'" onchange="updateLog('+i+',\'phone\',this.value)" style="width:100px"></td>'+
+'<td><span class="cell-text">'+esc(r.state)+'</span><input value="'+esc(r.state)+'" onchange="updateLog('+i+',\'state\',this.value)" style="width:50px"></td>'+
+'<td><span class="cell-text">'+(esc(r.outcome)||'—')+'</span><select onchange="updateLog('+i+',\'outcome\',this.value);renderLog()">'+
 '<option value="">--</option>'+
-'<option value="Took Demo"'+(r.outcome==='Took Demo'?' selected':'')+'>Took Demo</option>'+
-'<option value="No Answer"'+(r.outcome==='No Answer'?' selected':'')+'>No Answer</option>'+
-'<option value="Not Interested"'+(r.outcome==='Not Interested'?' selected':'')+'>Not Interested</option>'+
-'<option value="Callback"'+(r.outcome==='Callback'?' selected':'')+'>Callback</option>'+
-'<option value="Gatekeeper"'+(r.outcome==='Gatekeeper'?' selected':'')+'>Gatekeeper</option>'+
-'<option value="Wrong Number"'+(r.outcome==='Wrong Number'?' selected':'')+'>Wrong Number</option>'+
+['Took Demo','No Answer','Not Interested','Callback','Gatekeeper','Wrong Number'].map(function(o){return'<option value="'+o+'"'+(r.outcome===o?' selected':'')+'>'+o+'</option>'}).join('')+
 '</select></td>'+
-'<td><select onchange="updateLog('+i+',\'demo\',this.value)">'+
-'<option value="">--</option><option value="Yes"'+(r.demo==='Yes'?' selected':'')+'>Yes</option><option value="No"'+(r.demo==='No'?' selected':'')+'>No</option></select></td>'+
-'<td><input value="'+esc(r.objection)+'" onchange="updateLog('+i+',\'objection\',this.value)" style="width:80px"></td>'+
-'<td><input value="'+esc(r.callback)+'" onchange="updateLog('+i+',\'callback\',this.value)" style="width:80px"></td>'+
-'<td><input value="'+esc(r.notes)+'" onchange="updateLog('+i+',\'notes\',this.value)"></td>'+
-'<td><button class="del-row" onclick="deleteLog('+i+')">✕</button></td>';
+'<td><span class="cell-text">'+esc(r.objection)+'</span><input value="'+esc(r.objection)+'" onchange="updateLog('+i+',\'objection\',this.value)" style="width:80px"></td>'+
+'<td><span class="cell-text">'+esc(r.callback)+'</span><input value="'+esc(r.callback)+'" onchange="updateLog('+i+',\'callback\',this.value)" style="width:80px"></td>'+
+'<td><span class="cell-text" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted" onclick="openNote('+i+')">'+(r.notes?'📝 View':'—')+'</span><span style="display:none"><input value="'+esc(r.notes)+'" style="width:60px" disabled><button class="row-btn" onclick="openNote('+i+')" style="font-size:11px">📝</button></span></td>'+
+'<td>'+
+(r.locked?'<button class="row-btn edit-btn" onclick="unlockRow('+i+')" title="Edit">✏️</button>':'')+
+'<button class="row-btn" onclick="deleteLog('+i+')" title="Delete">✕</button></td>';
 b.appendChild(tr);
 });
 document.getElementById('logCount').textContent=logData.length;
@@ -893,18 +942,32 @@ var d=now.toISOString().slice(0,10);
 var t=now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false});
 var biz=document.getElementById('companyInput')?document.getElementById('companyInput').value:'';
 var owner=detectedName||'';
-logData.unshift({date:d,time:t,biz:biz,owner:owner,phone:'',state:'Georgia',attempt:'1',outcome:'',demo:'',objection:'',callback:'',notes:''});
+logData.unshift({date:d,time:t,biz:biz,owner:owner,phone:'',state:'Georgia',attempt:'1',outcome:'',objection:'',callback:'',notes:'',locked:false});
 saveLog();renderLog();
 }
 
 function updateLog(i,k,v){logData[i][k]=v;saveLog()}
 function deleteLog(i){logData.splice(i,1);saveLog();renderLog()}
+function lockAllRows(){logData.forEach(function(r){r.locked=true});saveLog();renderLog()}
+function unlockRow(i){logData[i].locked=false;saveLog();renderLog()}
 function saveLog(){localStorage.setItem('nola-calllog',JSON.stringify(logData));document.getElementById('logCount').textContent=logData.length}
 
+function openNote(i){
+editingNote=i;
+document.getElementById('noteText').value=logData[i].notes||'';
+document.getElementById('noteOverlay').classList.add('open');
+document.getElementById('noteText').focus();
+}
+function closeNote(){document.getElementById('noteOverlay').classList.remove('open');editingNote=-1}
+function saveNote(){
+if(editingNote>=0){logData[editingNote].notes=document.getElementById('noteText').value;saveLog();renderLog()}
+closeNote();
+}
+
 function exportLog(){
-var csv='Date,Time,Business,Owner,Phone,State,Attempt,Outcome,Demo,Objection,Callback,Notes\n';
-logData.forEach(function(r){
-csv+='"'+[r.date,r.time,r.biz,r.owner,r.phone,r.state,r.attempt,r.outcome,r.demo,r.objection,r.callback,r.notes].join('","')+'"\n';
+var csv='#,Date,Time,Business,Owner,Phone,State,Outcome,Objection,Callback,Notes\n';
+logData.forEach(function(r,i){
+csv+='"'+(i+1)+'","'+[r.date,r.time,r.biz,r.owner,r.phone,r.state,r.outcome,r.objection,r.callback,r.notes].join('","')+'"\n';
 });
 var blob=new Blob([csv],{type:'text/csv'});
 var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='nolacalls-calllog.csv';a.click();
