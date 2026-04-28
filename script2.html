@@ -544,11 +544,15 @@ document.querySelectorAll('.obj-panel').forEach((p,i)=>p.classList.toggle('activ
 function jumpTo(id){
 var el=document.getElementById(id);
 if(!el)return;
-el.scrollIntoView({block:'center'});
-el.classList.remove('highlight-target');
-void el.offsetWidth;
-el.classList.add('highlight-target');
-setTimeout(function(){el.classList.remove('highlight-target')},2200);
+// Find the next .say element after the target header
+var sayEl=el.nextElementSibling;
+while(sayEl && !sayEl.classList.contains('say') && !sayEl.querySelector('.say')){sayEl=sayEl.nextElementSibling}
+var target=sayEl&&sayEl.classList.contains('say')?sayEl:(sayEl&&sayEl.querySelector('.say'))||el;
+target.scrollIntoView({block:'center'});
+target.classList.remove('highlight-target');
+void target.offsetWidth;
+target.classList.add('highlight-target');
+setTimeout(function(){target.classList.remove('highlight-target')},2200);
 }
 
 // Make all .go links also use highlight animation
