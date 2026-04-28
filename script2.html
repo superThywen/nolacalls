@@ -279,9 +279,9 @@ a:hover{text-decoration:underline}
 
 <h3 class="h-red">If NO:</h3>
 <div class="say"><b>Ryan:</b> "Got it — is there any way you can transfer me to him?"</div>
+<div class="predict"><a class="pos" style="cursor:pointer" onclick="jumpTo('s2')">"yeah hold on"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('hes-out-alt')">"no he's out"</a><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('whos-calling')">"who is this?"</a></div>
 <div class="say" id="hes-out-alt"><b>Ryan:</b> "When's he usually back?"</div>
 <div class="predict">They say a time → Log it, call back then.</div>
-<div class="predict"><a class="pos" style="cursor:pointer" onclick="jumpTo('s2')">"yeah hold on"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('hes-out-alt')">"no he's out"</a></div>
 
 <h3 class="h-orange" id="whos-calling">If "Who's calling?"</h3>
 <div class="say-wrap">
