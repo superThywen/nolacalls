@@ -259,7 +259,7 @@ a:hover{text-decoration:underline}
 .work-btn.active::before{background:linear-gradient(135deg,#39FF14,#22D3EE);animation:work-glow-active 1.5s ease-in-out infinite}
 @keyframes work-glow-active{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.7;transform:scale(1.1)}}
 
-.caller-widget{position:fixed;top:70px;right:20px;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px 20px;display:none;z-index:100;box-shadow:0 8px 28px rgba(0,0,0,.3);min-width:240px}
+.caller-widget{position:fixed;top:70px;right:20px;cursor:grab;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px 20px;display:none;z-index:100;box-shadow:0 8px 28px rgba(0,0,0,.3);min-width:240px}
 .caller-widget.active{display:block}
 .caller-top{display:flex;align-items:center;gap:12px}
 .caller-input-row{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--ln)}
@@ -1129,6 +1129,28 @@ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='n
 }
 
 renderLog();
+
+// ===== DRAGGABLE CALLER WIDGET =====
+(function(){
+var widget=document.getElementById('callerWidget');
+var dragging=false,offsetX,offsetY;
+widget.addEventListener('mousedown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='BUTTON')return;
+dragging=true;
+widget.style.cursor='grabbing';
+offsetX=e.clientX-widget.getBoundingClientRect().left;
+offsetY=e.clientY-widget.getBoundingClientRect().top;
+widget.style.right='auto';
+});
+document.addEventListener('mousemove',function(e){
+if(!dragging)return;
+widget.style.left=(e.clientX-offsetX)+'px';
+widget.style.top=(e.clientY-offsetY)+'px';
+});
+document.addEventListener('mouseup',function(){
+if(dragging){dragging=false;widget.style.cursor='grab'}
+});
+})();
 
 // ===== NOTIFICATION SOUND =====
 function playNotifSound(){
