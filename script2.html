@@ -264,9 +264,14 @@ a:hover{text-decoration:underline}
 <h2 id="s1">Step 1 — Verify the Owner</h2>
 <div class="card">
 <div class="card-label">Opening line</div>
+<div class="say-wrap">
 <div class="say"><b>Ryan:</b> "Hi, is this the owner of <span class="placeholder">[Business Name]</span>?"</div>
+<div class="alt-side" style="top:0">
+<div class="say" id="whoisthis-alt"><b>Ryan:</b> "So my name is Ryan, <span style="color:var(--a);font-size:14px;font-weight:600">— 1 sec —</span> and I started working with plumbing companies. I've identified that <span class="placeholder">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it, and it's completely free. I know it sounds too good to be true, but give me 30 seconds and I'll tell you about it."</div>
+</div>
+</div>
 
-<h3 class="h-green">If YES → <a href="#s2" class="go">Go to Step 2</a></h3>
+<h3 class="h-green">If YES → <a href="#s2" class="go">Go to Step 2</a> &nbsp; <a class="neg" onclick="jumpTo('whoisthis-alt')">→ "who is this?"</a></h3>
 
 <h3 class="h-red">If NO (employee):</h3>
 <div class="say"><b>Ryan:</b> "Got it — is there a good time to reach them?"</div>
