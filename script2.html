@@ -20,13 +20,7 @@ body.light{
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:auto}
-body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--tx);line-height:1.55;max-width:700px;margin:0 auto;padding:140px 24px 120px;transition:background .3s,color .3s}
-
-/* ===== TOP BAR ===== */
-.topbar{position:fixed;top:0;left:0;right:0;height:56px;background:var(--sf);border-bottom:1px solid var(--ln);display:flex;align-items:center;padding:0 20px;gap:12px;z-index:100;backdrop-filter:blur(12px)}
-.topbar-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#9B82FF,#6849FF);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.topbar-mark::after{content:'';width:10px;height:10px;background:#fff;border-radius:50%}
-.topbar-name{font-weight:700;font-size:16px;color:var(--tx)}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--tx);line-height:1.55;max-width:700px;margin:0 auto;padding:80px 24px 120px;transition:background .3s,color .3s}
 
 /* ===== SUBTITLE ===== */
 .subtitle{font-size:clamp(28px,5vw,38px);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin:20px 0 32px;text-align:center;background:linear-gradient(120deg,var(--v),var(--c),var(--v));background-size:200% 200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:gs 6s ease-in-out infinite}
@@ -127,7 +121,11 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 .div{border:none;border-top:1px solid var(--ln);margin:40px 0}
 
 /* ===== SIDE NAV ===== */
-.side{position:fixed;top:50%;left:14px;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px;z-index:99;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:12px 8px;box-shadow:0 8px 28px rgba(0,0,0,.25)}
+.side-logo{display:flex;align-items:center;gap:8px;padding:8px 12px 12px;border-bottom:1px solid var(--ln);margin-bottom:6px}
+.side-logo-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#9B82FF,#6849FF);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.side-logo-mark::after{content:'';width:8px;height:8px;background:#fff;border-radius:50%}
+.side-logo-name{font-weight:700;font-size:14px;color:var(--tx)}
+.side{position:fixed;top:50%;left:14px;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px;z-index:99;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:6px 8px 12px;box-shadow:0 8px 28px rgba(0,0,0,.25)}
 .side a{display:flex;align-items:center;gap:8px;color:var(--txm);padding:8px 12px;border-radius:8px;font-size:12px;font-weight:500;white-space:nowrap;transition:all .2s;text-decoration:none;border:1px solid transparent}
 .side a:hover{background:var(--vs);color:var(--v);border-color:rgba(124,92,255,.2);text-decoration:none}
 .side .ic{font-size:14px;width:20px;text-align:center}
@@ -146,14 +144,16 @@ a{color:var(--v);text-decoration:none}
 a:hover{text-decoration:underline}
 
 /* ===== TIME BAR ===== */
-.timebar{position:fixed;top:56px;left:0;right:0;background:var(--sf);border-bottom:1px solid var(--ln);z-index:99;font-size:12px;padding:8px 16px 10px}
+.timebar{position:fixed;top:0;left:0;right:0;background:var(--sf);border-bottom:1px solid var(--ln);z-index:100;font-size:12px;padding:8px 16px 10px;backdrop-filter:blur(12px)}
 .timebar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .timebar-clock{color:var(--txm);font-weight:700;font-size:13px;font-family:'Inter',monospace}
 .timebar-status{font-size:11px;color:var(--txd);font-weight:500}
 .timebar-status.go{color:#39FF14;font-weight:700}
 .meter-wrap{position:relative;height:28px;background:var(--bg);border-radius:14px;border:1px solid var(--ln);overflow:hidden}
 .meter-window{position:absolute;top:0;bottom:0;background:rgba(57,255,20,.08);border-left:2px solid rgba(57,255,20,.3);border-right:2px solid rgba(57,255,20,.3);transition:all .3s}
-.meter-window.active{background:rgba(57,255,20,.15);box-shadow:inset 0 0 20px rgba(57,255,20,.1)}
+.meter-window.active{background:rgba(57,255,20,.2);box-shadow:inset 0 0 20px rgba(57,255,20,.15)}
+.meter-window.pulse{animation:window-pulse 1.5s ease-out 3}
+@keyframes window-pulse{0%{background:rgba(57,255,20,.5);box-shadow:0 0 20px rgba(57,255,20,.4)}50%{background:rgba(57,255,20,.1)}100%{background:rgba(57,255,20,.2);box-shadow:inset 0 0 20px rgba(57,255,20,.15)}}
 .meter-markers{position:absolute;top:0;left:0;right:0;height:100%;display:flex;pointer-events:none}
 .meter-zone{position:absolute;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:var(--txd);gap:3px;z-index:1}
 .meter-zone.live{color:#39FF14}
@@ -221,6 +221,7 @@ a:hover{text-decoration:underline}
 
 <!-- SIDE NAV -->
 <nav class="side">
+<div class="side-logo"><div class="side-logo-mark"></div><span class="side-logo-name">Nola</span></div>
 <a href="#before"><span class="ic">📋</span>Before You Dial</a>
 <a href="#s1"><span class="ic">1️⃣</span>Verify Owner</a>
 <a href="#s2"><span class="ic">2️⃣</span>Opener + Pitch</a>
@@ -234,12 +235,6 @@ a:hover{text-decoration:underline}
 <a href="#goals"><span class="ic">🎯</span>Goals</a>
 <a href="#practice"><span class="ic">🎙️</span>Practice</a>
 </nav>
-
-<!-- TOP BAR -->
-<div class="topbar">
-<div class="topbar-mark"></div>
-<span class="topbar-name">NolaCalls</span>
-</div>
 
 <!-- THEME -->
 <button class="tt" onclick="document.body.classList.toggle('light');this.textContent=document.body.classList.contains('light')?'🌙':'💡'" title="Toggle theme">💡</button>
@@ -780,6 +775,26 @@ function setName(name){
   setTimeout(function(){widget.style.boxShadow='0 8px 28px rgba(0,0,0,.3)'},1500);
 }
 
+// ===== NOTIFICATION SOUND =====
+function playNotifSound(){
+try{
+var ctx=new(window.AudioContext||window.webkitAudioContext)();
+var o1=ctx.createOscillator();var g1=ctx.createGain();
+o1.type='sine';o1.frequency.value=880;
+g1.gain.setValueAtTime(0.3,ctx.currentTime);
+g1.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+0.3);
+o1.connect(g1);g1.connect(ctx.destination);
+o1.start(ctx.currentTime);o1.stop(ctx.currentTime+0.3);
+
+var o2=ctx.createOscillator();var g2=ctx.createGain();
+o2.type='sine';o2.frequency.value=1320;
+g2.gain.setValueAtTime(0.3,ctx.currentTime+0.15);
+g2.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+0.5);
+o2.connect(g2);g2.connect(ctx.destination);
+o2.start(ctx.currentTime+0.15);o2.stop(ctx.currentTime+0.5);
+}catch(e){}
+}
+
 // ===== LIVE TIME BAR (24hr scale) =====
 function updateTimeBar(){
 var now=new Date();
@@ -838,7 +853,13 @@ zones.forEach(function(z){
   }
 });
 
-if(anyLive||( etH>=16&&etH<20)){
+if(anyLive||(etH>=16&&etH<20)){
+  if(!win.classList.contains('active')){
+    // First time entering — pulse + sound
+    win.classList.add('pulse');
+    playNotifSound();
+    setTimeout(function(){win.classList.remove('pulse')},4500);
+  }
   win.classList.add('active');
   status.textContent='🟢 CALLING WINDOW ACTIVE';
   status.className='timebar-status go';
