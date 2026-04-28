@@ -46,6 +46,10 @@ h3{font-size:17px;font-weight:600;margin:20px 0 10px;color:var(--tx)}
 /* ===== INSTRUCTION (cyan) ===== */
 .inst{font-size:15px;color:var(--c);padding:8px 0 8px 24px;border-left:3px solid var(--c);margin:8px 0;opacity:.9;font-weight:500}
 .inst-green{font-size:15px;color:#10B981;padding:8px 0 8px 24px;border-left:3px solid #10B981;margin:8px 0;opacity:.9;font-weight:500}
+h3.h-green{color:#10B981}
+h3.h-red{color:#EF4444}
+h3.h-orange{color:#F59E0B}
+h3.h-blue{color:var(--c)}
 
 /* ===== NOTE (amber) ===== */
 .note{font-size:14px;color:var(--a);background:var(--as);padding:10px 16px;border-radius:8px;margin:8px 0;font-style:italic}
@@ -192,13 +196,13 @@ a:hover{text-decoration:underline}
 <div class="card-label">Opening line</div>
 <div class="say"><b>Ryan:</b> "Hi, is this the owner of <span class="placeholder">[Business Name]</span>?"</div>
 
-<h3>If YES → <a href="#s2" class="go">Go to Step 2</a></h3>
+<h3 class="h-green">If YES → <a href="#s2" class="go">Go to Step 2</a></h3>
 
-<h3>If NO (employee):</h3>
+<h3 class="h-red">If NO (employee):</h3>
 <div class="say"><b>Ryan:</b> "Got it — is there a good time to reach them?"</div>
 <p class="inst">Log callback time. Move on.</p>
 
-<h3>If "Who's calling?"</h3>
+<h3 class="h-orange">If "Who's calling?"</h3>
 <div class="say"><b>Ryan:</b> "This is Ryan — I've got something important to discuss with the owner. Are they around?"</div>
 <p class="inst">Through → <a href="#s2">Step 2</a>. No → "No worries." Move on.</p>
 </div>
@@ -220,25 +224,25 @@ a:hover{text-decoration:underline}
 </div>
 <p class="inst-green">⏸ PAUSE. They'll say "yeah" or "who is this" — either way they just confirmed the problem.</p>
 
-<h3 style="margin-top:16px">If they say "yeah" / confirm:</h3>
+<h3 class="h-green" style="margin-top:16px">If they say "yeah" / confirm:</h3>
 <div class="say"><b>Ryan:</b> "This is exactly why I'm calling. I think you're going to love this. Give me 30 seconds, I can explain how it works and you tell me what you think."</div>
 <p class="inst-green">⏸ PAUSE. Wait for the go-ahead. If silence → "Did you hear me, boss?"</p>
 
-<h3>If they dodge ("What is this about?" / "Who are you?")</h3>
+<h3 class="h-orange">If they dodge ("What is this about?" / "Who are you?")</h3>
 <div class="say"><b>Ryan:</b> "I work with plumbing companies. I've identified that <span class="placeholder">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it. Give me 30 seconds?"</div>
 
 <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0">
 
-<h3>THE PITCH (after they give you the 30 seconds):</h3>
+<h3 class="h-green">THE PITCH (after they give you the 30 seconds):</h3>
 
 <div class="say"><b>Ryan:</b> "It's pretty simple. I built an AI receptionist that works 24/7. It answers every call you miss, sounds completely natural, and can answer common questions like pricing, services, and availability. But the best part is <span class="placeholder">[Owner Name]</span> — it books jobs directly without you lifting a finger. Is that something you'd find useful?"</div>
 <p class="inst-green">⏸ PAUSE. Let them react.</p>
 
-<h3>If they're interested:</h3>
+<h3 class="h-green">If they're interested:</h3>
 <div class="say"><b>Ryan:</b> "I want you to hear a demo I created. I'll have you call a number and act like a customer — it's pretty insane. We'll set it up on your line for free for the first 7 days. After that it's $99 a month. And you'll never have to answer calls again — the jobs just show up and you go do the work."</div>
 <p class="inst">→ <a href="#s3" class="go">Step 3</a></p>
 
-<h3>If they ask for price immediately:</h3>
+<h3 class="h-orange">If they ask for price immediately:</h3>
 <div class="say"><b>Ryan:</b> "First 7 days free, after that $99 a month. But before we talk price — let me send you the demo number. Call it, act like a customer, hear it for yourself. I'll text it to you right now."</div>
 <p class="inst">→ <a href="#s3" class="go">Step 3</a></p>
 </div>
@@ -261,17 +265,17 @@ a:hover{text-decoration:underline}
 <div class="card">
 <div class="card-label">Response handling</div>
 
-<h3>✅ YES / "sure" / "send it"</h3>
+<h3 class="h-green">✅ YES / "sure" / "send it"</h3>
 <div class="say"><b>Ryan:</b> "Great — the number is <span class="placeholder">(978) 391-6222</span>. Call it, pretend you're a customer with any plumbing issue — a leak, a clog, whatever. You'll hear exactly what your customers would hear. If you like it, we'll set it up on your business line free for 7 days. No card, nothing. I'll text it to you right now."</div>
 <p class="inst">📲 Text immediately. Hang up. Don't linger.</p>
 
-<h3>🤔 CURIOUS — "What is it?" / "How does it work?"</h3>
+<h3 class="h-orange">🤔 CURIOUS — "What is it?" / "How does it work?"</h3>
 <div class="say"><b>Ryan:</b> "You keep your same number. When a call comes in and you can't get to it, it forwards to us after a few rings. A receptionist picks up, finds out what's going on, gets their name and address, books an appointment, and texts you everything. Your customer never knew you weren't there. But honestly — just call the demo number, you'll get it in 30 seconds. Want me to text it to you?"</div>
 
-<h3>😏 SKEPTICAL — "Yeah right" / "Too good to be true"</h3>
+<h3 class="h-red">😏 SKEPTICAL — "Yeah right" / "Too good to be true"</h3>
 <div class="say"><b>Ryan:</b> "Call the number, you'll love it. 30 seconds, pretend you've got a plumbing problem, and hear it for yourself. Let me text it to you."</div>
 
-<h3>❌ "Not interested" → <a href="#obj" class="go">Objections</a></h3>
+<h3 class="h-red">❌ "Not interested" → <a href="#obj" class="go">Objections</a></h3>
 </div>
 
 <hr class="div">
@@ -353,7 +357,7 @@ a:hover{text-decoration:underline}
 <div class="card-label">Fear handler</div>
 <div class="say"><b>Ryan:</b> "You keep answering your phone exactly like you do now. Nothing changes. Nola only kicks in when YOU can't get to the phone — like when you're on a job, or at night, or on the weekend. If you pick up, she never touches the call. She's just the safety net for the ones that slip through."</div>
 
-<h3>If they only want after hours:</h3>
+<h3 class="h-orange">If they only want after hours:</h3>
 <div class="say"><b>Ryan:</b> "That's actually how most plumbers start — just use it after hours and on weekends. During the day you answer like normal. The missed calls at night are the ones that were going to voicemail anyway."</div>
 </div>
 
@@ -378,7 +382,7 @@ I'll check in with you tomorrow to see what you thought.
 <div class="card-label">Follow-up dialogue</div>
 <div class="say"><b>Ryan:</b> "Hey [name], it's Ryan from NolaCalls. Did you get a chance to call that demo number?"</div>
 
-<h3>✅ YES + liked it:</h3>
+<h3 class="h-green">✅ YES + liked it:</h3>
 <div class="say"><b>Ryan:</b> "Great — so want me to set it up on your line? First 7 days are free, no card. Takes me about 2 minutes to get your info."</div>
 <p class="inst">Collect one at a time, conversationally:</p>
 <ol>
@@ -395,18 +399,18 @@ I'll check in with you tomorrow to see what you thought.
 <div class="say"><b>Ryan:</b> "Perfect — I've got everything. We'll have Nola set up within 24 hours. I'll text you the exact code to turn on forwarding — one short code, 10 seconds. After that, you're live."</div>
 <p class="inst">Send info to John immediately after the call.</p>
 
-<h3>🤔 YES + concerns:</h3>
+<h3 class="h-orange">🤔 YES + concerns:</h3>
 <ul>
 <li><b>"How do I know it works?"</b> → "Set up on your real line for 7 days. Don't like it? I'll turn it off in 10 seconds."</li>
 <li><b>"Answer calls myself during day?"</b> → Use safety net pitch above.</li>
 <li><b>"Need to think about it"</b> → "Free for 7 days, no card. Want me to just set it up and you see for yourself?"</li>
 </ul>
 
-<h3>⏳ Haven't called demo yet:</h3>
+<h3 class="h-orange">⏳ Haven't called demo yet:</h3>
 <div class="say"><b>Ryan:</b> "No worries — 30 seconds. I can wait while you call it right now. The number is (978) 391-6222."</div>
 <p class="inst">Won't call now → "I'll try you again next time."</p>
 
-<h3>👎 Called, didn't like it:</h3>
+<h3 class="h-red">👎 Called, didn't like it:</h3>
 <div class="say"><b>Ryan:</b> "Got it — what didn't you like about it?"</div>
 <p class="note">If fixable → note for John. If not → "Fair enough. You've got my number."</p>
 </div>
