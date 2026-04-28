@@ -69,14 +69,25 @@ body.light .card{box-shadow:0 2px 12px rgba(0,0,0,.05)}
 .go:hover{background:var(--v);color:#fff;text-decoration:none}
 
 .say-wrap{position:relative}
-.alt-side{position:absolute;right:-290px;top:0;width:260px;background:var(--sf);border:1px solid var(--ln);border-left:3px solid var(--a);border-radius:0 10px 10px 0;padding:14px 16px;font-size:13px}
-.alt-side-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--a);font-weight:700;margin-bottom:8px}
-.alt-side .say{font-size:14px;padding:10px 12px;margin:6px 0}
+.alt-side{position:absolute;right:-340px;top:0;width:320px;background:var(--sf);border:1px solid var(--ln);border-left:3px solid var(--a);border-radius:0 12px 12px 0;padding:18px 20px}
+.alt-side-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--a);font-weight:700;margin-bottom:10px}
+.alt-side .say{font-size:20px;padding:18px 20px;margin:6px 0}
 .predict{font-size:14px;color:var(--txd);padding:6px 0 6px 24px;border-left:3px solid rgba(255,255,255,0.06);margin:8px 0}
 .predict .pos{color:#39FF14;font-weight:600}
-.predict .neg{color:#EF4444;font-weight:600}
+.predict .neg{color:#EF4444;font-weight:600;cursor:pointer;text-decoration:underline;text-decoration-style:dotted}
+.predict .neg:hover{opacity:.8}
 .predict .neu{color:#F59E0B;font-weight:600}
-@media(max-width:1300px){.alt-side{position:static;width:100%;right:auto;margin:10px 0;border-left:3px solid var(--a);border-radius:10px}}
+@media(max-width:1400px){.alt-side{position:static;width:100%;right:auto;margin:10px 0;border-left:3px solid var(--a);border-radius:10px}}
+
+/* ===== HIGHLIGHT ANIMATION ===== */
+@keyframes highlight-border{
+0%{box-shadow:0 0 0 3px #39FF14}
+25%{box-shadow:0 0 0 3px #22D3EE}
+50%{box-shadow:0 0 0 3px #7C5CFF}
+75%{box-shadow:0 0 0 3px #22D3EE}
+100%{box-shadow:0 0 0 0 transparent}
+}
+.highlight-target{animation:highlight-border 2s ease-out;border-radius:12px}
 
 /* ===== OBJECTION TABS ===== */
 .obj-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}
@@ -219,31 +230,31 @@ a:hover{text-decoration:underline}
 <div class="card">
 <div class="card-label">Live dialogue — the opener</div>
 
-<div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[Owner First Name]</span>, this is Ryan calling. Are you on the way to a job right now?" <span style="color:#39FF14;font-weight:700">⏸ PAUSE</span></div>
-<div class="predict">They'll say <span class="pos">"yeah heading to one"</span> / <span class="pos">"just finished"</span> / <span class="neg">"what's this about?"</span> — doesn't matter, you're showing you understand their world.</div>
+<div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[Owner First Name]</span>, this is Ryan calling. Are you on the way to a job right now?"</div>
+<div class="predict">They'll say <span class="pos">"yeah heading to one"</span> / <span class="pos">"just finished"</span> / <a class="neg" onclick="jumpTo('dodge-handler')">→ "what's this about?"</a> — doesn't matter, you're showing you understand their world.</div>
 
 <div class="say-wrap">
-<div class="say"><b>Ryan:</b> "I know that there are some plumbers that take a lot of calls and it takes time away from jobs. Is that something you're dealing with too?" <span style="color:#39FF14;font-weight:700">⏸ PAUSE</span></div>
+<div class="say"><b>Ryan:</b> "I know that there are some plumbers that take a lot of calls and it takes time away from jobs. Is that something you're dealing with too?"</div>
 <div class="alt-side">
 <div class="alt-side-label">🔄 If "what do you mean?"</div>
 <div class="say" style="border-left-color:var(--a)"><b>Ryan:</b> "Yeah so uhm, basically what I'm saying is — you know when you're on a job and calls keep coming in and you can't pick up? I'm just asking if that happens to you too."</div>
 </div>
 </div>
-<div class="predict">They'll say <span class="pos">"yeah"</span> or <span class="neg">"who is this"</span> — either way they just confirmed the problem.</div>
+<div class="predict">They'll say <span class="pos">"yeah"</span> or <a class="neg" onclick="jumpTo('dodge-handler')">→ "who is this"</a> — either way they just confirmed the problem.</div>
 
 <h3 class="h-green" style="margin-top:16px">If they say "yeah" / confirm:</h3>
-<div class="say"><b>Ryan:</b> "This is exactly why I'm calling. I think you're going to love this. Give me 30 seconds, I can explain how it works and you tell me what you think." <span style="color:#39FF14;font-weight:700">⏸ PAUSE</span></div>
+<div class="say"><b>Ryan:</b> "This is exactly why I'm calling. I think you're going to love this. Give me 30 seconds, I can explain how it works and you tell me what you think."</div>
 <div class="predict">Wait for the <span class="pos">go-ahead</span>. If silence → <span class="neu">"Did you hear me, boss?"</span></div>
 
-<h3 class="h-orange">If they dodge ("What is this about?" / "Who are you?")</h3>
+<h3 class="h-orange" id="dodge-handler">If they dodge ("What is this about?" / "Who are you?")</h3>
 <div class="say"><b>Ryan:</b> "I work with plumbing companies. I've identified that <span class="placeholder">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it. Give me 30 seconds?"</div>
 
 <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0">
 
 <h3 class="h-green">THE PITCH (after they give you the 30 seconds):</h3>
 
-<div class="say"><b>Ryan:</b> "It's pretty simple. I built an AI receptionist that works 24/7. It answers every call you miss, sounds completely natural, and can answer common questions like pricing, services, and availability. But the best part is <span class="placeholder">[Owner Name]</span> — it books jobs directly without you lifting a finger. Is that something you'd find useful?" <span style="color:#39FF14;font-weight:700">⏸ PAUSE</span></div>
-<div class="predict">Let them react. <span class="pos">"Yeah that sounds great"</span> / <span class="neu">"How much?"</span> / <span class="neg">"I don't know..."</span></div>
+<div class="say"><b>Ryan:</b> "It's pretty simple. I built an AI receptionist that works 24/7. It answers every call you miss, sounds completely natural, and can answer common questions like pricing, services, and availability. But the best part is <span class="placeholder">[Owner Name]</span> — it books jobs directly without you lifting a finger. Is that something you'd find useful?"</div>
+<div class="predict">Let them react. <span class="pos">"Yeah that sounds great"</span> / <span class="neu">"How much?"</span> / <a class="neg" onclick="jumpTo('obj')">→ "I don't know..."</a></div>
 
 <h3 class="h-green">If they're interested:</h3>
 <div class="say"><b>Ryan:</b> "I want you to hear a demo I created. I'll have you call a number and act like a customer — it's pretty insane. We'll set it up on your line for free for the first 7 days. After that it's $99 a month. And you'll never have to answer calls again — the jobs just show up and you go do the work."</div>
@@ -258,10 +269,10 @@ a:hover{text-decoration:underline}
 <div class="card">
 <div class="card-label">Follow-up dialogue</div>
 
-<div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[Owner Name]</span>, this is Ryan — I tried reaching you earlier this week. I know it's tough to get to the phone when you're on a job." <span style="color:#39FF14;font-weight:700">⏸ PAUSE</span></div>
+<div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[Owner Name]</span>, this is Ryan — I tried reaching you earlier this week. I know it's tough to get to the phone when you're on a job."</div>
 <div class="predict">They'll say <span class="pos">"yeah, it's been crazy"</span> or similar.</div>
 
-<div class="say"><b>Ryan:</b> "That's actually why I'm calling. I know you take a lot of calls and it pulls you away from jobs. Give me 30 seconds — I built something that fixes that." <span style="color:#39FF14;font-weight:700">⏸ PAUSE</span></div>
+<div class="say"><b>Ryan:</b> "That's actually why I'm calling. I know you take a lot of calls and it pulls you away from jobs. Give me 30 seconds — I built something that fixes that."</div>
 <p class="inst">Then deliver THE PITCH from above.</p>
 </div>
 
@@ -529,6 +540,25 @@ function showObj(n){
 document.querySelectorAll('.obj-tab').forEach((t,i)=>t.classList.toggle('active',i===n));
 document.querySelectorAll('.obj-panel').forEach((p,i)=>p.classList.toggle('active',i===n));
 }
+
+function jumpTo(id){
+var el=document.getElementById(id);
+if(!el)return;
+el.scrollIntoView({block:'center'});
+el.classList.remove('highlight-target');
+void el.offsetWidth;
+el.classList.add('highlight-target');
+setTimeout(function(){el.classList.remove('highlight-target')},2200);
+}
+
+// Make all .go links also use highlight animation
+document.addEventListener('click',function(e){
+var link=e.target.closest('a.go[href^="#"]');
+if(!link)return;
+e.preventDefault();
+var id=link.getAttribute('href').substring(1);
+jumpTo(id);
+});
 </script>
 </body>
 </html>
