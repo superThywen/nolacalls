@@ -20,7 +20,7 @@ body.light{
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:auto}
-body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--tx);line-height:1.55;max-width:700px;margin:0 auto;padding:80px 24px 120px;transition:background .3s,color .3s}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--tx);line-height:1.55;max-width:700px;margin:0 auto;padding:120px 24px 120px;transition:background .3s,color .3s}
 
 /* ===== TOP BAR ===== */
 .topbar{position:fixed;top:0;left:0;right:0;height:56px;background:var(--sf);border-bottom:1px solid var(--ln);display:flex;align-items:center;padding:0 20px;gap:12px;z-index:100;backdrop-filter:blur(12px)}
@@ -145,6 +145,18 @@ p{margin:8px 0;font-size:16px}
 a{color:var(--v);text-decoration:none}
 a:hover{text-decoration:underline}
 
+/* ===== TIME BAR ===== */
+.timebar{position:fixed;top:56px;left:0;right:0;height:42px;background:var(--sf);border-bottom:1px solid var(--ln);display:flex;align-items:center;justify-content:center;gap:6px;z-index:99;font-size:12px;padding:0 10px}
+.tz-block{display:flex;align-items:center;gap:6px;padding:4px 12px;border-radius:8px;border:1px solid var(--ln);background:var(--bg);transition:all .3s}
+.tz-block.live{background:rgba(57,255,20,.1);border-color:rgba(57,255,20,.3)}
+.tz-block.live .tz-label{color:#39FF14}
+.tz-block.live .tz-time{color:#39FF14;font-weight:700}
+.tz-label{color:var(--txd);font-weight:500;white-space:nowrap}
+.tz-time{color:var(--txm);font-weight:600;font-family:'Inter',monospace;white-space:nowrap}
+.tz-dot{width:6px;height:6px;border-radius:50%;background:var(--txd);flex-shrink:0}
+.tz-block.live .tz-dot{background:#39FF14;box-shadow:0 0 6px #39FF14;animation:live-dot 2s ease-out infinite}
+.timebar-clock{color:var(--txm);font-weight:700;font-size:13px;font-family:'Inter',monospace;margin-right:8px;padding-right:8px;border-right:1px solid var(--ln)}
+
 /* ===== WORK MODE ===== */
 .work-btn{position:fixed;bottom:33px;left:33px;width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--v),#9B82FF);color:#fff;border:none;cursor:pointer;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;z-index:100;letter-spacing:.15em;text-transform:uppercase;transition:transform .2s,box-shadow .2s;font-family:'Inter',sans-serif}
 .work-btn::before{content:'';position:absolute;inset:-4px;border-radius:50%;background:linear-gradient(135deg,var(--v),#9B82FF);filter:blur(12px);opacity:.35;z-index:-1;animation:work-glow 3s ease-in-out infinite}
@@ -168,6 +180,15 @@ a:hover{text-decoration:underline}
 <script src="https://unpkg.com/compromise"></script>
 </head>
 <body>
+
+<!-- TIME BAR -->
+<div class="timebar">
+<div class="timebar-clock" id="myClock">--:--</div>
+<div class="tz-block" id="tz-et"><div class="tz-dot"></div><div class="tz-label">ET</div><div class="tz-time" id="tz-et-time">--:--</div></div>
+<div class="tz-block" id="tz-ct"><div class="tz-dot"></div><div class="tz-label">CT</div><div class="tz-time" id="tz-ct-time">--:--</div></div>
+<div class="tz-block" id="tz-mt"><div class="tz-dot"></div><div class="tz-label">MT</div><div class="tz-time" id="tz-mt-time">--:--</div></div>
+<div class="tz-block" id="tz-pt"><div class="tz-dot"></div><div class="tz-label">PT</div><div class="tz-time" id="tz-pt-time">--:--</div></div>
+</div>
 
 <!-- WORK MODE BUTTON -->
 <button class="work-btn" id="workBtn" onclick="toggleWork()" title="Start/stop listening">WORK</button>
@@ -742,6 +763,41 @@ function setName(name){
   widget.style.boxShadow='0 0 0 5px #39FF14';
   setTimeout(function(){widget.style.boxShadow='0 8px 28px rgba(0,0,0,.3)'},1500);
 }
+
+// ===== LIVE TIME BAR =====
+function updateTimeBar(){
+var now=new Date();
+var fmt=function(tz){
+  return now.toLocaleTimeString('en-US',{timeZone:tz,hour:'numeric',minute:'2-digit',hour12:true});
+};
+var hr=function(tz){
+  return parseInt(now.toLocaleTimeString('en-US',{timeZone:tz,hour:'numeric',hour12:false}));
+};
+
+document.getElementById('myClock').textContent=now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true});
+
+var zones=[
+  {id:'tz-et',tz:'America/New_York',el:'tz-et-time'},
+  {id:'tz-ct',tz:'America/Chicago',el:'tz-ct-time'},
+  {id:'tz-mt',tz:'America/Denver',el:'tz-mt-time'},
+  {id:'tz-pt',tz:'America/Los_Angeles',el:'tz-pt-time'}
+];
+
+zones.forEach(function(z){
+  var t=fmt(z.tz);
+  var h=hr(z.tz);
+  document.getElementById(z.el).textContent=t;
+  var block=document.getElementById(z.id);
+  // Green if between 4-5 PM (16-17)
+  if(h>=16&&h<17){
+    block.classList.add('live');
+  }else{
+    block.classList.remove('live');
+  }
+});
+}
+updateTimeBar();
+setInterval(updateTimeBar,1000);
 
 // Make all .go links also use highlight animation
 document.addEventListener('click',function(e){
