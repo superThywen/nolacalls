@@ -149,11 +149,7 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 .log-table tr.locked .cell-text{display:inline}
 .log-table tr.locked input,.log-table tr.locked select{display:none}
 .log-table tr:not(.locked) .cell-text{display:none}
-.log-table tr.outcome-noanswer td{background:rgba(150,160,180,.25)}
-.log-table tr.outcome-notinterested td,.log-table tr.outcome-wrongnumber td{background:rgba(255,50,50,.2)}
-.log-table tr.outcome-callback td{background:rgba(255,180,0,.2)}
-.log-table tr.outcome-gatekeeper td{background:rgba(10,10,30,.8)}
-.log-table tr.outcome-tookdemo td{background:rgba(170,255,0,.2)}
+.log-table tr.outcome-tookdemo td{background:rgba(166,227,161,.12)}
 .log-table tr[draggable]{cursor:grab}
 .log-table tr.dragging{opacity:.4}
 .note-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
@@ -925,7 +921,7 @@ tr.innerHTML='<td style="text-align:center;color:var(--txd)">'+(i+1)+'</td>'+
 '</select></td>'+
 '<td><span class="cell-text">'+esc(r.objection)+'</span><input value="'+esc(r.objection)+'" onchange="updateLog('+i+',\'objection\',this.value)" style="width:80px"></td>'+
 '<td><span class="cell-text">'+esc(r.callback)+'</span><input value="'+esc(r.callback)+'" onchange="updateLog('+i+',\'callback\',this.value)" style="width:80px"></td>'+
-'<td><span class="cell-text" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted" onclick="openNote('+i+')">'+(r.notes?'📝 View':'—')+'</span><span style="display:none"><input value="'+esc(r.notes)+'" style="width:60px" disabled><button class="row-btn" onclick="openNote('+i+')" style="font-size:11px">📝</button></span></td>'+
+'<td><span class="cell-text">'+(r.notes?'<span style="cursor:pointer" onclick="openNote('+i+')">📒</span>':'')+'</span><span style="display:none"><input value="'+esc(r.notes)+'" style="width:60px" disabled><button class="row-btn" onclick="openNote('+i+')" style="font-size:11px">📝</button></span></td>'+
 '<td>'+
 (r.locked?'<button class="row-btn edit-btn" onclick="unlockRow('+i+')" title="Edit">✏️</button>':'')+
 '<button class="row-btn" onclick="deleteLog('+i+')" title="Delete">✕</button></td>';
