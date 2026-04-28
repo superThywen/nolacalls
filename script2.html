@@ -146,7 +146,7 @@ a:hover{text-decoration:underline}
 
 /* ===== TIME BAR ===== */
 .timebar{position:fixed;top:0;left:0;right:0;background:var(--sf);border-bottom:1px solid var(--ln);z-index:100;font-size:12px;padding:8px 16px 10px;backdrop-filter:blur(12px)}
-.timebar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.timebar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .timebar-clock{color:var(--tx);font-weight:700;font-size:15px;font-family:'Inter',monospace}
 .timebar-status{font-size:11px;color:#F59E0B;font-weight:600}
 .timebar-status.go{color:#39FF14;font-weight:700}
@@ -209,9 +209,9 @@ a:hover{text-decoration:underline}
 <option value="America/Los_Angeles">California (PT)</option>
 </select>
 </div>
-<div style="display:flex;align-items:center;gap:12px">
+<div style="text-align:center">
 <div class="timebar-clock" id="myClock">--:--</div>
-<div class="timebar-status" id="meterStatus">Outside calling hours</div>
+<div class="timebar-status" id="meterStatus" style="margin-top:2px">Outside calling hours</div>
 </div>
 <div style="width:120px"></div>
 </div>
