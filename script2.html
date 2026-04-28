@@ -619,10 +619,16 @@ document.querySelectorAll('.obj-panel').forEach((p,i)=>p.classList.toggle('activ
 function jumpTo(id){
 var el=document.getElementById(id);
 if(!el)return;
-// Find the next .say element after the target header
-var sayEl=el.nextElementSibling;
-while(sayEl && !sayEl.classList.contains('say') && !sayEl.querySelector('.say')){sayEl=sayEl.nextElementSibling}
-var target=sayEl&&sayEl.classList.contains('say')?sayEl:(sayEl&&sayEl.querySelector('.say'))||el;
+// If the element itself is a .say, highlight it directly
+var target;
+if(el.classList.contains('say')){
+  target=el;
+}else{
+  // Find the next .say element after the target header
+  var sayEl=el.nextElementSibling;
+  while(sayEl && !sayEl.classList.contains('say') && !sayEl.querySelector('.say')){sayEl=sayEl.nextElementSibling}
+  target=sayEl&&sayEl.classList.contains('say')?sayEl:(sayEl&&sayEl.querySelector('.say'))||el;
+}
 target.scrollIntoView({block:'center'});
 target.classList.remove('highlight-target');
 void target.offsetWidth;
