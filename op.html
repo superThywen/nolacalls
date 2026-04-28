@@ -511,7 +511,8 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <div class="say"><b>Ryan:</b> "Hi <span class="placeholder owner-name">[Owner Name]</span>, this is Ryan — I tried reaching you earlier this week. I know it's tough to get to the phone when you're on a job."</div>
 <div class="predict">They'll say <span class="pos">"yeah, it's been crazy"</span> or similar.</div>
 
-<div class="say"><b>Ryan:</b> "That's actually why I'm calling. I know you take a lot of calls and it pulls you away from jobs. Give me 30 seconds — I built something that fixes that."</div>
+<div class="say"><b>Ryan:</b> "That's actually why I'm calling. I know you take a lot of calls and it pulls you away from jobs. Give me 30 seconds — I built something that fixes that, for free."</div>
+<div class="predict"><span class="pos">"ok go ahead"</span><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('dodge-handler')">"who are you?"</a><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('alt-whatdoyoumean')">"sounds too good to be true"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">"not interested"</a></div>
 <p class="inst">Then deliver THE PITCH from above.</p>
 </div>
 
