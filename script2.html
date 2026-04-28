@@ -279,7 +279,7 @@ a:hover{text-decoration:underline}
 
 <h3 class="h-red">If NO:</h3>
 <div class="say"><b>Ryan:</b> "Got it — is there any way you can transfer me to him?"</div>
-<div class="predict">They'll say <span class="pos">"yeah hold on"</span> / <span class="neg">"no he's out"</span> — if out, ask "when's he usually back?" Log it, move on.</div>
+<div class="predict">They'll say <span class="pos">"yeah hold on"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neg">"no he's out"</span> — if out, ask "when's he usually back?" Log it, move on.</div>
 
 <h3 class="h-orange" id="whos-calling">If "Who's calling?"</h3>
 <div class="say-wrap">
@@ -291,7 +291,7 @@ a:hover{text-decoration:underline}
 <b>Ryan:</b> "<span class="placeholder">[Name]</span>, I need to talk to the owner — I'm calling about a business collaboration."</div>
 </div>
 </div>
-<div class="predict">They'll say <span class="pos">"yeah hold on"</span> / <span class="pos">"he's right here"</span> → <a href="#s2" class="go">Step 2</a></div>
+<div class="predict">They'll say <span class="pos">"yeah hold on"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"he's right here"</span> → <a href="#s2" class="go">Step 2</a></div>
 </div>
 
 <hr class="div">
@@ -303,35 +303,35 @@ a:hover{text-decoration:underline}
 <div class="card-label">Live dialogue — the opener</div>
 
 <div class="say"><b>Ryan:</b> "Hi <span class="placeholder owner-name">[Owner Name]</span>, this is Ryan calling. Are you on your way to a job right now?"</div>
-<div class="predict">They'll say <span class="pos">"yeah heading to one"</span> / <span class="pos">"just finished"</span> / <a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('alt-whatdoyoumean')">→ "what's this about?"</a></div>
+<div class="predict">They'll say <span class="pos">"yeah heading to one"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"just finished"</span><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('alt-whatdoyoumean')">→ "what's this about?"</a></div>
 
-<h3 class="h-green">If they say "yeah" / confirm:</h3>
+<h3 class="h-green">If they say "yeah"<span style="color:var(--txd);margin:0 6px">│</span>confirm:</h3>
 <div class="say-wrap">
 <div class="say"><b>Ryan:</b> "I see. I know that there are some plumbers that take a lot of calls and it takes time away from jobs. Is that something you're dealing with too?"</div>
 <div class="alt-side" style="top:-45px">
 <div class="say" id="alt-whatdoyoumean"><b>Ryan:</b> "It's about the best pitch you're ever going to hear."</div>
-<div class="predict">They'll say <span class="pos">"ok"</span> / <span class="pos">"yeah sure"</span> / <span class="pos">"go ahead"</span></div>
+<div class="predict">They'll say <span class="pos">"ok"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"yeah sure"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"go ahead"</span></div>
 <div class="say"><b>Ryan:</b> "Ok so yeah, let me ask you a question — what happens to a call when people are trying to reach you when you're out on a job?"</div>
 </div>
 </div>
-<div class="predict">They'll say <span class="pos">"yeah"</span> / <span class="pos">"yes sir"</span> / <a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('dodge-handler')">→ "who is this"</a></div>
+<div class="predict">They'll say <span class="pos">"yeah"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"yes sir"</span><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('dodge-handler')">→ "who is this"</a></div>
 
-<h3 class="h-green">If they say "yeah" / confirm:</h3>
+<h3 class="h-green">If they say "yeah"<span style="color:var(--txd);margin:0 6px">│</span>confirm:</h3>
 <div class="say"><b>Ryan:</b> "Oh ok, perfect, well then — I think you're going to love that I'm calling. If you want to give me 30 seconds, I can explain how my system works and see what you think."</div>
-<div class="predict">They'll say <span class="pos">"sure go ahead"</span> / <span class="pos">"yeah ok"</span>. If silence → <span class="neu">"Did you hear me, boss?"</span></div>
+<div class="predict">They'll say <span class="pos">"sure go ahead"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"yeah ok"</span>. If silence → <span class="neu">"Did you hear me, boss?"</span></div>
 
-<h3 class="h-orange" id="dodge-handler">If they dodge ("What is this about?" / "Who are you?")</h3>
+<h3 class="h-orange" id="dodge-handler">If they dodge ("What is this about?"<span style="color:var(--txd);margin:0 6px">│</span>"Who are you?")</h3>
 <div class="say"><b>Ryan:</b> "So my name is Ryan, <span style="color:var(--a);font-size:14px;font-weight:600">— 1 sec —</span> and I started working with plumbing companies. I've identified that <span class="placeholder biz-name">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it, and it's completely free. I know it sounds too good to be true, but give me 30 seconds and I'll tell you about it."</div>
-<div class="predict">They'll say <span class="pos">"ok go ahead"</span> / <a class="neg" onclick="jumpTo('obj')">→ "not interested"</a></div>
+<div class="predict">They'll say <span class="pos">"ok go ahead"</span><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" onclick="jumpTo('obj')">→ "not interested"</a></div>
 
 <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0">
 
 <h3 class="h-green">THE PITCH (after they give you the 30 seconds):</h3>
 
 <div class="say"><b>Ryan:</b> "Well <span style="color:var(--txd);font-size:14px">/ ok so yeah</span> — it's pretty simple. I built an AI receptionist that works 24/7. It answers every call you miss, sounds completely natural, and can answer any questions, like pricing, services, and availability. But the best part is <span class="placeholder owner-name">[Owner Name]</span> — it books jobs directly into your calendar without you lifting a finger. Is that something you'd find useful?"</div>
-<div class="predict">They'll say <span class="pos">"yeah that sounds great"</span> / <span class="neu">"how much?"</span> / <a class="neg" onclick="jumpTo('obj')">→ "I don't know..."</a></div>
+<div class="predict">They'll say <span class="pos">"yeah that sounds great"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neu">"how much?"</span><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" onclick="jumpTo('obj')">→ "I don't know..."</a></div>
 
-<h3 class="h-green">If they say "yeah" / interested:</h3>
+<h3 class="h-green">If they say "yeah"<span style="color:var(--txd);margin:0 6px">│</span>interested:</h3>
 <div class="say"><b>Ryan:</b> "I want you to hear a demo I created. I'll have you call a number and act like a customer — it's pretty insane. We'll set it up on your line for free for the first 7 days. After that it's $99 a month. And you'll never have to answer calls again — the jobs just show up and you go do the work."</div>
 <p class="inst">→ <a href="#s3" class="go">Step 3</a></p>
 
@@ -358,14 +358,14 @@ a:hover{text-decoration:underline}
 <div class="card">
 <div class="card-label">Response handling</div>
 
-<h3 class="h-green">✅ YES / "sure" / "send it"</h3>
+<h3 class="h-green">✅ YES<span style="color:var(--txd);margin:0 6px">│</span>"sure"<span style="color:var(--txd);margin:0 6px">│</span>"send it"</h3>
 <div class="say"><b>Ryan:</b> "Great — the number is <span class="placeholder">(978) 391-6222</span>. Call it, pretend you're a customer with any plumbing issue — a leak, a clog, whatever. You'll hear exactly what your customers would hear. If you like it, we'll set it up on your business line free for 7 days. No card, nothing. I'll text it to you right now."</div>
 <p class="inst">📲 Text immediately. Hang up. Don't linger.</p>
 
-<h3 class="h-orange">🤔 CURIOUS — "What is it?" / "How does it work?"</h3>
+<h3 class="h-orange">🤔 CURIOUS — "What is it?"<span style="color:var(--txd);margin:0 6px">│</span>"How does it work?"</h3>
 <div class="say"><b>Ryan:</b> "You keep your same number. When a call comes in and you can't get to it, it forwards to us after a few rings. A receptionist picks up, finds out what's going on, gets their name and address, books an appointment, and texts you everything. Your customer never knew you weren't there. But honestly — just call the demo number, you'll get it in 30 seconds. Want me to text it to you?"</div>
 
-<h3 class="h-red">😏 SKEPTICAL — "Yeah right" / "Too good to be true"</h3>
+<h3 class="h-red">😏 SKEPTICAL — "Yeah right"<span style="color:var(--txd);margin:0 6px">│</span>"Too good to be true"</h3>
 <div class="say"><b>Ryan:</b> "Call the number, you'll love it. 30 seconds, pretend you've got a plumbing problem, and hear it for yourself. Let me text it to you."</div>
 
 <h3 class="h-red">❌ "Not interested" → <a href="#obj" class="go">Objections</a></h3>
@@ -386,7 +386,7 @@ a:hover{text-decoration:underline}
 <div class="obj-tab" onclick="showObj(5)">Send info</div>
 <div class="obj-tab" onclick="showObj(6)">I call back</div>
 <div class="obj-tab" onclick="showObj(7)">My number?</div>
-<div class="obj-tab" onclick="showObj(8)">Rude / hostile</div>
+<div class="obj-tab" onclick="showObj(8)">Rude<span style="color:var(--txd);margin:0 6px">│</span>hostile</div>
 </div>
 
 <div class="obj-panel active" id="ob0">
@@ -418,9 +418,9 @@ a:hover{text-decoration:underline}
 </div>
 
 <div class="obj-panel" id="ob5">
-<div class="obj-header">"Send me an email" / "Send me some info"</div>
+<div class="obj-header">"Send me an email"<span style="color:var(--txd);margin:0 6px">│</span>"Send me some info"</div>
 <div class="say"><b>Ryan:</b> "No <span class="placeholder">[Name]</span>, I'm gonna be honest with you — those never get read. And I genuinely think this is worth 30 seconds of your time. If now's not good, we can reschedule — when's a better time for a quick call?"</div>
-<div class="predict">They'll say <span class="pos">"ok fine go ahead"</span> / <span class="neu">"call me tomorrow"</span> / <a class="neg" onclick="jumpTo('obj')">→ "not interested"</a></div>
+<div class="predict">They'll say <span class="pos">"ok fine go ahead"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neu">"call me tomorrow"</span><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" onclick="jumpTo('obj')">→ "not interested"</a></div>
 </div>
 
 <div class="obj-panel" id="ob6">
@@ -436,11 +436,11 @@ a:hover{text-decoration:underline}
 </div>
 
 <div class="obj-panel" id="ob8">
-<div class="obj-header">They're rude / hostile / swearing</div>
+<div class="obj-header">They're rude<span style="color:var(--txd);margin:0 6px">│</span>hostile<span style="color:var(--txd);margin:0 6px">│</span>swearing</div>
 <div class="say"><b>Ryan:</b> "Look, I get it — you probably get 10 of these calls a week from SEO companies and marketing guys. I'm not one of them. I've identified that <span class="placeholder biz-name">[Business Name]</span> has a big problem — when calls come in while you're on a job, what happens to them?"</div>
 <p class="inst">If they engage → back in the pitch. If not → one more push:</p>
 <div class="say"><b>Ryan:</b> "Sir, just answer me this and I'll leave you alone — when a call comes in while you're on a job, what happens to it?"</div>
-<p class="note">If "don't call again" / "take me off your list" → comply (legal). "Got it. Have a good one." DNC list.</p>
+<p class="note">If "don't call again"<span style="color:var(--txd);margin:0 6px">│</span>"take me off your list" → comply (legal). "Got it. Have a good one." DNC list.</p>
 </div>
 
 <hr class="div">
@@ -484,7 +484,7 @@ I'll check in with you tomorrow to see what you thought.
 <li>"Normal hours?"</li>
 <li>"What services do you offer?"</li>
 <li>"What area do you cover?"</li>
-<li>"Service call / dispatch fee?"</li>
+<li>"Service call<span style="color:var(--txd);margin:0 6px">│</span>dispatch fee?"</li>
 <li>"Phone carrier — AT&amp;T, T-Mobile, Verizon?"</li>
 <li>"Emergency contact — gas leak or flooding?"</li>
 <li>"Backup number?"</li>
@@ -519,7 +519,7 @@ Name: [name]<br>
 Business: [business name]<br>
 Email: [email]<br>
 Phone: [their number]<br>
-Carrier: [AT&amp;T / T-Mobile / Verizon]<br>
+Carrier: [AT&amp;T<span style="color:var(--txd);margin:0 6px">│</span>T-Mobile<span style="color:var(--txd);margin:0 6px">│</span>Verizon]<br>
 Hours: [hours]<br>
 Services: [services]<br>
 Area: [area]<br>
