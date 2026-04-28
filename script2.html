@@ -154,15 +154,12 @@ a:hover{text-decoration:underline}
 .meter-window.active{background:rgba(57,255,20,.2);box-shadow:inset 0 0 20px rgba(57,255,20,.15)}
 .meter-window.pulse{animation:window-pulse 1.5s ease-out 3}
 @keyframes window-pulse{0%{background:rgba(57,255,20,.5);box-shadow:0 0 20px rgba(57,255,20,.4)}50%{background:rgba(57,255,20,.1)}100%{background:rgba(57,255,20,.2);box-shadow:inset 0 0 20px rgba(57,255,20,.15)}}
-.meter-markers{position:absolute;top:0;left:0;right:0;height:100%;display:flex;pointer-events:none}
-.meter-zone{position:absolute;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:var(--txd);gap:3px;z-index:1}
-.meter-zone.live{color:#39FF14}
-.meter-zone .zone-name{font-weight:700;font-size:10px}
-.meter-zone .zone-time{opacity:.7}
+.meter-markers{position:absolute;top:0;left:0;right:0;height:100%;display:flex;pointer-events:none;z-index:1}
+.meter-hr{position:absolute;top:0;bottom:0;border-right:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--txd);font-weight:500;opacity:.6}
+.meter-hr.work{opacity:1;font-weight:700;font-size:9px}
+.meter-hr.work.live{color:#39FF14}
 .meter-needle{position:absolute;top:-2px;bottom:-2px;width:3px;background:#EF4444;border-radius:2px;z-index:3;box-shadow:0 0 8px rgba(239,68,68,.6);transition:left .5s ease}
 .meter-needle::after{content:'';position:absolute;top:-4px;left:-3px;width:9px;height:9px;background:#EF4444;border-radius:50%;box-shadow:0 0 6px rgba(239,68,68,.5)}
-.meter-hours{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;z-index:0}
-.meter-hour-mark{position:absolute;top:0;bottom:0;width:1px;background:var(--ln);opacity:.3}
 
 /* ===== WORK MODE ===== */
 .work-btn{position:fixed;bottom:33px;left:33px;width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--v),#9B82FF);color:#fff;border:none;cursor:pointer;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;z-index:100;letter-spacing:.15em;text-transform:uppercase;transition:transform .2s,box-shadow .2s;font-family:'Inter',sans-serif}
@@ -194,15 +191,10 @@ a:hover{text-decoration:underline}
 <div class="timebar-clock" id="myClock">--:--</div>
 <div class="timebar-status" id="meterStatus">Outside calling hours</div>
 </div>
-<div class="meter-wrap">
+<div class="meter-wrap" id="meterWrap">
 <div class="meter-window" id="meterWindow"></div>
 <div class="meter-needle" id="meterNeedle" style="left:0%"></div>
-<div class="meter-markers">
-<div class="meter-zone" id="tz-et"><span class="zone-name">ET</span><span class="zone-time" id="tz-et-time"></span></div>
-<div class="meter-zone" id="tz-ct"><span class="zone-name">CT</span><span class="zone-time" id="tz-ct-time"></span></div>
-<div class="meter-zone" id="tz-mt"><span class="zone-name">MT</span><span class="zone-time" id="tz-mt-time"></span></div>
-<div class="meter-zone" id="tz-pt"><span class="zone-name">PT</span><span class="zone-time" id="tz-pt-time"></span></div>
-</div>
+<div class="meter-markers" id="meterMarkers"></div>
 </div>
 </div>
 
@@ -814,42 +806,55 @@ var status=document.getElementById('meterStatus');
 var needle=document.getElementById('meterNeedle');
 var win=document.getElementById('meterWindow');
 
-// Full bar = 24 hours ET
-// Needle position = current ET hour / 24 * 100%
 var needlePct=(etH/24)*100;
 needle.style.left='calc('+needlePct+'% - 1px)';
 
-// Calling window: ET 4PM (16) to ET 8PM (20) = PT 5PM
-// As percentage of 24hr: 16/24=66.7% start, 20/24=83.3% end
 var winStart=(16/24)*100;
 var winEnd=(20/24)*100;
 win.style.left=winStart+'%';
 win.style.width=(winEnd-winStart)+'%';
 
-// Position zone labels inside the window
-// ET 4-5PM = 66.7%-70.8%, CT 4-5PM = 70.8%-75%, MT = 75%-79.2%, PT = 79.2%-83.3%
-var zones=[
-  {id:'tz-et',tz:'America/New_York',el:'tz-et-time',start:16,end:17},
-  {id:'tz-ct',tz:'America/Chicago',el:'tz-ct-time',start:17,end:18},
-  {id:'tz-mt',tz:'America/Denver',el:'tz-mt-time',start:18,end:19},
-  {id:'tz-pt',tz:'America/Los_Angeles',el:'tz-pt-time',start:19,end:20}
-];
+// Build hour blocks (only once)
+var markers=document.getElementById('meterMarkers');
+if(!markers.dataset.built){
+  markers.dataset.built='1';
+  var workZones={16:'ET',17:'CT',18:'MT',19:'PT'};
+  var workTzs={16:'America/New_York',17:'America/Chicago',18:'America/Denver',19:'America/Los_Angeles'};
+  for(var i=0;i<24;i++){
+    var d=document.createElement('div');
+    d.className='meter-hr'+(workZones[i]?' work':'');
+    d.style.left=(i/24*100)+'%';
+    d.style.width=(1/24*100)+'%';
+    d.dataset.hour=i;
+    if(workZones[i]){
+      d.dataset.tz=workTzs[i];
+      d.dataset.label=workZones[i];
+      d.id='tz-hr-'+i;
+    }
+    // Label: show ET time for all hours
+    var label=i===0?'12a':i<12?(i+'a'):i===12?'12p':((i-12)+'p');
+    d.textContent=workZones[i]?workZones[i]:label;
+    markers.appendChild(d);
+  }
+}
 
+// Update work zone live status
 var anyLive=false;
-zones.forEach(function(z){
-  var t=fmt(z.tz);
-  var h=hrMin(z.tz);
-  document.getElementById(z.el).textContent=t;
-  var block=document.getElementById(z.id);
-  var left=(z.start/24)*100;
-  var w=((z.end-z.start)/24)*100;
-  block.style.left=left+'%';
-  block.style.width=w+'%';
+var workHours=[
+  {hour:16,tz:'America/New_York'},
+  {hour:17,tz:'America/Chicago'},
+  {hour:18,tz:'America/Denver'},
+  {hour:19,tz:'America/Los_Angeles'}
+];
+workHours.forEach(function(w){
+  var el=document.getElementById('tz-hr-'+w.hour);
+  if(!el)return;
+  var h=hrMin(w.tz);
   if(h>=16&&h<17){
-    block.classList.add('live');
+    el.classList.add('live');
     anyLive=true;
   }else{
-    block.classList.remove('live');
+    el.classList.remove('live');
   }
 });
 
