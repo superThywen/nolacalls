@@ -435,8 +435,8 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 </div>
 
 <div class="predict" style="font-size:15px;font-weight:600;padding:10px 0 10px 24px"><span class="pos">If YES →</span> <a href="#s2" class="go">Go to Step 2</a></div>
-<div class="predict" style="font-size:15px;font-weight:600;padding:4px 0 4px 24px"><a style="color:#F59E0B;cursor:pointer" onclick="jumpTo('whos-calling')">If YES + "who is this?" →</a></div>
-<div class="predict" style="font-size:15px;font-weight:600;padding:4px 0 10px 24px"><a style="color:#F59E0B;cursor:pointer" onclick="jumpTo('whoisthis-alt')">If just "who is this?" →</a></div>
+<div class="predict" style="font-size:15px;font-weight:600;padding:4px 0 4px 24px"><a style="color:#F59E0B;cursor:pointer" onclick="jumpTo('who-am-i-speaking-with')">If YES + "who is this?" →</a></div>
+<div class="predict" style="font-size:15px;font-weight:600;padding:4px 0 10px 24px"><a style="color:#F59E0B;cursor:pointer" onclick="jumpTo('whos-calling')">If just "who is this?" →</a></div>
 
 <h3 class="h-red">If NO:</h3>
 <div class="say"><b>Ryan:</b> "Got it — is there any way you can transfer me to him?"</div>
@@ -465,7 +465,7 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <div class="card">
 <div class="card-label">Live dialogue — the opener</div>
 
-<div class="say"><b>Ryan:</b> "And who am I speaking with?"</div>
+<div class="say" id="who-am-i-speaking-with"><b>Ryan:</b> "And who am I speaking with?"</div>
 <div class="predict">If they already said their name → skip this.</div>
 
 <div class="say"><b>Ryan:</b> "Hi <span class="placeholder owner-name">[Owner Name]</span>, this is Ryan calling. Are you on your way to a job right now?"</div>
@@ -488,7 +488,11 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 
 <h3 class="h-orange" id="dodge-handler">If they dodge ("What is this about?"<span style="color:var(--txd);margin:0 6px">│</span>"Who are you?")</h3>
 <div class="say"><b>Ryan:</b> "So my name is Ryan, <span style="color:var(--a);font-size:14px;font-weight:600">— 1 sec —</span> and I started working with plumbing companies. I've identified that <span class="placeholder biz-name">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it, and it's completely free. I know it sounds too good to be true, just give me 30 seconds — how does that sound?"</div>
-<div class="predict">They'll say <span class="pos">"ok go ahead"</span><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" onclick="jumpTo('obj')">→ "not interested"</a></div>
+<div class="predict">They'll say <span class="pos">"ok go ahead"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neg">"not interested"</span></div>
+
+<h3 class="h-green">If "not interested" after dodge:</h3>
+<div class="say"><b>Ryan:</b> "We're here to help you out <span class="placeholder owner-name">[Owner Name]</span>, that's all that matters right now. Just give me 30 seconds, I'll explain."</div>
+<div class="predict"><span class="pos">"ok go ahead"</span><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">→ still "not interested"</a></div>
 
 <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0">
 
