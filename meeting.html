@@ -1,0 +1,275 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NolaCalls — Meeting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='32' y2='32' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%239B82FF'/%3E%3Cstop offset='1' stop-color='%236849FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='url(%23g)'/%3E%3Ccircle cx='16' cy='16' r='5' fill='white'/%3E%3C/svg%3E">
+<style>
+:root{
+--bg:#0A0E1A;--sf:#13182A;--sf2:#1B2138;--tx:#E2E8F0;--txm:#94A3B8;--txd:#64748B;
+--v:#7C5CFF;--vs:rgba(124,92,255,.12);--c:#22D3EE;--cs:rgba(34,211,238,.1);
+--ln:rgba(148,163,184,.1);--a:#F59E0B
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font-family:'Inter',sans-serif;line-height:1.7;min-height:100vh}
+body.light{--bg:#F8FAFC;--sf:#FFFFFF;--sf2:#F1F5F9;--tx:#1E293B;--txm:#475569;--txd:#94A3B8;--ln:rgba(71,85,105,.15)}
+
+.side{position:fixed;top:0;left:0;width:240px;height:100vh;background:var(--sf);border-right:1px solid var(--ln);display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.side a{display:flex;align-items:center;gap:10px;padding:10px 16px;color:var(--txm);text-decoration:none;font-size:13px;font-weight:600;border-left:3px solid transparent;transition:all .15s}
+.side a:hover{background:var(--vs);color:var(--v);border-left-color:var(--v)}
+.side-logo{display:flex;align-items:center;gap:8px;padding:10px 16px 12px;border-bottom:1px solid var(--ln);margin-bottom:0}
+.side-logo-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#9B82FF,#6849FF);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.side-logo-mark::after{content:'';width:8px;height:8px;background:#fff;border-radius:50%}
+.side-logo-name{font-weight:700;font-size:14px;color:var(--tx)}
+.cold-call-link{display:block;padding:10px 16px;background:var(--sf2);color:var(--txm);text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-align:center;border-bottom:1px solid var(--ln);transition:all .2s}
+.cold-call-link:hover{background:var(--vs);color:var(--v)}
+.ic{margin-right:2px}
+
+.main{margin-left:240px;max-width:800px;padding:40px 40px 120px}
+h1{font-size:28px;font-weight:700;margin-bottom:8px;color:var(--tx)}
+.subtitle{color:var(--txm);font-size:14px;margin-bottom:32px}
+h2{font-size:20px;font-weight:700;margin:40px 0 16px;padding:10px 14px;border-left:4px solid var(--v);background:var(--vs);border-radius:0 8px 8px 0;color:var(--tx)}
+h3{font-size:15px;font-weight:700;margin:20px 0 8px;color:var(--txm)}
+.h-green{color:#A6E3A1}
+.h-orange{color:#F59E0B}
+.h-red{color:#EF4444}
+
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:20px 22px;margin:12px 0 20px}
+.card-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--v);margin-bottom:14px}
+.say{background:var(--vs);border-left:3px solid var(--v);padding:12px 16px;border-radius:0 10px 10px 0;margin:8px 0;font-size:16px;line-height:1.7;color:var(--tx)}
+.inst{color:var(--c);font-size:13px;font-weight:600;margin:8px 0}
+.note{background:rgba(245,158,11,.08);border-left:3px solid var(--a);padding:12px 16px;border-radius:0 10px 10px 0;margin:10px 0;font-size:14px;color:var(--a)}
+.warn{background:rgba(239,68,68,.08);border-left:3px solid #EF4444;padding:12px 16px;border-radius:0 10px 10px 0;margin:10px 0;font-size:14px;color:#EF4444}
+
+.code{background:var(--sf2);border:1px solid var(--ln);border-radius:8px;padding:10px 14px;font-family:'Courier New',monospace;font-size:14px;margin:6px 0;color:var(--c);word-break:break-all}
+.carrier-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0}
+.carrier-card{background:var(--sf2);border:1px solid var(--ln);border-radius:10px;padding:14px;text-align:center}
+.carrier-card h4{font-size:14px;color:var(--tx);margin-bottom:8px}
+.carrier-card .code{font-size:12px;margin:4px 0}
+
+.checklist{list-style:none;padding:0}
+.checklist li{padding:8px 0 8px 28px;position:relative;font-size:14px;border-bottom:1px solid var(--ln)}
+.checklist li::before{content:'☐';position:absolute;left:0;font-size:16px}
+.checklist li.done::before{content:'☑';color:#A6E3A1}
+
+hr.div{border:none;border-top:2px solid var(--ln);margin:40px 0}
+
+.tt{position:fixed;top:14px;right:14px;background:var(--sf);border:1px solid var(--ln);color:var(--txm);width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:16px;z-index:200;display:flex;align-items:center;justify-content:center}
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="authWall" style="position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px">
+<div style="font-size:14px;color:var(--txm);font-weight:600;letter-spacing:.1em;text-transform:uppercase">NolaCalls — Meeting</div>
+<input id="authInput" type="password" placeholder="Access code..." style="background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:12px 18px;color:var(--tx);font-size:16px;width:280px;text-align:center;font-family:'Inter',sans-serif;outline:none" onkeydown="if(event.key==='Enter')checkAuth()">
+<button onclick="checkAuth()" style="background:var(--v);color:#fff;border:none;border-radius:10px;padding:10px 32px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Enter</button>
+<div id="authError" style="color:#EF4444;font-size:13px;display:none">Access denied.</div>
+</div>
+<script>
+function checkAuth(){
+var code=document.getElementById('authInput').value;
+if(code==='nola2026'){
+document.getElementById('authWall').style.display='none';
+localStorage.setItem('nola-meeting-auth','1');
+}else{document.getElementById('authError').style.display='block'}}
+if(localStorage.getItem('nola-meeting-auth')==='1'){document.getElementById('authWall').style.display='none'}
+</script>
+
+<!-- SIDE NAV -->
+<nav class="side">
+<a href="/op" class="cold-call-link">📞 Cold Call Script</a>
+<div class="side-logo"><div class="side-logo-mark"></div><span class="side-logo-name">Nola</span></div>
+<a href="#overview"><span class="ic">📋</span>Overview</a>
+<a href="#agenda"><span class="ic">1️⃣</span>Meeting Agenda</a>
+<a href="#info"><span class="ic">2️⃣</span>Collect Info</a>
+<a href="#forwarding"><span class="ic">3️⃣</span>Call Forwarding</a>
+<a href="#delivery"><span class="ic">4️⃣</span>Job Delivery</a>
+<a href="#setup"><span class="ic">5️⃣</span>Technical Setup</a>
+<a href="#trial"><span class="ic">6️⃣</span>Free Trial Launch</a>
+</nav>
+
+<!-- THEME -->
+<button class="tt" onclick="document.body.classList.toggle('light');this.textContent=document.body.classList.contains('light')?'🌙':'💡'" title="Toggle theme">💡</button>
+
+<!-- CONTENT -->
+<div class="main">
+
+<h1>Meeting & Onboarding Guide</h1>
+<div class="subtitle">Everything you need for the callback appointment after a plumber tries the demo.</div>
+
+<hr class="div">
+
+<h2 id="overview">Overview</h2>
+<div class="card">
+<div class="card-label">What this meeting is</div>
+<p style="font-size:14px;color:var(--txm)">The plumber already heard the demo. They're interested. This call is where you understand how they work, answer their questions, and set up the free trial. You do NOT need to sell — the demo already did that. You're here to configure and launch.</p>
+</div>
+
+<hr class="div">
+
+<h2 id="agenda">1 — Meeting Agenda</h2>
+<div class="card">
+<div class="card-label">What to cover (keep it under 15 minutes)</div>
+<ul class="checklist">
+<li>Ask what they thought of the demo</li>
+<li>Collect business info (name, hours, services, area, dispatch fee)</li>
+<li>Ask how they currently manage jobs/schedule</li>
+<li>Ask what carrier they use (AT&T, T-Mobile, Verizon, other)</li>
+<li>Ask: iPhone or Android?</li>
+<li>Explain how call forwarding works (30 seconds)</li>
+<li>Ask their preferences: all the time or after hours only? how many rings?</li>
+<li>Get their emergency contacts (2 required)</li>
+<li>Explain the 7-day free trial — no card, no commitment</li>
+<li>Tell them you'll text them when it's live (same day)</li>
+</ul>
+</div>
+
+<hr class="div">
+
+<h2 id="info">2 — Collect Business Info</h2>
+<div class="card">
+<div class="card-label">What you need from them</div>
+
+<div class="say"><b>Ryan:</b> "Alright, I'm going to set this up for you today. I just need a few things so she sounds like she's actually working at your shop."</div>
+
+<h3 class="h-green">Ask one at a time:</h3>
+<ul class="checklist">
+<li>Business name (exactly how they answer the phone)</li>
+<li>Hours of operation</li>
+<li>Services they offer</li>
+<li>Service area (cities/counties they cover)</li>
+<li>Dispatch / service call fee (e.g. "$89 for the visit")</li>
+<li>Emergency contact #1 — phone number for transfers</li>
+<li>Emergency contact #2 — backup</li>
+</ul>
+
+<h3 class="h-green">Then ask:</h3>
+<div class="say"><b>Ryan:</b> "How do you currently keep track of your jobs? Like, do you use Google Calendar, an app like Jobber, or just write it down?"</div>
+<div class="note">Most solo plumbers use: Google Calendar, pen & paper, Housecall Pro ($59/mo), or Jobber ($39/mo). ServiceTitan = never for solo guys. Some use nothing at all.</div>
+</div>
+
+<hr class="div">
+
+<h2 id="forwarding">3 — Call Forwarding Setup</h2>
+<div class="card">
+<div class="card-label">Explain it simply</div>
+
+<div class="say"><b>Ryan:</b> "So here's how it works — you keep your same number. We set up something called call forwarding on your phone. When a call comes in and you can't get to it, after a few rings it forwards to our receptionist. She picks up, handles the call, and texts you everything. Your customers never know the difference."</div>
+
+<h3 class="h-green">Ask their preferences:</h3>
+<div class="say"><b>Ryan:</b> "Do you want her answering all the time as a backup, or only after hours — like after 5 PM and on weekends?"</div>
+<div class="say"><b>Ryan:</b> "And how many rings do you want before she picks up? Some guys want 4-5 rings so they have time to grab it, some want her to jump in faster."</div>
+
+<h3 class="h-orange">Two modes:</h3>
+<div class="card" style="margin:10px 0">
+<h4 style="color:var(--c);font-size:14px;margin-bottom:8px">Mode A — Always-on backup (conditional forwarding)</h4>
+<p style="font-size:13px;color:var(--txm)">Phone rings X times. If plumber doesn't answer → AI picks up. If plumber answers → AI never touches the call.</p>
+<p style="font-size:13px;color:var(--txm);margin-top:6px"><b>Ring count control:</b> AT&T/T-Mobile: 5 to 30 seconds (1-6 rings). Verizon: not adjustable. For more than 6 rings → use Twilio-in-the-middle (Mode B setup).</p>
+</div>
+
+<div class="card" style="margin:10px 0">
+<h4 style="color:var(--c);font-size:14px;margin-bottom:8px">Mode B — Twilio in the middle (time-based / custom rings)</h4>
+<p style="font-size:13px;color:var(--txm)">Plumber forwards ALL calls to Twilio. Twilio rings the plumber's real phone for as long as they want (7, 8, 10+ rings). If no answer → AI picks up. Can also do time-based: during business hours → ring plumber first. After hours → AI immediately.</p>
+<p style="font-size:13px;color:var(--txm);margin-top:6px"><b>Use this when:</b> plumber wants 7+ rings, or wants after-hours only, or is on Verizon and wants custom timing.</p>
+</div>
+
+<h3 class="h-orange">Carrier codes (send via text after meeting):</h3>
+
+<div class="carrier-grid">
+<div class="carrier-card">
+<h4>AT&T</h4>
+<div class="code">*61*[number]*11#</div>
+<p style="font-size:11px;color:var(--txm);margin-top:4px">Custom delay:<br>**61*[number]*11*[sec]#<br>(5/10/15/20/25/30)</p>
+<p style="font-size:11px;color:var(--txm);margin-top:4px">Disable: ##61*11#</p>
+</div>
+<div class="carrier-card">
+<h4>T-Mobile</h4>
+<div class="code">**61*1[number]#</div>
+<p style="font-size:11px;color:var(--txm);margin-top:4px">Custom delay:<br>**61*1[number]*11*[sec]#</p>
+<p style="font-size:11px;color:var(--txm);margin-top:4px">Disable: ##61#</p>
+<div class="warn" style="font-size:11px;padding:6px 8px;margin-top:6px">⚠️ T-Mobile codes fail on some plans. May need to call carrier.</div>
+</div>
+<div class="carrier-card">
+<h4>Verizon</h4>
+<div class="code">*71[number]</div>
+<p style="font-size:11px;color:var(--txm);margin-top:4px">Ring count: NOT adjustable</p>
+<p style="font-size:11px;color:var(--txm);margin-top:4px">Disable: *73</p>
+<div class="warn" style="font-size:11px;padding:6px 8px;margin-top:6px">⚠️ iPhone iOS 18+: must turn OFF Live Voicemail first! Settings → Phone → Live Voicemail → OFF</div>
+</div>
+</div>
+
+<div class="note">MVNOs: Cricket = AT&T codes. Metro = T-Mobile codes. Straight Talk = depends on SIM network. US Cellular = *92 then number.</div>
+<div class="note">Fallback for ANY carrier: call carrier and say "I want to forward unanswered calls to [number]" — works 100%, takes 2 minutes.</div>
+<div class="note">Check if forwarding is on: *#61# (AT&T/T-Mobile only). Emergency disable ALL: ##002#</div>
+</div>
+
+<hr class="div">
+
+<h2 id="delivery">4 — Job Delivery Method</h2>
+<div class="card">
+<div class="card-label">How the plumber gets call details</div>
+
+<div class="say"><b>Ryan:</b> "After she takes a call, how do you want to get the details? Most guys just want a text with the name, number, address, and what's wrong. But if you use Google Calendar or an app, we can push it straight in there too."</div>
+
+<h3 class="h-green">Option A — Text message (default, works for everyone)</h3>
+<p style="font-size:14px;color:var(--txm)">Retell webhook → Make.com → Twilio SMS to plumber. Example text: "New call: John Smith, (404) 555-1234, 123 Oak St, kitchen sink leak, wants tomorrow morning"</p>
+
+<h3 class="h-green">Option B — Google Calendar</h3>
+<p style="font-size:14px;color:var(--txm)">Retell webhook → Make.com → Google Calendar event with all details. Plumber sees it on their phone calendar.</p>
+
+<h3 class="h-green">Option C — Jobber / Housecall Pro</h3>
+<p style="font-size:14px;color:var(--txm)">Retell webhook → Make.com → Jobber/HCP API → creates new job request in their system.</p>
+
+<h3 class="h-orange">Option D — Pen and paper</h3>
+<p style="font-size:14px;color:var(--txm)">Just text them. They write it down like they always do. Don't overcomplicate it.</p>
+</div>
+
+<hr class="div">
+
+<h2 id="setup">5 — Technical Setup (you do this after the call)</h2>
+<div class="card">
+<div class="card-label">Setup checklist — ~15-20 minutes</div>
+<ul class="checklist">
+<li>Duplicate Sarah demo agent in Retell</li>
+<li>Update welcome message: "Hi! [Business Name], this is Nola, how can I help you?"</li>
+<li>Add AI disclosure: "This call is recorded and handled by an AI assistant."</li>
+<li>Swap in client's business name, hours, services, dispatch fee, area</li>
+<li>Set emergency contacts (2 required)</li>
+<li>Buy dedicated Twilio number ($2/mo)</li>
+<li>Connect Twilio number to Retell agent</li>
+<li>Set up Make.com webhook → SMS (or calendar/app based on their preference)</li>
+<li>If Mode B (Twilio in the middle): set up Twilio Studio flow with time-of-day routing + custom ring timeout</li>
+<li>Test end-to-end: call the number, verify AI answers, verify SMS/calendar delivery</li>
+<li>Text plumber the forwarding code for their carrier</li>
+<li>If Verizon iPhone: remind them to turn off Live Voicemail</li>
+<li>Confirm it's working: "Try calling your own number from another phone and don't pick up"</li>
+</ul>
+</div>
+
+<hr class="div">
+
+<h2 id="trial">6 — Free Trial Launch</h2>
+<div class="card">
+<div class="card-label">What to say when it's live</div>
+
+<div class="say"><b>Text to plumber:</b> "Hey [Name], everything's set up. Your AI receptionist is live. Try calling your number from another phone and don't pick up — you'll hear her answer. Let me know what you think 👍"</div>
+
+<h3 class="h-green">During the 7-day trial:</h3>
+<ul class="checklist">
+<li>Day 1: confirm it's working, ask if they have questions</li>
+<li>Day 3-4: text them stats — "Your AI caught 3 calls so far this week"</li>
+<li>Day 7: "You caught X calls this week. Want to keep it? $99/month" → Stripe payment link</li>
+</ul>
+
+<h3 class="h-orange">If they say no after trial:</h3>
+<div class="say"><b>Text:</b> "No worries at all. I'll turn it off. If you ever want it back, just text me."</div>
+<p class="inst">Disable forwarding, archive the agent. Don't burn the bridge.</p>
+</div>
+
+</div>
+</body>
+</html>

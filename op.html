@@ -208,7 +208,9 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 @media(max-width:1200px){.log-btn{display:none}}
 
 /* ===== SIDE NAV ===== */
-.side-logo{display:flex;align-items:center;gap:8px;padding:10px 16px 12px;border-bottom:1px solid var(--ln);margin-bottom:0;justify-content:space-between}
+.side-logo{display:flex;align-items:center;gap:8px;padding:10px 16px 12px;border-bottom:1px solid var(--ln);margin-bottom:0}
+.meeting-link{display:block;padding:10px 16px;background:linear-gradient(135deg,var(--v),#9B82FF);color:#fff;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-align:center;border-bottom:1px solid var(--ln);transition:all .2s}
+.meeting-link:hover{background:linear-gradient(135deg,#9B82FF,#6849FF)}
 .side-logo-mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#9B82FF,#6849FF);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .side-logo-mark::after{content:'';width:8px;height:8px;background:#fff;border-radius:50%}
 .side-logo-name{font-weight:700;font-size:14px;color:var(--tx)}
@@ -403,6 +405,7 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 
 <!-- SIDE NAV -->
 <nav class="side">
+<a href="/meeting" class="meeting-link">📋 Meeting</a>
 <div class="side-logo"><div class="side-logo-mark"></div><span class="side-logo-name">Nola</span></div>
 <a href="#s1"><span class="ic">1️⃣</span>Verify Owner</a>
 <a href="#s2"><span class="ic">2️⃣</span>Opener + Pitch</a>
