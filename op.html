@@ -501,18 +501,8 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <h3 class="h-green">THE PITCH (after they give you the 30 seconds):</h3>
 
 <div class="say"><b>Ryan:</b> "Ok so yeah, let me ask you a question — what happens to a call right now when people are trying to reach you when you're out on a job? Do you have a receptionist that handles this type of stuff?"</div>
-<div class="predict">They'll describe their situation — <span class="pos">"goes to voicemail"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"I call them back"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"my wife answers"</span></div>
-
-<div class="say"><b>Ryan:</b> "Well <span style="color:var(--txd);font-size:14px">/ ok so yeah</span> — it's pretty simple. I built an AI receptionist that works 24/7. It answers every single call you miss, sounds completely natural, and can answer any questions, like pricing, services, and availability. But the best part <span class="placeholder owner-name">[Owner Name]</span> is that it books jobs directly into your calendar without you lifting a finger. Is that something you'd find useful?"</div>
-<div class="predict">They'll say <span class="pos">"yeah that sounds great"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neu">"how much?"</span><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" onclick="jumpTo('obj')">→ "I don't know..."</a></div>
-
-<h3 class="h-green">If they say "yeah"<span style="color:var(--txd);margin:0 6px">│</span>interested:</h3>
-<div class="say"><b>Ryan:</b> "Alright, I want you to hear a demo I created. I'll have you call a number and just act like a customer — it's pretty insane. We'll set it up on your line for free for the first 7 days. And you'll never have to answer calls again — the jobs just show up and you go do the work."</div>
-<p class="inst">→ <a href="#s3" class="go">Step 3</a></p>
-
-<h3 class="h-orange">If they ask for price immediately:</h3>
-<div class="say"><b>Ryan:</b> "After the first seven days, if you like it, we'll charge you 99 bucks a month. But the best part is that if you don't like it, we can just part ways and you will never hear from me again. You won't have to buy it. You gotta listen to the demo number and let me know what you think."</div>
-<p class="inst">→ <a href="#s3" class="go">Step 3</a></p>
+<div class="predict">They'll describe their situation — <span class="pos">"goes to voicemail"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"I call them back"</span><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('wife-handler')">"my wife answers"</a></div>
+<p class="inst">→ <a href="#s3" class="go">Step 3 — How It Works</a></p>
 </div>
 
 <h3>Version B — After 1–2 missed attempts:</h3>
@@ -524,7 +514,7 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 
 <div class="say"><b>Ryan:</b> "That's actually why I'm calling. I know you take a lot of calls and it pulls you away from jobs. Give me 30 seconds — I built something that fixes that, for free."</div>
 <div class="predict"><span class="pos">"ok go ahead"</span><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('dodge-handler')">"who are you?"</a><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('alt-whatdoyoumean')">"sounds too good to be true"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">"not interested"</a></div>
-<p class="inst">Then deliver THE PITCH from above.</p>
+<p class="inst">→ <a href="#s3" class="go">Step 3 — How It Works</a></p>
 </div>
 
 <h3 class="h-orange" id="wife-handler">If "my wife handles the calls":</h3>
@@ -533,16 +523,35 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 
 <h3 class="h-green">If they admit she misses some:</h3>
 <div class="say"><b>Ryan:</b> "Yeah, that's exactly what this is for. It's not replacing her at all — she keeps doing what she's doing. This just catches the ones that slip through. After hours, when she's busy, whatever. It's like a safety net so you never lose a job."</div>
-<div class="predict"><span class="pos">"ok that makes sense"</span> → continue to THE PITCH</div>
+<div class="predict"><span class="pos">"ok that makes sense"</span> → <a href="#s3" class="go">Step 3 — How It Works</a></div>
 
 <h3 class="h-orange">If they say she gets most of them:</h3>
 <div class="say"><b>Ryan:</b> "That's awesome. But even one missed call — that's a $400, $500 job gone to the next guy. This would just back her up. She keeps doing everything, and the system only kicks in when she can't get to the phone. Zero change for her."</div>
-<div class="predict"><span class="pos">"hmm ok"</span> → continue to THE PITCH<span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">→ "nah we're good"</a></div>
+<div class="predict"><span class="pos">"hmm ok"</span> → <a href="#s3" class="go">Step 3 — How It Works</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">→ "nah we're good"</a></div>
 
 <hr class="div">
 
 <!-- STEP 3 -->
-<h2 id="s3">Step 3 — Handle Their Response</h2>
+<h2 id="s3">Step 3 — How It Works</h2>
+<div class="card">
+<div class="card-label">The pitch</div>
+
+<div class="say"><b>Ryan:</b> "Well <span style="color:var(--txd);font-size:14px">/ ok so yeah</span> — it's pretty simple. I built an AI receptionist that works 24/7. It answers every single call you miss, sounds completely natural, and can answer any questions, like pricing, services, and availability. But the best part <span class="placeholder owner-name">[Owner Name]</span> is that it books jobs directly into your calendar without you lifting a finger. Is that something you'd find useful?"</div>
+<div class="predict">They'll say <span class="pos">"yeah that sounds great"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neu">"how much?"</span><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" onclick="jumpTo('obj')">→ "I don't know..."</a></div>
+
+<h3 class="h-green">If they say "yeah"<span style="color:var(--txd);margin:0 6px">│</span>interested:</h3>
+<div class="say"><b>Ryan:</b> "Alright, I want you to hear a demo I created. I'll have you call a number and just try to act like a customer, pretend you've got a plumbing problem, and test it for yourself. We have the most natural sounding AI receptionist in the market right now."</div>
+<p class="inst">→ <a href="#s4" class="go">Step 4</a></p>
+
+<h3 class="h-orange">If they ask for price immediately:</h3>
+<div class="say"><b>Ryan:</b> "After the first seven days, if you like it, we'll charge you 99 bucks a month. But the best part is that if you don't like it, we can just part ways and you will never hear from me again. You won't have to buy it. You gotta listen to the demo number and let me know what you think."</div>
+<p class="inst">→ <a href="#s4" class="go">Step 4</a></p>
+</div>
+
+<hr class="div">
+
+<!-- STEP 4 -->
+<h2 id="s4">Step 4 — Handle Their Response</h2>
 <div class="card">
 <div class="card-label">Response handling</div>
 
