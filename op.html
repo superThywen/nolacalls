@@ -198,6 +198,10 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 .note-modal-btns button{padding:6px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none}
 .note-save{background:var(--v);color:#fff}
 .note-cancel{background:var(--sf2);color:var(--txm)}
+.work-btn-fixed{position:fixed;bottom:155px;left:14px;width:210px;padding:12px 0;border-radius:10px;background:linear-gradient(135deg,var(--v),#9B82FF);border:1px solid var(--v);color:#fff;font-size:13px;font-weight:600;cursor:pointer;z-index:99;font-family:'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;transition:all .2s;text-align:center}
+.work-btn-fixed:hover{transform:scale(1.03);box-shadow:0 0 20px rgba(124,92,255,.3)}
+.work-btn-fixed.active{background:linear-gradient(135deg,#39FF14,#22D3EE);color:#0A0E1A;border-color:#39FF14;font-weight:800}
+@media(max-width:1200px){.work-btn-fixed{display:none}}
 .log-btn{position:fixed;bottom:110px;left:14px;width:210px;padding:12px 0;border-radius:10px;background:var(--sf);border:1px solid var(--ln);color:var(--txm);font-size:13px;font-weight:600;cursor:pointer;z-index:99;font-family:'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;transition:all .2s;text-align:center}
 .log-btn:hover{background:var(--v);color:#fff;border-color:var(--v)}
 .log-count{background:var(--v);color:#fff;font-size:10px;padding:2px 7px;border-radius:10px;margin-left:6px}
@@ -250,13 +254,9 @@ a:hover{text-decoration:underline}
 .meter-needle::after{content:'';position:absolute;top:-4px;left:-3px;width:9px;height:9px;background:#EF4444;border-radius:50%;box-shadow:0 0 6px rgba(239,68,68,.5)}
 
 /* ===== WORK MODE ===== */
-.work-btn{width:auto;height:auto;padding:6px 18px;border-radius:8px;background:linear-gradient(135deg,var(--v),#9B82FF);color:#fff;border:none;cursor:pointer;font-size:10px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;letter-spacing:.12em;text-transform:uppercase;transition:transform .2s,box-shadow .2s;font-family:'Inter',sans-serif;position:relative}
-.work-btn::before{content:'';position:absolute;inset:-3px;border-radius:10px;background:linear-gradient(135deg,var(--v),#9B82FF);filter:blur(8px);opacity:.3;z-index:-1;animation:work-glow 3s ease-in-out infinite}
 .work-btn::after{display:none}
 @keyframes work-glow{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.4;transform:scale(1.05)}}
 .work-btn:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(124,92,255,.3)}
-.work-btn.active{background:linear-gradient(135deg,#39FF14,#22D3EE);color:#0A0E1A;font-weight:800}
-.work-btn.active::before{background:linear-gradient(135deg,#39FF14,#22D3EE);animation:work-glow-active 1.5s ease-in-out infinite}
 @keyframes work-glow-active{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.7;transform:scale(1.1)}}
 
 .caller-widget{position:fixed;top:70px;right:20px;cursor:grab;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px 20px;display:none;z-index:100;box-shadow:0 8px 28px rgba(0,0,0,.3);min-width:240px}
@@ -347,6 +347,7 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 </div>
 
 <!-- LOG BUTTON -->
+<button class="work-btn-fixed" id="workBtn" onclick="toggleWork()" title="Start/stop listening">🎙️ WORK</button>
 <button class="log-btn" onclick="openLog()">📋 LOG <span class="log-count" id="logCount">0</span></button>
 
 <!-- LOG MODAL -->
@@ -402,7 +403,7 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 
 <!-- SIDE NAV -->
 <nav class="side">
-<div class="side-logo"><div class="side-logo-mark"></div><span class="side-logo-name">Nola</span><button class="work-btn" id="workBtn" onclick="toggleWork()" title="Start/stop listening">WORK</button></div>
+<div class="side-logo"><div class="side-logo-mark"></div><span class="side-logo-name">Nola</span></div>
 <a href="#s1"><span class="ic">1️⃣</span>Verify Owner</a>
 <a href="#s2"><span class="ic">2️⃣</span>Opener + Pitch</a>
 <a href="#s3"><span class="ic">3️⃣</span>How It Works</a>
