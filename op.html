@@ -426,17 +426,17 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <h2 id="s1" style="color:#A6E3A1;border-left-color:#A6E3A1;background:rgba(166,227,161,.08)">Step 1 — Verify the Owner <span class="stat-lime">[OPENER]</span></h2>
 <div class="card">
 <div class="card-label">Opening line</div>
+<div class="say-wrap">
 <div class="say"><b>Ryan:</b> "Hi, is this the owner of <span class="placeholder biz-name">[Business Name]</span>?"</div>
+<div class="alt-side" style="top:0">
+<div style="font-size:12px;color:#F59E0B;font-weight:600;margin-bottom:6px;text-align:center">If "who is this?"</div>
+<div class="say" id="whoisthis-alt"><b>Ryan:</b> "So my name is Ryan, <span style="color:var(--a);font-size:14px;font-weight:600">— 1 sec —</span> and I started working with plumbing companies. I've identified that <span class="placeholder biz-name">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it, and it's completely free. I know it sounds too good to be true, just give me 30 seconds — how does that sound?"</div>
+</div>
+</div>
 
 <div class="predict" style="font-size:15px;font-weight:600;padding:10px 0 10px 24px"><span class="pos">If YES →</span> <a href="#s2" class="go">Go to Step 2</a></div>
-
-<h3 class="h-orange">If YES + "who is this?"</h3>
-<div class="say"><b>Ryan:</b> "So my name is Ryan, <span style="color:var(--a);font-size:14px;font-weight:600">— 1 sec —</span> and I started working with plumbing companies. I've identified that <span class="placeholder biz-name">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it, and it's completely free. I know it sounds too good to be true, just give me 30 seconds — how does that sound?"</div>
-<div class="predict"><span class="pos">"ok go ahead"</span> → <a href="#s2" class="go">Go to Step 2</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">→ "not interested"</a></div>
-
-<h3 class="h-orange" id="whoisthis-alt">If just "who is this?"</h3>
-<div class="say"><b>Ryan:</b> "This is Ryan — I've got something important to discuss with the owner. Are they around?"</div>
-<div class="predict"><span class="pos">"yeah that's me"</span> → <a href="#s2" class="go">Go to Step 2</a><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"yeah hold on"</span><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('whos-calling')">"who's calling?"</a></div>
+<div class="predict" style="font-size:15px;font-weight:600;padding:4px 0 4px 24px"><a style="color:#F59E0B;cursor:pointer" onclick="jumpTo('whos-calling')">If YES + "who is this?" →</a></div>
+<div class="predict" style="font-size:15px;font-weight:600;padding:4px 0 10px 24px"><a style="color:#F59E0B;cursor:pointer" onclick="jumpTo('whoisthis-alt')">If just "who is this?" →</a></div>
 
 <h3 class="h-red">If NO:</h3>
 <div class="say"><b>Ryan:</b> "Got it — is there any way you can transfer me to him?"</div>
