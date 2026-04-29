@@ -478,8 +478,8 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <div class="say" id="alt-whatdoyoumean"><b>Ryan:</b> "Basically, it's about the best pitch you're ever going to hear in your life."</div>
 <div class="predict">They'll say <span class="pos">"ok"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"yeah sure"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"go ahead"</span></div>
 <div class="say"><b>Ryan:</b> "Ok so yeah, let me ask you a question — what happens to a call right now when people are trying to reach you when you're out on a job? Do you have a receptionist that handles this type of stuff?"</div>
-<div class="predict">They'll describe their situation</div>
-<div class="say"><b>Ryan:</b> "So you're dealing with this as well, then I think you're going to love that I'm calling. If you want to give me 30 seconds, I can explain how my system works and see what you think."</div>
+<div class="predict">They'll describe their situation — <span class="pos">"goes to voicemail"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"I call them back"</span><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('wife-handler')">"my wife answers"</a></div>
+<div class="say"><b>Ryan:</b> "I see. So you're dealing with this as well, then I think you're going to love that I'm calling. If you want to give me 30 seconds, I can explain how my system works and see what you think."</div>
 </div>
 </div>
 <div class="predict">They'll say <span class="pos">"yeah"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"yes sir"</span><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('dodge-handler')">→ "who is this"</a></div>
@@ -526,6 +526,18 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <div class="predict"><span class="pos">"ok go ahead"</span><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('dodge-handler')">"who are you?"</a><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('alt-whatdoyoumean')">"sounds too good to be true"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">"not interested"</a></div>
 <p class="inst">Then deliver THE PITCH from above.</p>
 </div>
+
+<h3 class="h-orange" id="wife-handler">If "my wife handles the calls":</h3>
+<div class="say"><b>Ryan:</b> "Oh that's great, so you've got someone on it already. Let me ask you this though — does she ever miss any? Like when she's out running errands, or after hours, weekends — what happens to those calls?"</div>
+<div class="predict">They'll say <span class="pos">"yeah she misses some"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neu">"not really, she gets most of them"</span></div>
+
+<h3 class="h-green">If they admit she misses some:</h3>
+<div class="say"><b>Ryan:</b> "Yeah, that's exactly what this is for. It's not replacing her at all — she keeps doing what she's doing. This just catches the ones that slip through. After hours, when she's busy, whatever. It's like a safety net so you never lose a job."</div>
+<div class="predict"><span class="pos">"ok that makes sense"</span> → continue to THE PITCH</div>
+
+<h3 class="h-orange">If they say she gets most of them:</h3>
+<div class="say"><b>Ryan:</b> "That's awesome. But even one missed call — that's a $400, $500 job gone to the next guy. This would just back her up. She keeps doing everything, and the system only kicks in when she can't get to the phone. Zero change for her."</div>
+<div class="predict"><span class="pos">"hmm ok"</span> → continue to THE PITCH<span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">→ "nah we're good"</a></div>
 
 <hr class="div">
 
