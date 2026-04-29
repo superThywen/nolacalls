@@ -890,10 +890,6 @@ recognition.lang='en-US';
 recognition.onresult=function(e){
   // Reset silence timer on any speech
   if(silenceTimer){clearTimeout(silenceTimer)}
-  silenceTimer=setTimeout(function(){
-    // 30 seconds silence = auto stop
-    if(workActive){toggleWork()}
-  },30000);
 
   // Get latest transcript
   var transcript='';
@@ -922,7 +918,7 @@ recognition.onresult=function(e){
   if(people.length>0){
     var name=people[0].replace(/^(hi|hey|hello|so|okay|ok|yeah|perfect|well|man|sir|mister|mr)\s+/i,'').trim();
     name=name.split(' ')[0]; // First name only
-    if(name.length>=2 && name.length<=15){
+    if(name.length>=2 && name.length<=15 && name.toLowerCase()!=='ryan'){
       setName(name);
       return;
     }
@@ -942,7 +938,7 @@ recognition.onresult=function(e){
     if(m&&m[1]){
       var n=m[1];
       // Filter out common false positives
-      var skip=['The','This','That','What','When','Where','How','Yes','Yeah','Well','But','And','Not','Just'];
+      var skip=['The','This','That','What','When','Where','How','Yes','Yeah','Well','But','And','Not','Just','Ryan'];
       if(skip.indexOf(n)===-1){
         setName(n);
         return;
