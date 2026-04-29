@@ -426,20 +426,22 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <h2 id="s1" style="color:#A6E3A1;border-left-color:#A6E3A1;background:rgba(166,227,161,.08)">Step 1 — Verify the Owner <span class="stat-lime">[OPENER]</span></h2>
 <div class="card">
 <div class="card-label">Opening line</div>
-<div class="say-wrap">
 <div class="say"><b>Ryan:</b> "Hi, is this the owner of <span class="placeholder biz-name">[Business Name]</span>?"</div>
-<div class="alt-side" style="top:0">
-<div style="font-size:12px;color:#F59E0B;font-weight:600;margin-bottom:6px;text-align:center">If "who is this?"</div>
-<div class="say" id="whoisthis-alt"><b>Ryan:</b> "So my name is Ryan, <span style="color:var(--a);font-size:14px;font-weight:600">— 1 sec —</span> and I started working with plumbing companies. I've identified that <span class="placeholder biz-name">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it, and it's completely free. I know it sounds too good to be true, just give me 30 seconds — how does that sound?"</div>
-</div>
-</div>
 
-<div class="predict" style="font-size:15px;font-weight:600;padding:10px 0 10px 24px"><span class="pos">If YES →</span> <a href="#s2" class="go">Go to Step 2</a> <span style="color:var(--txd);margin:0 8px">│</span> <a style="color:#F59E0B;font-weight:600;cursor:pointer;text-decoration:none" onclick="jumpTo('whoisthis-alt')">"who is this?"</a></div>
+<div class="predict" style="font-size:15px;font-weight:600;padding:10px 0 10px 24px"><span class="pos">If YES →</span> <a href="#s2" class="go">Go to Step 2</a></div>
+
+<h3 class="h-orange">If YES + "who is this?"</h3>
+<div class="say"><b>Ryan:</b> "So my name is Ryan, <span style="color:var(--a);font-size:14px;font-weight:600">— 1 sec —</span> and I started working with plumbing companies. I've identified that <span class="placeholder biz-name">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it, and it's completely free. I know it sounds too good to be true, just give me 30 seconds — how does that sound?"</div>
+<div class="predict"><span class="pos">"ok go ahead"</span> → <a href="#s2" class="go">Go to Step 2</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">→ "not interested"</a></div>
+
+<h3 class="h-orange" id="whoisthis-alt">If just "who is this?"</h3>
+<div class="say"><b>Ryan:</b> "This is Ryan — I've got something important to discuss with the owner. Are they around?"</div>
+<div class="predict"><span class="pos">"yeah that's me"</span> → <a href="#s2" class="go">Go to Step 2</a><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"yeah hold on"</span><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('whos-calling')">"who's calling?"</a></div>
 
 <h3 class="h-red">If NO:</h3>
 <div class="say"><b>Ryan:</b> "Got it — is there any way you can transfer me to him?"</div>
 <div class="predict"><a class="pos" style="cursor:pointer" onclick="jumpTo('s2')">"yeah hold on"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('hes-out-alt')">"no he's out"</a><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('whos-calling')">"who is this?"</a></div>
-<div class="say" id="hes-out-alt"><b>Ryan:</b> "When's he usually back?"</div>
+<div class="say" id="hes-out-alt"><b>Ryan:</b> "Can I ask when he's usually back?"</div>
 <div class="predict">They say a time → Log it, call back then.</div>
 
 <h3 class="h-orange" id="whos-calling">If "Who's calling?"</h3>
@@ -492,15 +494,18 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 
 <h3 class="h-green">THE PITCH (after they give you the 30 seconds):</h3>
 
+<div class="say"><b>Ryan:</b> "Ok so yeah, let me ask you a question — what happens to a call right now when people are trying to reach you when you're out on a job?"</div>
+<div class="predict">They'll describe their situation — <span class="pos">"goes to voicemail"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"I call them back"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"my wife answers"</span></div>
+
 <div class="say"><b>Ryan:</b> "Well <span style="color:var(--txd);font-size:14px">/ ok so yeah</span> — it's pretty simple. I built an AI receptionist that works 24/7. It answers every single call you miss, sounds completely natural, and can answer any questions, like pricing, services, and availability. But the best part <span class="placeholder owner-name">[Owner Name]</span> is that it books jobs directly into your calendar without you lifting a finger. Is that something you'd find useful?"</div>
 <div class="predict">They'll say <span class="pos">"yeah that sounds great"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neu">"how much?"</span><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" onclick="jumpTo('obj')">→ "I don't know..."</a></div>
 
 <h3 class="h-green">If they say "yeah"<span style="color:var(--txd);margin:0 6px">│</span>interested:</h3>
-<div class="say"><b>Ryan:</b> "Alright, I want you to hear a demo I created. I'll have you call a number and just act like a customer — it's pretty insane. We'll set it up on your line for free for the first 7 days. After that it's $99 a month. And you'll never have to answer calls again — the jobs just show up and you go do the work."</div>
+<div class="say"><b>Ryan:</b> "Alright, I want you to hear a demo I created. I'll have you call a number and just act like a customer — it's pretty insane. We'll set it up on your line for free for the first 7 days. And you'll never have to answer calls again — the jobs just show up and you go do the work."</div>
 <p class="inst">→ <a href="#s3" class="go">Step 3</a></p>
 
 <h3 class="h-orange">If they ask for price immediately:</h3>
-<div class="say"><b>Ryan:</b> "First 7 days free, after that $99 a month. But before we talk price — let me send you the demo number. Call it, act like a customer, hear it for yourself. I'll text it to you right now."</div>
+<div class="say"><b>Ryan:</b> "After the first seven days, if you like it, we'll charge you 99 bucks a month. But the best part is that if you don't like it, we can just part ways and you will never hear from me again. You won't have to buy it. You gotta listen to the demo number and let me know what you think."</div>
 <p class="inst">→ <a href="#s3" class="go">Step 3</a></p>
 </div>
 
@@ -524,25 +529,16 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <div class="card-label">Response handling</div>
 
 <h3 class="h-green">✅ YES<span style="color:var(--txd);margin:0 6px">│</span>"sure"<span style="color:var(--txd);margin:0 6px">│</span>"send it"</h3>
-<div class="say"><b>Ryan:</b> "Alright, so I have a demo set up — you can hear exactly what your customers would hear. Do you have 30 seconds right now? I can call it and put you through live."</div>
-<div class="predict"><span class="pos">"yeah sure"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neu">"not right now"</span></div>
-
-<h3 class="h-green">If yes (do demo now):</h3>
-<div class="say"><b>Ryan:</b> "Perfect — I'm calling it now. Just listen. Pretend you've got a plumbing problem — a leak, a clog, whatever comes to mind."</div>
-<p class="inst">Call (978) 391-6222 on your end, merge/conference the plumber in. Let them hear it.</p>
-<div class="say"><b>Ryan:</b> "Pretty insane right? So we'll set that up on your line for free for the first 7 days. No card, nothing. After that it's $99 a month. And you'll never miss a call again — the jobs just show up. Want me to get you set up?"</div>
-
-<h3 class="h-orange">If not right now:</h3>
-<div class="say"><b>Ryan:</b> "No worries. When's a good time for me to call you back — tomorrow morning or afternoon?"</div>
-<div class="predict"><span class="pos">"tomorrow morning"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"call me at [time]"</span> → Log callback time.</div>
-<div class="say"><b>Ryan:</b> "Perfect. I'll also text you the demo number — (978) 391-6222 — in case you want to hear it before then. Talk to you tomorrow."</div>
-<p class="inst">Text the number immediately. Log the callback. Move on.</p>
+<div class="say"><b>Ryan:</b> "Alright, I'm going to text you a phone number right now. Call it whenever you get a free minute — pretend you've got a leak or a clog, whatever comes to mind. It'll blow your mind. And then could you talk tomorrow morning, or in the afternoon?"</div>
+<div class="predict"><span class="pos">"tomorrow morning"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"call me at [time]"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neu">"just text me"</span></div>
+<div class="say"><b>Ryan:</b> "Perfect. I'll shoot you that number right now. Give it a call when you get a chance and I'll follow up with you tomorrow. Sound good?"</div>
+<p class="inst">Text (978) 391-6222 immediately. Log the callback time. Move on.</p>
 
 <h3 class="h-orange">🤔 CURIOUS — "What is it?"<span style="color:var(--txd);margin:0 6px">│</span>"How does it work?"</h3>
 <div class="say"><b>Ryan:</b> "You keep your same number. When a call comes in and you can't get to it, it forwards to us after a few rings. Our AI receptionist picks up, finds out what's going on, gets their name and address, books an appointment, and texts you everything. Your customer never knew you weren't there."</div>
 
 <h3 class="h-red">😏 SKEPTICAL — "Yeah right"<span style="color:var(--txd);margin:0 6px">│</span>"Too good to be true"</h3>
-<div class="say"><b>Ryan:</b> "Call the number, you'll love it. 30 seconds, pretend you've got a plumbing problem, and hear it for yourself. Let me text it to you."</div>
+<div class="say"><b>Ryan:</b> "I know how it sounds. But call the number, 30 seconds, pretend you've got a plumbing problem, and hear it for yourself. Let me text it to you."</div>
 
 <h3 class="h-red">❌ "Not interested" → <a href="#obj" class="go">Objections</a></h3>
 </div>
