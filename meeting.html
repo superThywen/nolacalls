@@ -274,6 +274,106 @@ if(localStorage.getItem('nola-meeting-auth')==='1'){document.getElementById('aut
 <p class="inst">Disable forwarding, archive the agent. Don't burn the bridge.</p>
 </div>
 
+<hr class="div">
+
+<h2 id="objections">7 — Common Questions & Objections</h2>
+
+<div class="card">
+<div class="card-label">Pricing & Cancellation</div>
+
+<h3 class="h-orange">"What happens after the 7 days?"</h3>
+<div class="say"><b>Ryan:</b> "$99 a month. No contract, no commitment, month to month. You can cancel anytime."</div>
+
+<h3 class="h-orange">"What if I want to cancel?"</h3>
+<div class="say"><b>Ryan:</b> "Just text me. I turn it off same day. And you can disable the forwarding yourself in 10 seconds with one code on your phone — you're always in control."</div>
+</div>
+
+<div class="card">
+<div class="card-label">Technical Questions</div>
+
+<h3 class="h-orange">"Can I see the calls she took?"</h3>
+<div class="say"><b>Ryan:</b> "You get a text after every single call with all the details. And I send you a weekly summary — how many calls she caught, how many jobs booked. Can you do that with your current setup? Most guys just have voicemail and half the time they don't even check it."</div>
+
+<h3 class="h-orange">"Can I listen to the recordings?"</h3>
+<div class="say"><b>Ryan:</b> "Can you listen to your calls right now? No, right? Neither can most plumbers. What you get is a full summary of every call — name, number, what's wrong, when they want it done — texted straight to your phone the second the call ends. You know everything without sitting there listening to recordings."</div>
+<div class="note">Only offer actual recordings if they push hard: "If you ever want to hear a specific call, text me and I'll send it over."</div>
+
+<h3 class="h-orange">"What if she gives wrong information?"</h3>
+<div class="say"><b>Ryan:</b> "It's impossible for her to say anything wrong. She only works with YOUR information — your hours, your services, your prices, your service area. Nothing else. She doesn't guess, she doesn't improvise. She's the best model on the market right now. And that's exactly why we go through all your info together — so everything is locked in from day one. If you ever want to change something, text me and I update it the same day."</div>
+
+<h3 class="h-orange">"What if your system goes down?"</h3>
+<div class="say"><b>Ryan:</b> "Our system runs at 99.99% uptime — that's less than one hour of downtime per year. But even if something ever did happen, your phone just works like it normally does. The call stays on your phone, rings you directly. Nobody loses a call."</div>
+
+<h3 class="h-orange">"What about Spanish-speaking callers?"</h3>
+<div class="say"><b>Ryan:</b> "She speaks Spanish too. If someone calls in Spanish, she switches automatically — handles the whole call in Spanish and still texts you the details in English. So you won't lose those calls either."</div>
+<div class="note">Spanish must be enabled in the agent settings (multilingual mode). Test it before promising. Georgia is ~11% Hispanic, higher in Atlanta metro.</div>
+
+<h3 class="h-orange">"Can she actually schedule a specific time?"</h3>
+<div class="say"><b>Ryan:</b> "She asks the customer when they'd prefer and what's going on, then texts you the request. You decide if that time works and call them back to confirm. That way you're always in control of your schedule — she's not booking things you can't do."</div>
+<div class="note">Calendar integration (Google Calendar) is possible later as an upgrade. For now, Sarah collects the request, plumber confirms. No double-booking risk.</div>
+</div>
+
+<div class="card">
+<div class="card-label">Voicemail Conflict</div>
+
+<h3 class="h-red">CRITICAL: Carrier voicemail can steal calls before forwarding kicks in</h3>
+<p style="font-size:14px;color:var(--txm)">The plumber MUST disable carrier voicemail or extend the voicemail timer past the forwarding timer. Otherwise voicemail picks up before the receptionist does.</p>
+
+<div class="say"><b>Ryan:</b> "One quick thing — we need to make sure your regular voicemail doesn't grab the call before our receptionist does. I'll walk you through turning it off, takes 10 seconds."</div>
+
+<h3 class="h-orange">Disable voicemail by carrier:</h3>
+<div class="carrier-grid">
+<div class="carrier-card">
+<h4>AT&T</h4>
+<div class="code">##004#</div>
+<p style="font-size:11px;color:var(--txm);margin-top:4px">Disables all conditional forwarding including voicemail</p>
+<p style="font-size:11px;color:var(--txm);margin-top:4px">Full removal: call 611 or 1-800-331-0500</p>
+</div>
+<div class="carrier-card">
+<h4>T-Mobile</h4>
+<div class="code">##004#</div>
+<p style="font-size:11px;color:var(--txm);margin-top:4px">Same code works on T-Mobile</p>
+<p style="font-size:11px;color:var(--txm);margin-top:4px">Full removal: call 611 or (877) 746-0909</p>
+</div>
+<div class="carrier-card">
+<h4>Verizon</h4>
+<div class="code">*73</div>
+<p style="font-size:11px;color:var(--txm);margin-top:4px">Disables forwarding to voicemail</p>
+<p style="font-size:11px;color:var(--txm);margin-top:4px">Full removal: call 1-800-922-0204</p>
+</div>
+</div>
+<div class="note">Fallback for ANY carrier: call carrier and say "I want to turn off my voicemail" — works 100%, takes 2 minutes.</div>
+<div class="warn">⚠️ IMPORTANT: Disable voicemail FIRST, then set up call forwarding. If done in wrong order, voicemail may still intercept.</div>
+</div>
+
+<div class="card">
+<div class="card-label">Situational Questions</div>
+
+<h3 class="h-orange">"I already have an answering service"</h3>
+<div class="say"><b>Ryan:</b> "How much are you paying for it? And is it 24/7? [Let them answer] We're $99 a month, 24/7, she never calls in sick, never puts anyone on hold, and she texts you the details instantly instead of you checking a message board."</div>
+
+<h3 class="h-orange">"What if I go on vacation?"</h3>
+<div class="say"><b>Ryan:</b> "She keeps answering and texting you everything. You call them back when you're ready. And if you don't want any calls at all while you're away, you just disable the forwarding with one code on your phone and turn it back on when you're home. Takes 10 seconds."</div>
+
+<h3 class="h-orange">"What if I want to change my hours or services?"</h3>
+<div class="say"><b>Ryan:</b> "Just text me. I update it within a few hours."</div>
+
+<h3 class="h-orange">"What if I have a helper/partner who also answers?"</h3>
+<div class="say"><b>Ryan:</b> "Doesn't change anything. If either of you picks up, she never touches the call. She only kicks in when nobody answers. Doesn't matter how many people you have on the phone."</div>
+</div>
+
+<div class="card">
+<div class="card-label">Trust & Company Questions</div>
+
+<h3 class="h-orange">"Who else uses this?"</h3>
+<div class="say"><b>Ryan:</b> "AI receptionists are one of the fastest growing tools in the trades right now. Thousands of plumbers, electricians, and HVAC companies across the country have started adopting them. It just appeared and the guys who get in now still have the edge. You heard the demo yourself — you tell me if that sounds like the future or not."</div>
+
+<h3 class="h-orange">"Where are you based?"</h3>
+<div class="say"><b>Ryan:</b> "We're based out of Atlanta."</div>
+<div class="note">If they ask for more details: "We're fully remote — everything's done over the phone and online. That's how we keep costs low and pass the savings to you. Most tech companies work this way now."</div>
+<div class="note">If they push further (office address, meet in person): "I appreciate that — we don't have a physical office, it's all remote. But I'm always a text or call away. You've got my direct number." Then redirect: "So let me get your info set up so we can get this running for you today."</div>
+</div>
+
 </div>
 </body>
 </html>
