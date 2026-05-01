@@ -1233,8 +1233,8 @@ var win=document.getElementById('meterWindow');
 var needlePct=(etH/24)*100;
 needle.style.left='calc('+needlePct+'% - 1px)';
 
-var winStart=(16/24)*100;
-var winEnd=(20/24)*100;
+var winStart=(8/24)*100;
+var winEnd=(17.5/24)*100;
 win.style.left=winStart+'%';
 win.style.width=(winEnd-winStart)+'%';
 
@@ -1282,7 +1282,7 @@ workHours.forEach(function(w){
   }
 });
 
-if(anyLive||(etH>=16&&etH<20)){
+if(anyLive||(etH>=8&&etH<17.5)){
   if(!win.classList.contains('active')){
     // First time entering — pulse + sound
     win.classList.add('pulse');
@@ -1292,9 +1292,9 @@ if(anyLive||(etH>=16&&etH<20)){
   win.classList.add('active');
   status.textContent='🟢 CALLING WINDOW ACTIVE';
   status.className='timebar-status go';
-}else if(etH<16){
+}else if(etH<8){
   win.classList.remove('active');
-  var mins=Math.ceil((16-etH)*60);
+  var mins=Math.ceil((8-etH)*60);
   if(mins<=120){
     status.textContent='Window opens in '+mins+' min';
   }else{
