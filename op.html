@@ -322,6 +322,7 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 </div>
 <div class="meter-wrap" id="meterWrap">
 <div class="meter-window" id="meterWindow"></div>
+<div class="meter-window" id="meterWindow2"></div>
 <div class="meter-needle" id="meterNeedle" style="left:0%"></div>
 <div class="meter-markers" id="meterMarkers"></div>
 </div>
@@ -1234,9 +1235,16 @@ var needlePct=(etH/24)*100;
 needle.style.left='calc('+needlePct+'% - 1px)';
 
 var winStart=(8/24)*100;
-var winEnd=(17.5/24)*100;
+var winEnd=(11/24)*100;
 win.style.left=winStart+'%';
 win.style.width=(winEnd-winStart)+'%';
+var win2=document.getElementById('meterWindow2');
+if(win2){
+  var w2Start=(15.5/24)*100;
+  var w2End=(17.5/24)*100;
+  win2.style.left=w2Start+'%';
+  win2.style.width=(w2End-w2Start)+'%';
+}
 
 // Build hour blocks (only once)
 var markers=document.getElementById('meterMarkers');
@@ -1282,7 +1290,8 @@ workHours.forEach(function(w){
   }
 });
 
-if(anyLive||(etH>=8&&etH<17.5)){
+var inWindow=(etH>=8&&etH<11)||(etH>=15.5&&etH<17.5);
+if(anyLive||inWindow){
   if(!win.classList.contains('active')){
     // First time entering — pulse + sound
     win.classList.add('pulse');
@@ -1292,9 +1301,11 @@ if(anyLive||(etH>=8&&etH<17.5)){
   win.classList.add('active');
   status.textContent='🟢 CALLING WINDOW ACTIVE';
   status.className='timebar-status go';
-}else if(etH<8){
+}else if(etH<8||(etH>=11&&etH<15.5)){
   win.classList.remove('active');
-  var mins=Math.ceil((8-etH)*60);
+  if(win2)win2.classList.remove('active');
+  var nextStart=etH<8?8:15.5;
+  var mins=Math.ceil((nextStart-etH)*60);
   if(mins<=120){
     status.textContent='Window opens in '+mins+' min';
   }else{
