@@ -1240,7 +1240,7 @@ win.style.left=winStart+'%';
 win.style.width=(winEnd-winStart)+'%';
 var win2=document.getElementById('meterWindow2');
 if(win2){
-  var w2Start=(15.5/24)*100;
+  var w2Start=(14/24)*100;
   var w2End=(17.5/24)*100;
   win2.style.left=w2Start+'%';
   win2.style.width=(w2End-w2Start)+'%';
@@ -1290,7 +1290,7 @@ workHours.forEach(function(w){
   }
 });
 
-var inWindow=(etH>=8&&etH<11)||(etH>=15.5&&etH<17.5);
+var inWindow=(etH>=8&&etH<11)||(etH>=14&&etH<17.5);
 if(anyLive||inWindow){
   if(!win.classList.contains('active')){
     // First time entering — pulse + sound
@@ -1301,10 +1301,10 @@ if(anyLive||inWindow){
   win.classList.add('active');
   status.textContent='🟢 CALLING WINDOW ACTIVE';
   status.className='timebar-status go';
-}else if(etH<8||(etH>=11&&etH<15.5)){
+}else if(etH<8||(etH>=11&&etH<14)){
   win.classList.remove('active');
   if(win2)win2.classList.remove('active');
-  var nextStart=etH<8?8:15.5;
+  var nextStart=etH<8?8:14;
   var mins=Math.ceil((nextStart-etH)*60);
   if(mins<=120){
     status.textContent='Window opens in '+mins+' min';
