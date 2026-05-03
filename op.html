@@ -1191,7 +1191,21 @@ saveLog();renderLog();
 }
 
 function updateLog(i,k,v){logData[i][k]=v;saveLog()}
-function deleteLog(i){logData.splice(i,1);saveLog();renderLog()}
+function deleteLog(i){
+var biz=logData[i].biz;
+logData.splice(i,1);
+saveLog();renderLog();
+if(typeof LEADS!=='undefined'){
+for(var j=0;j<LEADS.length;j++){
+if(LEADS[j].n===biz){
+var idx=usedLeads.indexOf(j);
+if(idx!==-1){usedLeads.splice(idx,1);localStorage.setItem('nola-usedleads',JSON.stringify(usedLeads))}
+break;
+}
+}
+document.getElementById('leadsCount').textContent=LEADS.length-usedLeads.length-deadLeads.length;
+}
+}
 function lockAllRows(){logData.forEach(function(r){r.locked=true});logData.sort(function(a,b){return(b.date+b.time).localeCompare(a.date+a.time)});saveLog();renderLog()}
 function unlockRow(i){logData[i].locked=false;saveLog();renderLog()}
 
