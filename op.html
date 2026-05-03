@@ -445,7 +445,7 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <h3 class="h-red">If NO (wife answers):</h3>
 <div class="say" id="wife-answers"><b>Ryan:</b> "Oh okay — and who am I talking with?"</div>
 <div class="predict">She says her name → <span class="placeholder">[her name]</span></div>
-<div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[her name]</span>, nice to talk to you. So I actually might have a really nice proposition for you and your husband — is he around right now?"</div>
+<div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[her name]</span>, nice to talk to you. So I actually might have a really nice proposition for both you guys — is he around right now?"</div>
 <div class="predict"><a class="pos" style="cursor:pointer" onclick="jumpTo('s2')">"yeah hold on"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('hes-out-alt')">"no he's out"</a><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('whos-calling')">"who is this?" / "what's this about?"</a></div>
 <div class="say" id="hes-out-alt"><b>Ryan:</b> "Can I ask when he's usually back?"</div>
 <div class="predict">They say a time → Log it, call back then.</div>
