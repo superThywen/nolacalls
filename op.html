@@ -414,6 +414,7 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <a href="#s4"><span class="ic">4️⃣</span>Handle Response</a>
 <a href="#obj"><span class="ic">🛡️</span>Objections</a>
 <a href="#fear"><span class="ic">😰</span>Change Fear</a>
+<a href="#appointment"><span class="ic">📅</span>Appointment</a>
 </nav>
 
 <!-- THEME -->
@@ -543,7 +544,7 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <div class="predict">They'll say <a class="pos" style="cursor:pointer" onclick="jumpTo('s4')">"yeah that sounds great"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neu" style="cursor:pointer" onclick="jumpTo('price-immediate')">"how much?"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">→ "I don't know..."</a></div>
 
 <h3 class="h-green">If they say "yeah"<span style="color:var(--txd);margin:0 6px">│</span>interested:</h3>
-<div class="say"><b>Ryan:</b> "Alright, well, I think the best way to do this is if we could book up an appointment tomorrow, maybe in the morning if that works for you, I'll give you a quick rundown on how everything works."</div>
+<div class="say" id="appointment"><b>Ryan:</b> "Alright, well, I think the best way to do this is if we could book up an appointment tomorrow, maybe in the morning if that works for you, I'll give you a quick rundown on how everything works."</div>
 <p class="inst">→ <a href="#s4" class="go">Step 4</a></p>
 
 <h3 class="h-orange" id="price-immediate">If they ask for price immediately:</h3>
