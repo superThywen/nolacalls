@@ -186,6 +186,7 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 .log-table tr.outcome-notinterested td,.log-table tr.outcome-wrongnumber td{background:rgba(239,68,68,.2) !important}
 .log-table tr.outcome-callback td{background:rgba(245,158,11,.2) !important}
 .log-table tr.outcome-gatekeeper td{background:rgba(10,10,30,.7) !important}
+.log-table tr.outcome-owneraway td{background:rgba(124,92,255,.2) !important}
 .log-table tr[draggable]{cursor:grab}
 .log-table tr.dragging{opacity:.4}
 .note-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
@@ -1089,7 +1090,7 @@ function openLog(){document.getElementById('logOverlay').classList.add('open');r
 function closeLog(){document.getElementById('logOverlay').classList.remove('open')}
 
 function outcomeClass(o){
-var map={'No Answer':'noanswer','Not Interested':'notinterested','Callback':'callback','Gatekeeper':'gatekeeper','Wrong Number':'wrongnumber','Took Demo':'tookdemo'};
+var map={'No Answer':'noanswer','Not Interested':'notinterested','Callback':'callback','Gatekeeper':'gatekeeper','Owner Away':'owneraway','Wrong Number':'wrongnumber','Took Demo':'tookdemo'};
 return map[o]?'outcome-'+map[o]:'';
 }
 
@@ -1117,7 +1118,7 @@ tr.innerHTML='<td style="text-align:center;color:var(--txd)">'+(i+1)+'</td>'+
 '<td><span class="cell-text">'+esc(r.state)+'</span><input value="'+esc(r.state)+'" onchange="updateLog('+i+',\'state\',this.value)" style="width:50px"></td>'+
 '<td><span class="cell-text">'+(esc(r.outcome)||'—')+'</span><select onchange="updateLog('+i+',\'outcome\',this.value);renderLog()">'+
 '<option value="">--</option>'+
-['Took Demo','No Answer','Not Interested','Callback','Gatekeeper','Wrong Number'].map(function(o){return'<option value="'+o+'"'+(r.outcome===o?' selected':'')+'>'+o+'</option>'}).join('')+
+['Took Demo','No Answer','Not Interested','Callback','Gatekeeper','Owner Away','Wrong Number'].map(function(o){return'<option value="'+o+'"'+(r.outcome===o?' selected':'')+'>'+o+'</option>'}).join('')+
 '</select></td>'+
 '<td><span class="cell-text">'+esc(r.objection)+'</span><input value="'+esc(r.objection)+'" onchange="updateLog('+i+',\'objection\',this.value)" style="width:80px"></td>'+
 '<td><span class="cell-text">'+esc(r.callback)+'</span><input value="'+esc(r.callback)+'" onchange="updateLog('+i+',\'callback\',this.value)" style="width:80px"></td>'+
