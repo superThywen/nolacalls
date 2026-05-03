@@ -1145,7 +1145,7 @@ tr.innerHTML='<td style="text-align:center;color:var(--txd)">'+(i+1)+'</td>'+
 ['Took Demo','No Answer','Not Interested','Callback','Gatekeeper','Owner Away','Wrong Number'].map(function(o){return'<option value="'+o+'"'+(r.outcome===o?' selected':'')+'>'+o+'</option>'}).join('')+
 '</select></td>'+
 '<td>'+(r.outcome==='Owner Away'?
-'<span class="cell-text">'+(r.callbackAt?timeUntil(r.callbackAt):'—')+'</span><span style="display:none"><button class="row-btn" onclick="setCallback('+i+',24)" style="font-size:10px">24h</button><button class="row-btn" onclick="setCallback('+i+',48)" style="font-size:10px">48h</button><button class="row-btn" onclick="setCallbackCustom('+i+')" style="font-size:10px">Custom</button></span>':
+(r.callbackAt?timeUntil(r.callbackAt):'<button class="row-btn" onclick="setCallback('+i+',24)" style="font-size:10px;margin:0 2px">24h</button><button class="row-btn" onclick="setCallback('+i+',48)" style="font-size:10px;margin:0 2px">48h</button><button class="row-btn" onclick="setCallbackCustom('+i+')" style="font-size:10px;margin:0 2px">Custom</button>'):
 '<span class="cell-text">'+esc(r.objection)+'</span><input value="'+esc(r.objection)+'" onchange="updateLog('+i+',\'objection\',this.value)" style="width:80px">')+'</td>'+
 '<td><span class="cell-text">'+esc(r.callback)+'</span><input value="'+esc(r.callback)+'" onchange="updateLog('+i+',\'callback\',this.value)" style="width:80px"></td>'+
 '<td><span class="cell-text">'+(r.notes?'<span style="cursor:pointer" onclick="openNote('+i+')">📒</span>':'')+'</span><span style="display:none"><input value="'+esc(r.notes)+'" style="width:60px" disabled><button class="row-btn" onclick="openNote('+i+')" style="font-size:11px">📝</button></span></td>'+
