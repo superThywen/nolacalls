@@ -1049,7 +1049,7 @@ tr.innerHTML='<td>'+(count+1)+'</td>'+
 '<td>'+l.r+'</td>'+
 '<td>'+(l.rt>0?l.rt+'/5':'—')+'</td>'+
 '<td><span class="'+sizeClass+'">'+l.s+'</span></td>'+
-'<td>'+(dead?'<span style="color:#EF4444;font-size:11px">Closed</span>':used?'<span style="color:var(--txd)">Done</span>':'<button class="leads-use" onclick="useLead('+i+',event)">Call</button><button class="leads-dead" onclick="markDead('+i+',event)">Dead</button>')+'</td>';
+'<td>'+(dead?'<span style="color:#EF4444;font-size:11px">Closed</span>':used?getLeadOutcome(l):'<button class="leads-use" onclick="useLead('+i+',event)">Call</button><button class="leads-dead" onclick="markDead('+i+',event)">Dead</button>')+'</td>';
 b.appendChild(tr);
 count++;
 }
@@ -1077,6 +1077,12 @@ function markDead(i,e){
 if(e)e.stopPropagation();
 if(deadLeads.indexOf(i)===-1){deadLeads.push(i);localStorage.setItem('nola-deadleads',JSON.stringify(deadLeads))}
 renderLeads();
+}
+
+function getLeadOutcome(l){
+var colors={'Took Demo':'#A6E3A1','No Answer':'#94A3B8','Not Interested':'#EF4444','Callback':'#F59E0B','Gatekeeper':'#64748B','Owner Away':'#7C5CFF','Wrong Number':'#EF4444'};
+for(var j=0;j<logData.length;j++){if(logData[j].biz===l.n&&logData[j].outcome){return'<span style="color:'+( colors[logData[j].outcome]||'var(--txd)')+';font-size:11px;font-weight:600">'+logData[j].outcome+'</span>'}}
+return'<span style="color:var(--txd)">Done</span>';
 }
 
 if(typeof LEADS!=='undefined'){document.getElementById('leadsCount').textContent=LEADS.length-usedLeads.length-deadLeads.length}
