@@ -454,7 +454,7 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <b>Ryan:</b> "<span class="placeholder">[Name]</span>, I need to talk to the owner — I'm calling about a business collaboration."</div>
 </div>
 </div>
-<div class="predict">They'll say <span class="pos">"yeah hold on"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"he's right here"</span> → <a href="#s2" class="go">Step 2</a></div>
+<div class="predict">They'll say <a class="pos" style="cursor:pointer" onclick="jumpTo('s2')">"yeah hold on"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="pos" style="cursor:pointer" onclick="jumpTo('s2')">"he's right here"</a> → <a href="#s2" class="go">Step 2</a></div>
 </div>
 
 <hr class="div">
@@ -478,33 +478,33 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <div class="say" id="alt-heading-to-job"><b>Ryan:</b> "I see. I know that right now plumbers take a lot of calls and it takes time away from jobs. Is this something you're dealing with too?"</div>
 <div style="height:24px"></div>
 <div class="say" id="alt-whatdoyoumean"><b>Ryan:</b> "Basically, it's about the best pitch you're ever going to hear in your life."</div>
-<div class="predict">They'll say <span class="pos">"ok"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"yeah sure"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"go ahead"</span></div>
-<div class="say"><b>Ryan:</b> "Ok so yeah, let me ask you a question — what happens to a call right now when people are trying to reach you when you're out on a job? Do you have a receptionist that handles this type of stuff?"</div>
-<div class="predict">They'll describe their situation — <span class="pos">"goes to voicemail"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"I call them back"</span><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('wife-handler')">"my wife answers"</a></div>
-<div class="say"><b>Ryan:</b> "I see. So you're dealing with this as well, then I think you're going to love that I'm calling. If you want to give me 30 seconds, I can explain how my system works and see what you think."</div>
-<div class="predict">They'll say <span class="pos">"sure go ahead"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"yeah ok"</span>. If silence → <span class="neu">"Did you hear me, boss?"</span><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">→ "I don't think I'm interested"</a></div>
+<div class="predict">They'll say <a class="pos" style="cursor:pointer" onclick="jumpTo('alt-side-pitch')">"ok"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="pos" style="cursor:pointer" onclick="jumpTo('alt-side-pitch')">"yeah sure"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="pos" style="cursor:pointer" onclick="jumpTo('alt-side-pitch')">"go ahead"</a></div>
+<div class="say" id="alt-side-pitch"><b>Ryan:</b> "Ok so yeah, let me ask you a question — what happens to a call right now when people are trying to reach you when you're out on a job? Do you have a receptionist that handles this type of stuff?"</div>
+<div class="predict">They'll describe their situation — <a class="pos" style="cursor:pointer" onclick="jumpTo('alt-side-love')">"goes to voicemail"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="pos" style="cursor:pointer" onclick="jumpTo('alt-side-love')">"I call them back"</a><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('wife-handler')">"my wife answers"</a></div>
+<div class="say" id="alt-side-love"><b>Ryan:</b> "I see. So you're dealing with this as well, then I think you're going to love that I'm calling. If you want to give me 30 seconds, I can explain how my system works and see what you think."</div>
+<div class="predict">They'll say <a class="pos" style="cursor:pointer" onclick="jumpTo('the-pitch')">"sure go ahead"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="pos" style="cursor:pointer" onclick="jumpTo('the-pitch')">"yeah ok"</a>. If silence → <span class="neu">"Did you hear me, boss?"</span><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">→ "I don't think I'm interested"</a></div>
 </div>
 </div>
-<div class="predict">They'll say <span class="pos">"yeah"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"yes sir"</span><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('dodge-handler')">→ "who is this"</a></div>
+<div class="predict">They'll say <a class="pos" style="cursor:pointer" onclick="jumpTo('oh-ok-perfect')">"yeah"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="pos" style="cursor:pointer" onclick="jumpTo('oh-ok-perfect')">"yes sir"</a><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('dodge-handler')">→ "who is this"</a></div>
 
 <h3 class="h-green">If they say "yeah"<span style="color:var(--txd);margin:0 6px">│</span>confirm:</h3>
-<div class="say"><b>Ryan:</b> "Oh ok, perfect, well then — I think you're going to love that I'm calling. If you want to give me 30 seconds, I can explain how my system works and see what you think."</div>
-<div class="predict">They'll say <span class="pos">"sure go ahead"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"yeah ok"</span>. If silence → <span class="neu">"Did you hear me, boss?"</span></div>
+<div class="say" id="oh-ok-perfect"><b>Ryan:</b> "Oh ok, perfect, well then — I think you're going to love that I'm calling. If you want to give me 30 seconds, I can explain how my system works and see what you think."</div>
+<div class="predict">They'll say <a class="pos" style="cursor:pointer" onclick="jumpTo('the-pitch')">"sure go ahead"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="pos" style="cursor:pointer" onclick="jumpTo('the-pitch')">"yeah ok"</a>. If silence → <span class="neu">"Did you hear me, boss?"</span></div>
 
 <h3 class="h-orange" id="dodge-handler">If they dodge ("What is this about?"<span style="color:var(--txd);margin:0 6px">│</span>"Who are you?")</h3>
 <div class="say"><b>Ryan:</b> "So my name is Ryan, <span style="color:var(--a);font-size:14px;font-weight:600">— 1 sec —</span> and I started working with plumbing companies. I've identified that <span class="placeholder biz-name">[Business Name]</span> has a big problem with missed calls — and I built something that fixes it, and it's completely free. I know it sounds too good to be true, just give me 30 seconds — how does that sound?"</div>
-<div class="predict">They'll say <span class="pos">"ok go ahead"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neg">"not interested"</span></div>
+<div class="predict">They'll say <a class="pos" style="cursor:pointer" onclick="jumpTo('the-pitch')">"ok go ahead"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">"not interested"</a></div>
 
 <h3 class="h-green">If "not interested" after dodge:</h3>
 <div class="say"><b>Ryan:</b> "We're here to help you out <span class="placeholder owner-name">[Owner Name]</span>, that's all that matters right now. Just give me 30 seconds, I'll explain."</div>
-<div class="predict"><span class="pos">"ok go ahead"</span><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">→ still "not interested"</a></div>
+<div class="predict"><a class="pos" style="cursor:pointer" onclick="jumpTo('the-pitch')">"ok go ahead"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">→ still "not interested"</a></div>
 
 <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0">
 
 <h3 class="h-green">THE PITCH (after they give you the 30 seconds):</h3>
 
-<div class="say"><b>Ryan:</b> "Ok so yeah, let me ask you a question — what happens to a call right now when people are trying to reach you when you're out on a job? Do you have a receptionist that handles this type of stuff?"</div>
-<div class="predict">They'll describe their situation — <span class="pos">"goes to voicemail"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"I call them back"</span><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('wife-handler')">"my wife answers"</a></div>
+<div class="say" id="the-pitch"><b>Ryan:</b> "Ok so yeah, let me ask you a question — what happens to a call right now when people are trying to reach you when you're out on a job? Do you have a receptionist that handles this type of stuff?"</div>
+<div class="predict">They'll describe their situation — <a class="pos" style="cursor:pointer" onclick="jumpTo('s3')">"goes to voicemail"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="pos" style="cursor:pointer" onclick="jumpTo('s3')">"I call them back"</a><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('wife-handler')">"my wife answers"</a></div>
 <p class="inst">→ <a href="#s3" class="go">Step 3 — How It Works</a></p>
 </div>
 
@@ -513,24 +513,24 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <div class="card-label">Follow-up dialogue</div>
 
 <div class="say"><b>Ryan:</b> "Hi <span class="placeholder owner-name">[Owner Name]</span>, this is Ryan — I tried reaching you earlier this week. I know it's tough to get to the phone when you're on a job."</div>
-<div class="predict">They'll say <span class="pos">"yeah, it's been crazy"</span> or similar.</div>
+<div class="predict">They'll say <a class="pos" style="cursor:pointer" onclick="jumpTo('thats-why-calling')">"yeah, it's been crazy"</a> or similar.</div>
 
-<div class="say"><b>Ryan:</b> "That's actually why I'm calling. I know you take a lot of calls and it pulls you away from jobs. Give me 30 seconds — I built something that fixes that, for free."</div>
-<div class="predict"><span class="pos">"ok go ahead"</span><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('dodge-handler')">"who are you?"</a><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('alt-whatdoyoumean')">"sounds too good to be true"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">"not interested"</a></div>
+<div class="say" id="thats-why-calling"><b>Ryan:</b> "That's actually why I'm calling. I know you take a lot of calls and it pulls you away from jobs. Give me 30 seconds — I built something that fixes that, for free."</div>
+<div class="predict"><a class="pos" style="cursor:pointer" onclick="jumpTo('the-pitch')">"ok go ahead"</a><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('dodge-handler')">"who are you?"</a><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('alt-whatdoyoumean')">"sounds too good to be true"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">"not interested"</a></div>
 <p class="inst">→ <a href="#s3" class="go">Step 3 — How It Works</a></p>
 </div>
 
 <h3 class="h-orange" id="wife-handler">If "my wife handles the calls":</h3>
 <div class="say"><b>Ryan:</b> "Oh that's great, so you've got someone doing it already. Let me ask you this though — does she ever miss any? Like when she's out running errands, or after hours, weekends — what happens to those calls?"</div>
-<div class="predict">They'll say <span class="pos">"yeah she misses some"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neu">"not really, she gets most of them"</span></div>
+<div class="predict">They'll say <a class="pos" style="cursor:pointer" onclick="jumpTo('wife-misses-some')">"yeah she misses some"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neu" style="cursor:pointer" onclick="jumpTo('wife-gets-most')">"not really, she gets most of them"</a></div>
 
 <h3 class="h-green">If they admit she misses some:</h3>
-<div class="say"><b>Ryan:</b> "Yeah, that's exactly what this is for. It's not replacing her at all — she keeps doing what she's doing. This just catches the ones that slip through. After hours, when she's busy, whatever. It's like a safety net so you never lose a job."</div>
-<div class="predict"><span class="pos">"ok that makes sense"</span> → <a href="#s3" class="go">Step 3 — How It Works</a></div>
+<div class="say" id="wife-misses-some"><b>Ryan:</b> "Yeah, that's exactly what this is for. It's not replacing her at all — she keeps doing what she's doing. This just catches the ones that slip through. After hours, when she's busy, whatever. It's like a safety net so you never lose a job."</div>
+<div class="predict"><a class="pos" style="cursor:pointer" onclick="jumpTo('s3')">"ok that makes sense"</a> → <a href="#s3" class="go">Step 3 — How It Works</a></div>
 
 <h3 class="h-orange">If they say she gets most of them:</h3>
-<div class="say"><b>Ryan:</b> "That's awesome. But even one missed call — that's a $400, $500 job gone to the next guy. This would just back her up. She keeps doing everything, and the system only kicks in when she can't get to the phone. Zero change for her."</div>
-<div class="predict"><span class="pos">"hmm ok"</span> → <a href="#s3" class="go">Step 3 — How It Works</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">→ "nah we're good"</a></div>
+<div class="say" id="wife-gets-most"><b>Ryan:</b> "That's awesome. But even one missed call — that's a $400, $500 job gone to the next guy. This would just back her up. She keeps doing everything, and the system only kicks in when she can't get to the phone. Zero change for her."</div>
+<div class="predict"><a class="pos" style="cursor:pointer" onclick="jumpTo('s3')">"hmm ok"</a> → <a href="#s3" class="go">Step 3 — How It Works</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">→ "nah we're good"</a></div>
 
 <hr class="div">
 
@@ -540,13 +540,13 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <div class="card-label">The pitch</div>
 
 <div class="say"><b>Ryan:</b> "Well <span style="color:var(--txd);font-size:14px">/ ok so yeah</span> — it's pretty simple. I built an AI receptionist that works 24/7. It answers every single call you miss, sounds exactly like a human, and can answer any questions, like pricing, services, and availability. But the best part <span class="placeholder owner-name">[Owner Name]</span> is that it books jobs directly into your calendar without you lifting a finger. Is that something you'd find useful?"</div>
-<div class="predict">They'll say <span class="pos">"yeah that sounds great"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neu">"how much?"</span><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" onclick="jumpTo('obj')">→ "I don't know..."</a></div>
+<div class="predict">They'll say <a class="pos" style="cursor:pointer" onclick="jumpTo('s4')">"yeah that sounds great"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neu" style="cursor:pointer" onclick="jumpTo('price-immediate')">"how much?"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('obj')">→ "I don't know..."</a></div>
 
 <h3 class="h-green">If they say "yeah"<span style="color:var(--txd);margin:0 6px">│</span>interested:</h3>
 <div class="say"><b>Ryan:</b> "Alright, well, I think the best way to do this is if we could book up an appointment tomorrow, maybe in the morning if that works for you, I'll give you a quick rundown on how everything works."</div>
 <p class="inst">→ <a href="#s4" class="go">Step 4</a></p>
 
-<h3 class="h-orange">If they ask for price immediately:</h3>
+<h3 class="h-orange" id="price-immediate">If they ask for price immediately:</h3>
 <div class="say"><b>Ryan:</b> "After the first seven days, if you like it, we'll charge you 99 bucks a month. But if you don't like it, we'll just part ways and that's it. You gotta listen to the demo number and let me know what you think."</div>
 <p class="inst">→ <a href="#s4" class="go">Step 4</a></p>
 </div>
@@ -560,8 +560,8 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 
 <h3 class="h-green">✅ YES<span style="color:var(--txd);margin:0 6px">│</span>"sure"<span style="color:var(--txd);margin:0 6px">│</span>"send it"</h3>
 <div class="say"><b>Ryan:</b> "Alright, I'm going to text you a phone number right now. Call it whenever you get a free minute — pretend you've got a leak or a clog, whatever comes to mind. It'll blow your mind. And then could you talk tomorrow morning, or in the afternoon?"</div>
-<div class="predict"><span class="pos">"tomorrow morning"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="pos">"call me at [time]"</span><span style="color:var(--txd);margin:0 6px">│</span><span class="neu">"just text me"</span></div>
-<div class="say"><b>Ryan:</b> "Perfect. I'll shoot you that number right now. Give it a call when you get a chance and I'll follow up with you tomorrow. Sound good?"</div>
+<div class="predict"><a class="pos" style="cursor:pointer" onclick="jumpTo('perfect-shoot')">"tomorrow morning"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="pos" style="cursor:pointer" onclick="jumpTo('perfect-shoot')">"call me at [time]"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neu" style="cursor:pointer" onclick="jumpTo('perfect-shoot')">"just text me"</a></div>
+<div class="say" id="perfect-shoot"><b>Ryan:</b> "Perfect. I'll shoot you that number right now. Give it a call when you get a chance and I'll follow up with you tomorrow. Sound good?"</div>
 <p class="inst">Text (978) 391-6222 immediately. Log the callback time. Move on.</p>
 
 <h3 class="h-orange">🤔 CURIOUS — "What is it?"<span style="color:var(--txd);margin:0 6px">│</span>"How does it work?"</h3>
