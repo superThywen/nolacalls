@@ -417,6 +417,7 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <a href="#fear"><span class="ic">😰</span>Change Fear</a>
 <a href="javascript:void(0)" onclick="jumpTo('appointment')"><span class="ic">📅</span>Appointment</a>
 <a href="javascript:void(0)" onclick="jumpTo('voicemail')"><span class="ic">📞</span>Voicemail</a>
+<a href="javascript:void(0)" onclick="jumpTo('gatekeep')"><span class="ic">🚪</span>Gatekeep</a>
 </nav>
 
 <!-- THEME -->
@@ -782,6 +783,15 @@ Notes: [anything else]
 <div class="card">
 <div class="card-label">Leave this message</div>
 <div class="say"><b>Ryan:</b> "Hi <span class="placeholder owner-name">[Owner Name]</span>, my name is Ryan. I'm calling for this exact reason that the voicemail just told me — I want to help you, for free, not have to worry about missing calls without a receptionist. I just came to the market and I have something you might want to hear. It's amazing and it fixes this problem entirely. I know it sounds very pitch-salesy but you will love it. Call me back when you can if you want to fix this problem — meaning you will get more jobs, since you're losing them because you don't have a 24/7 receptionist. And no, it's not what you think."</div>
+</div>
+
+<hr class="div">
+
+<h2 id="gatekeep">🚪 Gatekeeper — Last Resort</h2>
+<div class="card">
+<div class="card-label">When they refuse to transfer you</div>
+<div class="say"><b>Ryan:</b> "Would you really let the owner find out that you hid a business proposition from him? Transfer me to the owner, or let me know when I can call back for you to transfer me to him."</div>
+<div class="predict"><a class="pos" style="cursor:pointer" onclick="jumpTo('s2')">"hold on"</a><span style="color:var(--txd);margin:0 6px">│</span><span class="neu">"call back at [time]"</span> → Log it.<span style="color:var(--txd);margin:0 6px">│</span><span class="neg">"don't call again"</span> → Comply. DNC.</div>
 </div>
 
 <hr class="div">
