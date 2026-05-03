@@ -1042,7 +1042,7 @@ var sizeClass=l.s==='Small'?'leads-size-s':l.s==='Medium'?'leads-size-m':'leads-
 var tr=document.createElement('tr');
 if(dead)tr.className='dead';
 else if(used)tr.className='used';
-var outcomeText=used?getLeadOutcome(l):'';
+var outcomeText=used?getLeadOutcomeText(l):'';
 var outcomeColor=used?getLeadOutcomeColor(l):'';
 if(outcomeColor)tr.style.background=outcomeColor;
 tr.innerHTML='<td>'+(count+1)+'</td>'+
@@ -1083,14 +1083,24 @@ renderLeads();
 }
 
 function getLeadOutcome(l){
-var colors={'Took Demo':'#A6E3A1','No Answer':'#94A3B8','Not Interested':'#EF4444','Callback':'#F59E0B','Gatekeeper':'#64748B','Owner Away':'#7C5CFF','Wrong Number':'#EF4444'};
-for(var j=0;j<logData.length;j++){if(logData[j].biz===l.n&&logData[j].outcome){return logData[j].outcome}}
-return'';
+for(var j=0;j<logData.length;j++){if(logData[j].biz===l.n&&logData[j].outcome){return logData[j]}}
+return null;
 }
 function getLeadOutcomeColor(l){
 var bgColors={'Took Demo':'rgba(166,227,161,.2)','No Answer':'rgba(150,160,180,.2)','Not Interested':'rgba(239,68,68,.2)','Callback':'rgba(245,158,11,.2)','Gatekeeper':'rgba(10,10,30,.7)','Owner Away':'rgba(124,92,255,.2)','Wrong Number':'rgba(239,68,68,.2)'};
-var outcome=getLeadOutcome(l);
-return bgColors[outcome]||'';
+var entry=getLeadOutcome(l);
+return entry?bgColors[entry.outcome]||'':'';
+}
+function getLeadOutcomeText(l){
+var entry=getLeadOutcome(l);
+if(!entry)return'';
+if(entry.outcome==='Owner Away'&&entry.callbackAt){
+var diff=entry.callbackAt-Date.now();
+if(diff<=0)return'<span style="color:#39FF14;font-weight:700;font-size:11px">READY — Call Now</span>';
+var h=Math.floor(diff/3600000);var m=Math.floor((diff%3600000)/60000);
+return'<span style="color:#F59E0B;font-weight:700;font-size:11px">Wait '+h+'h '+m+'m</span>';
+}
+return entry.outcome;
 }
 
 if(typeof LEADS!=='undefined'){document.getElementById('leadsCount').textContent=LEADS.length-usedLeads.length-deadLeads.length}
@@ -1134,7 +1144,9 @@ tr.innerHTML='<td style="text-align:center;color:var(--txd)">'+(i+1)+'</td>'+
 '<option value="">--</option>'+
 ['Took Demo','No Answer','Not Interested','Callback','Gatekeeper','Owner Away','Wrong Number'].map(function(o){return'<option value="'+o+'"'+(r.outcome===o?' selected':'')+'>'+o+'</option>'}).join('')+
 '</select></td>'+
-'<td><span class="cell-text">'+esc(r.objection)+'</span><input value="'+esc(r.objection)+'" onchange="updateLog('+i+',\'objection\',this.value)" style="width:80px"></td>'+
+'<td>'+(r.outcome==='Owner Away'?
+'<span class="cell-text">'+(r.callbackAt?timeUntil(r.callbackAt):'—')+'</span><span style="display:none"><button class="row-btn" onclick="setCallback('+i+',24)" style="font-size:10px">24h</button><button class="row-btn" onclick="setCallback('+i+',48)" style="font-size:10px">48h</button><button class="row-btn" onclick="setCallbackCustom('+i+')" style="font-size:10px">Custom</button></span>':
+'<span class="cell-text">'+esc(r.objection)+'</span><input value="'+esc(r.objection)+'" onchange="updateLog('+i+',\'objection\',this.value)" style="width:80px">')+'</td>'+
 '<td><span class="cell-text">'+esc(r.callback)+'</span><input value="'+esc(r.callback)+'" onchange="updateLog('+i+',\'callback\',this.value)" style="width:80px"></td>'+
 '<td><span class="cell-text">'+(r.notes?'<span style="cursor:pointer" onclick="openNote('+i+')">📒</span>':'')+'</span><span style="display:none"><input value="'+esc(r.notes)+'" style="width:60px" disabled><button class="row-btn" onclick="openNote('+i+')" style="font-size:11px">📝</button></span></td>'+
 '<td>'+
@@ -1161,6 +1173,21 @@ function updateLog(i,k,v){logData[i][k]=v;saveLog()}
 function deleteLog(i){logData.splice(i,1);saveLog();renderLog()}
 function lockAllRows(){logData.forEach(function(r){r.locked=true});logData.sort(function(a,b){return(b.date+b.time).localeCompare(a.date+a.time)});saveLog();renderLog()}
 function unlockRow(i){logData[i].locked=false;saveLog();renderLog()}
+
+function setCallback(i,hours){
+logData[i].callbackAt=Date.now()+(hours*3600000);
+saveLog();renderLog();
+}
+function setCallbackCustom(i){
+var input=prompt('Enter hours until callback (e.g. 72):');
+if(input&&!isNaN(input)){setCallback(i,parseInt(input))}
+}
+function timeUntil(ts){
+var diff=ts-Date.now();
+if(diff<=0)return'<span style="color:#39FF14;font-weight:700">READY</span>';
+var h=Math.floor(diff/3600000);var m=Math.floor((diff%3600000)/60000);
+return'<span style="color:#F59E0B;font-weight:600">'+h+'h '+m+'m</span>';
+}
 function saveLog(){localStorage.setItem('nola-calllog',JSON.stringify(logData));document.getElementById('logCount').textContent=logData.length}
 
 function openNote(i){
