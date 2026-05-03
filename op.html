@@ -1042,6 +1042,9 @@ var sizeClass=l.s==='Small'?'leads-size-s':l.s==='Medium'?'leads-size-m':'leads-
 var tr=document.createElement('tr');
 if(dead)tr.className='dead';
 else if(used)tr.className='used';
+var outcomeText=used?getLeadOutcome(l):'';
+var outcomeColor=used?getLeadOutcomeColor(l):'';
+if(outcomeColor)tr.style.background=outcomeColor;
 tr.innerHTML='<td>'+(count+1)+'</td>'+
 '<td><b>'+l.n+'</b></td>'+
 '<td>'+l.p+'</td>'+
@@ -1049,7 +1052,7 @@ tr.innerHTML='<td>'+(count+1)+'</td>'+
 '<td>'+l.r+'</td>'+
 '<td>'+(l.rt>0?l.rt+'/5':'—')+'</td>'+
 '<td><span class="'+sizeClass+'">'+l.s+'</span></td>'+
-'<td>'+(dead?'<span style="color:#EF4444;font-size:11px">Closed</span>':used?getLeadOutcome(l):'<button class="leads-use" onclick="useLead('+i+',event)">Call</button><button class="leads-dead" onclick="markDead('+i+',event)">Dead</button>')+'</td>';
+'<td>'+(dead?'<span style="color:#EF4444;font-size:11px">Closed</span>':used?(outcomeText||'<span style="color:var(--txd)">Done</span>'):'<button class="leads-use" onclick="useLead('+i+',event)">Call</button><button class="leads-dead" onclick="markDead('+i+',event)">Dead</button>')+'</td>';
 b.appendChild(tr);
 count++;
 }
@@ -1081,8 +1084,13 @@ renderLeads();
 
 function getLeadOutcome(l){
 var colors={'Took Demo':'#A6E3A1','No Answer':'#94A3B8','Not Interested':'#EF4444','Callback':'#F59E0B','Gatekeeper':'#64748B','Owner Away':'#7C5CFF','Wrong Number':'#EF4444'};
-for(var j=0;j<logData.length;j++){if(logData[j].biz===l.n&&logData[j].outcome){return'<span style="color:'+( colors[logData[j].outcome]||'var(--txd)')+';font-size:11px;font-weight:600">'+logData[j].outcome+'</span>'}}
-return'<span style="color:var(--txd)">Done</span>';
+for(var j=0;j<logData.length;j++){if(logData[j].biz===l.n&&logData[j].outcome){return logData[j].outcome}}
+return'';
+}
+function getLeadOutcomeColor(l){
+var bgColors={'Took Demo':'rgba(166,227,161,.2)','No Answer':'rgba(150,160,180,.2)','Not Interested':'rgba(239,68,68,.2)','Callback':'rgba(245,158,11,.2)','Gatekeeper':'rgba(10,10,30,.7)','Owner Away':'rgba(124,92,255,.2)','Wrong Number':'rgba(239,68,68,.2)'};
+var outcome=getLeadOutcome(l);
+return bgColors[outcome]||'';
 }
 
 if(typeof LEADS!=='undefined'){document.getElementById('leadsCount').textContent=LEADS.length-usedLeads.length-deadLeads.length}
