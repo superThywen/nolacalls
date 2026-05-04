@@ -1229,7 +1229,7 @@ tr.innerHTML='<td style="text-align:center;color:var(--txd)">'+(i+1)+'</td>'+
 '<td><span class="cell-text">'+esc(r.owner)+'</span><input value="'+esc(r.owner)+'" onchange="updateLog('+i+',\'owner\',this.value)" style="width:60px"></td>'+
 '<td><span class="cell-text">'+esc(r.phone)+'</span><input value="'+esc(r.phone)+'" onchange="updateLog('+i+',\'phone\',this.value)" style="width:100px"></td>'+
 '<td><span class="cell-text">'+esc(r.state)+'</span><input value="'+esc(r.state)+'" onchange="updateLog('+i+',\'state\',this.value)" style="width:50px"></td>'+
-'<td><span class="cell-text">'+(esc(r.outcome)||'—')+'</span><select onchange="updateLog('+i+',\'outcome\',this.value);renderLog()">'+
+'<td><span class="cell-text">'+(esc(r.outcome)||'—')+'</span><select onchange="updateLog('+i+',\'outcome\',this.value);renderLog();renderLeads()">'+
 '<option value="">--</option>'+
 ['Took Demo','No Answer','Not Interested','Callback','Gatekeeper','Owner Away','Wrong Number'].map(function(o){return'<option value="'+o+'"'+(r.outcome===o?' selected':'')+'>'+o+'</option>'}).join('')+
 '</select></td>'+
