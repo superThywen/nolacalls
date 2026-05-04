@@ -1121,10 +1121,12 @@ var dead=deadLeads.indexOf(i)!==-1;
 if(dead&&!search){continue}
 var sizeClass=l.s==='Small'?'leads-size-s':l.s==='Medium'?'leads-size-m':'leads-size-l';
 var tr=document.createElement('tr');
+var outcomeEntry=getLeadOutcome(l);
+var isNoAnswer=outcomeEntry&&outcomeEntry.outcome==='No Answer';
 if(dead)tr.className='dead';
-else if(used)tr.className='used';
-var outcomeText=used?getLeadOutcomeText(l):'';
-var outcomeColor=used?getLeadOutcomeColor(l):'';
+else if(used&&!isNoAnswer)tr.className='used';
+var outcomeText=(used||isNoAnswer)?getLeadOutcomeText(l):'';
+var outcomeColor=(used||isNoAnswer)?getLeadOutcomeColor(l):'';
 if(outcomeColor)tr.style.background=outcomeColor;
 tr.innerHTML='<td>'+(count+1)+'</td>'+
 '<td><b>'+l.n+'</b></td>'+
@@ -1133,11 +1135,11 @@ tr.innerHTML='<td>'+(count+1)+'</td>'+
 '<td>'+l.r+'</td>'+
 '<td>'+(l.rt>0?l.rt+'/5':'—')+'</td>'+
 '<td><span class="'+sizeClass+'">'+l.s+'</span></td>'+
-'<td>'+(dead?'<span style="color:#EF4444;font-size:11px">Closed</span>':used?(outcomeText||'<span style="color:var(--txd)">Done</span>'):'<button class="leads-use" onclick="useLead('+i+',event)">Call</button><button class="leads-dead" onclick="markDead('+i+',event)">Dead</button>')+'</td>';
+'<td>'+(dead?'<span style="color:#EF4444;font-size:11px">Closed</span>':(used&&!isNoAnswer)?(outcomeText||'<span style="color:var(--txd)">Done</span>'):isNoAnswer?('<span style="color:var(--txd);font-size:11px">No Answer</span> <button class="leads-use" onclick="useLead('+i+',event)">Call</button>'):'<button class="leads-use" onclick="useLead('+i+',event)">Call</button><button class="leads-dead" onclick="markDead('+i+',event)">Dead</button>')+'</td>';
 b.appendChild(tr);
 count++;
 }
-document.getElementById('leadsCount').textContent=LEADS.length-usedLeads.length-deadLeads.length;
+document.getElementById('leadsCount').textContent=countAvailableLeads();
 }
 
 function useLead(i,e){
@@ -1184,7 +1186,13 @@ return'<span style="color:#F59E0B;font-weight:700;font-size:11px">Wait '+h+'h '+
 return entry.outcome;
 }
 
-if(typeof LEADS!=='undefined'){document.getElementById('leadsCount').textContent=LEADS.length-usedLeads.length-deadLeads.length}
+function countAvailableLeads(){
+if(typeof LEADS==='undefined')return 0;
+var noAnswerCount=0;
+for(var i=0;i<usedLeads.length;i++){var l=LEADS[usedLeads[i]];if(l&&getLeadOutcome(l)&&getLeadOutcome(l).outcome==='No Answer')noAnswerCount++}
+return LEADS.length-usedLeads.length-deadLeads.length+noAnswerCount;
+}
+if(typeof LEADS!=='undefined'){document.getElementById('leadsCount').textContent=countAvailableLeads()}
 
 // ===== CALL LOG =====
 var logData=JSON.parse(localStorage.getItem('nola-calllog')||'[]');
@@ -1263,7 +1271,7 @@ if(idx!==-1){usedLeads.splice(idx,1);localStorage.setItem('nola-usedleads',JSON.
 break;
 }
 }
-document.getElementById('leadsCount').textContent=LEADS.length-usedLeads.length-deadLeads.length;
+document.getElementById('leadsCount').textContent=countAvailableLeads();
 }
 }
 function lockAllRows(){logData.forEach(function(r){r.locked=true});logData.sort(function(a,b){return(b.date+b.time).localeCompare(a.date+a.time)});saveLog();renderLog()}
