@@ -203,6 +203,7 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 .log-table tr.outcome-callback td{background:rgba(245,158,11,.2) !important}
 .log-table tr.outcome-gatekeeper td{background:rgba(10,10,30,.7) !important}
 .log-table tr.outcome-owneraway td{background:rgba(124,92,255,.2) !important}
+.log-table tr.outcome-ownercallback td{background:rgba(245,158,11,.3) !important}
 .log-table tr[draggable]{cursor:grab}
 .log-table tr.dragging{opacity:.4}
 .note-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
@@ -1123,10 +1124,11 @@ var sizeClass=l.s==='Small'?'leads-size-s':l.s==='Medium'?'leads-size-m':'leads-
 var tr=document.createElement('tr');
 var outcomeEntry=getLeadOutcome(l);
 var isNoAnswer=outcomeEntry&&outcomeEntry.outcome==='No Answer';
+var isOwnerCallBack=outcomeEntry&&outcomeEntry.outcome==='Owner Will Call Back';
 if(dead)tr.className='dead';
-else if(used&&!isNoAnswer)tr.className='used';
-var outcomeText=(used||isNoAnswer)?getLeadOutcomeText(l):'';
-var outcomeColor=(used||isNoAnswer)?getLeadOutcomeColor(l):'';
+else if(used&&!isNoAnswer&&!isOwnerCallBack)tr.className='used';
+var outcomeText=(used||isNoAnswer||isOwnerCallBack)?getLeadOutcomeText(l):'';
+var outcomeColor=(used||isNoAnswer||isOwnerCallBack)?getLeadOutcomeColor(l):'';
 if(outcomeColor)tr.style.background=outcomeColor;
 tr.innerHTML='<td>'+(count+1)+'</td>'+
 '<td><b>'+l.n+'</b></td>'+
@@ -1135,7 +1137,7 @@ tr.innerHTML='<td>'+(count+1)+'</td>'+
 '<td>'+l.r+'</td>'+
 '<td>'+(l.rt>0?l.rt+'/5':'—')+'</td>'+
 '<td><span class="'+sizeClass+'">'+l.s+'</span></td>'+
-'<td>'+(dead?'<span style="color:#EF4444;font-size:11px">Closed</span>':(used&&!isNoAnswer)?(outcomeText||'<span style="color:var(--txd)">Done</span>'):isNoAnswer?('<span style="color:var(--txd);font-size:11px">No Answer</span> <button class="leads-use" onclick="useLead('+i+',event)">Call</button>'):'<button class="leads-use" onclick="useLead('+i+',event)">Call</button><button class="leads-dead" onclick="markDead('+i+',event)">Dead</button>')+'</td>';
+'<td>'+(dead?'<span style="color:#EF4444;font-size:11px">Closed</span>':(used&&!isNoAnswer&&!isOwnerCallBack)?(outcomeText||'<span style="color:var(--txd)">Done</span>'):isNoAnswer?('<span style="color:var(--txd);font-size:11px">No Answer</span> <button class="leads-use" onclick="useLead('+i+',event)">Call</button>'):isOwnerCallBack?('<span style="color:#F59E0B;font-size:11px;font-weight:600">Owner Will Call Back</span>'):'<button class="leads-use" onclick="useLead('+i+',event)">Call</button><button class="leads-dead" onclick="markDead('+i+',event)">Dead</button>')+'</td>';
 b.appendChild(tr);
 count++;
 }
@@ -1170,7 +1172,7 @@ for(var j=0;j<logData.length;j++){if(logData[j].biz===l.n&&logData[j].outcome){r
 return null;
 }
 function getLeadOutcomeColor(l){
-var bgColors={'Took Demo':'rgba(166,227,161,.2)','No Answer':'rgba(150,160,180,.2)','Not Interested':'rgba(239,68,68,.2)','Callback':'rgba(245,158,11,.2)','Gatekeeper':'rgba(10,10,30,.7)','Owner Away':'rgba(124,92,255,.2)','Wrong Number':'rgba(239,68,68,.2)'};
+var bgColors={'Took Demo':'rgba(166,227,161,.2)','No Answer':'rgba(150,160,180,.2)','Not Interested':'rgba(239,68,68,.2)','Callback':'rgba(245,158,11,.2)','Gatekeeper':'rgba(10,10,30,.7)','Owner Away':'rgba(124,92,255,.2)','Owner Will Call Back':'rgba(245,158,11,.3)','Wrong Number':'rgba(239,68,68,.2)'};
 var entry=getLeadOutcome(l);
 return entry?bgColors[entry.outcome]||'':'';
 }
@@ -1189,7 +1191,7 @@ return entry.outcome;
 function countAvailableLeads(){
 if(typeof LEADS==='undefined')return 0;
 var noAnswerCount=0;
-for(var i=0;i<usedLeads.length;i++){var l=LEADS[usedLeads[i]];if(l&&getLeadOutcome(l)&&getLeadOutcome(l).outcome==='No Answer')noAnswerCount++}
+for(var i=0;i<usedLeads.length;i++){var l=LEADS[usedLeads[i]];if(l){var o=getLeadOutcome(l);if(o&&(o.outcome==='No Answer'||o.outcome==='Owner Will Call Back'))noAnswerCount++}}
 return LEADS.length-usedLeads.length-deadLeads.length+noAnswerCount;
 }
 // ===== CALL LOG =====
@@ -1203,7 +1205,7 @@ function openLog(){document.getElementById('logOverlay').classList.add('open');r
 function closeLog(){document.getElementById('logOverlay').classList.remove('open')}
 
 function outcomeClass(o){
-var map={'No Answer':'noanswer','Not Interested':'notinterested','Callback':'callback','Gatekeeper':'gatekeeper','Owner Away':'owneraway','Wrong Number':'wrongnumber','Took Demo':'tookdemo'};
+var map={'No Answer':'noanswer','Not Interested':'notinterested','Callback':'callback','Gatekeeper':'gatekeeper','Owner Away':'owneraway','Wrong Number':'wrongnumber','Took Demo':'tookdemo','Owner Will Call Back':'ownercallback'};
 return map[o]?'outcome-'+map[o]:'';
 }
 
@@ -1231,7 +1233,7 @@ tr.innerHTML='<td style="text-align:center;color:var(--txd)">'+(i+1)+'</td>'+
 '<td><span class="cell-text">'+esc(r.state)+'</span><input value="'+esc(r.state)+'" onchange="updateLog('+i+',\'state\',this.value)" style="width:50px"></td>'+
 '<td><span class="cell-text">'+(esc(r.outcome)||'—')+'</span><select onchange="updateLog('+i+',\'outcome\',this.value);renderLog();renderLeads()">'+
 '<option value="">--</option>'+
-['Took Demo','No Answer','Not Interested','Callback','Gatekeeper','Owner Away','Wrong Number'].map(function(o){return'<option value="'+o+'"'+(r.outcome===o?' selected':'')+'>'+o+'</option>'}).join('')+
+['Took Demo','No Answer','Not Interested','Callback','Gatekeeper','Owner Away','Owner Will Call Back','Wrong Number'].map(function(o){return'<option value="'+o+'"'+(r.outcome===o?' selected':'')+'>'+o+'</option>'}).join('')+
 '</select></td>'+
 '<td>'+(r.outcome==='Owner Away'?
 (r.callbackAt?timeUntil(r.callbackAt):'<button class="row-btn" onclick="setCallback('+i+',24)" style="font-size:10px;margin:0 2px">24h</button><button class="row-btn" onclick="setCallback('+i+',48)" style="font-size:10px;margin:0 2px">48h</button><button class="row-btn" onclick="setCallbackCustom('+i+')" style="font-size:10px;margin:0 2px">Custom</button>'):
