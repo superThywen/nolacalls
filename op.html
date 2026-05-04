@@ -482,6 +482,12 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 </div>
 <div class="predict">They'll say <a class="pos" style="cursor:pointer" onclick="jumpTo('s2')">"yeah hold on"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="pos" style="cursor:pointer" onclick="jumpTo('s2')">"he's right here"</a> → <a href="#s2" class="go">Step 2</a></div>
 </div>
+
+<button class="expand-btn btn-orange" onclick="toggleExpand(this)">If busy</button>
+<div class="expand-body">
+<div class="say"><b>Ryan:</b> "No worries <span class="placeholder owner-name">[Owner Name]</span>, when do you think it's a good time to call you back?"</div>
+<div class="predict">They give a time → Log it, call back then.</div>
+</div>
 </div>
 
 <hr class="div">
