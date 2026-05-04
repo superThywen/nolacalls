@@ -453,14 +453,26 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <div class="predict" style="font-size:15px;font-weight:600;padding:4px 0 10px 24px"><a style="color:#F59E0B;cursor:pointer" onclick="jumpTo('whos-calling')">If just "who is this?" →</a></div>
 </div>
 
-<button class="expand-btn btn-red" onclick="toggleExpand(this)">If NO (wife answers)</button>
+<button class="expand-btn btn-red" onclick="toggleExpand(this)">If NO</button>
 <div class="expand-body">
 <div class="say" id="wife-answers"><b>Ryan:</b> "Oh okay — and who am I talking with?"</div>
-<div class="predict">She says her name → <span class="placeholder">[her name]</span></div>
-<div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[her name]</span>, nice to talk to you. So I actually might have a really nice proposition for both you guys — is he around right now?"</div>
-<div class="predict"><a class="pos" style="cursor:pointer" onclick="jumpTo('s2')">"yeah hold on"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('hes-out-alt')">"no he's out"</a><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('whos-calling')">"who is this?" / "what's this about?"</a></div>
+
+<button class="expand-btn btn-red" onclick="toggleExpand(this)">Receptionist</button>
+<div class="expand-body">
+<div class="say"><b>Ryan:</b> "Hi [Receptionist Name] — This is Ryan — I've got something important to discuss with the owner. Are they around?"</div>
+<div class="predict"><a class="pos" style="cursor:pointer" onclick="jumpTo('s2')">"yeah hold on"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('hes-out-alt')">"no he's out"</a></div>
 <div class="say" id="hes-out-alt"><b>Ryan:</b> "I see, and how would you say is the best way to reach him?"</div>
 <div class="predict">They say a time → Log it, call back then.</div>
+</div>
+
+<button class="expand-btn btn-red" onclick="toggleExpand(this)">Wife</button>
+<div class="expand-body">
+<div class="predict">She says her name → <span class="placeholder">[her name]</span></div>
+<div class="say"><b>Ryan:</b> "Hi <span class="placeholder">[her name]</span>, nice to talk to you. So I actually might have a really nice proposition for both you guys — is he around right now?"</div>
+<div class="predict"><a class="pos" style="cursor:pointer" onclick="jumpTo('s2')">"yeah hold on"</a><span style="color:var(--txd);margin:0 6px">│</span><a class="neg" style="cursor:pointer" onclick="jumpTo('hes-out-wife')">"no he's out"</a><span style="color:var(--txd);margin:0 6px">│</span><a style="color:#F59E0B;font-weight:600;cursor:pointer" onclick="jumpTo('whos-calling')">"who is this?" / "what's this about?"</a></div>
+<div class="say" id="hes-out-wife"><b>Ryan:</b> "I see, and how would you say is the best way to reach him?"</div>
+<div class="predict">They say a time → Log it, call back then.</div>
+</div>
 </div>
 
 <button class="expand-btn btn-orange" id="whos-calling" onclick="toggleExpand(this)">If "Who's calling?"</button>
