@@ -1192,10 +1192,10 @@ var noAnswerCount=0;
 for(var i=0;i<usedLeads.length;i++){var l=LEADS[usedLeads[i]];if(l&&getLeadOutcome(l)&&getLeadOutcome(l).outcome==='No Answer')noAnswerCount++}
 return LEADS.length-usedLeads.length-deadLeads.length+noAnswerCount;
 }
-if(typeof LEADS!=='undefined'){document.getElementById('leadsCount').textContent=countAvailableLeads()}
-
 // ===== CALL LOG =====
 var logData=JSON.parse(localStorage.getItem('nola-calllog')||'[]');
+
+if(typeof LEADS!=='undefined'){document.getElementById('leadsCount').textContent=countAvailableLeads()}
 var editingNote=-1;
 var dragIdx=null;
 
