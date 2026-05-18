@@ -360,7 +360,7 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 </div>
 <div class="leads-body">
 <table class="leads-table">
-<thead><tr><th>#</th><th>Business</th><th>Phone</th><th>City</th><th>Reviews</th><th>Rating</th><th>Size</th><th></th></tr></thead>
+<thead><tr><th>#</th><th>Business</th><th>Phone</th><th>City</th><th>Reviews</th><th>Owner</th><th>Size</th><th></th></tr></thead>
 <tbody id="leadsBody"></tbody>
 </table>
 </div>
@@ -412,13 +412,14 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <div class="caller-dot"></div>
 <div>
 <div class="caller-label">Currently talking to</div>
+<div id="callerPhone" style="color:var(--c);font-size:13px;font-weight:600;margin-bottom:2px"></div>
 <div class="caller-name" id="callerName">Listening...</div>
 <div class="caller-listening" id="callerStatus">🎙️ Waiting for name...</div>
 </div>
 </div>
 <div class="caller-input-row">
 <input class="caller-input" id="companyInput" type="text" placeholder="Company name..." onkeydown="if(event.key==='Enter'){var n=document.getElementById('callerName').textContent;var c=this.value.trim();if(c){document.getElementById('callerName').textContent=n.replace(/ — .*/,'')+' — '+c;document.querySelectorAll('.biz-name').forEach(function(el){el.textContent=c})}this.blur()}">
-<button class="caller-clear" onclick="document.getElementById('companyInput').value='';document.getElementById('callerName').textContent='Listening...';document.getElementById('callerStatus').textContent='🎙️ Waiting for name...';detectedName=null;document.querySelectorAll('.biz-name').forEach(function(el){el.textContent='[Business Name]'});document.querySelectorAll('.owner-name').forEach(function(el){el.textContent='[Owner Name]'})" title="Clear all">✕</button>
+<button class="caller-clear" onclick="document.getElementById('companyInput').value='';document.getElementById('callerName').textContent='Listening...';document.getElementById('callerPhone').textContent='';document.getElementById('callerStatus').textContent='🎙️ Waiting for name...';detectedName=null;document.querySelectorAll('.biz-name').forEach(function(el){el.textContent='[Business Name]'});document.querySelectorAll('.owner-name').forEach(function(el){el.textContent='[Owner Name]'})" title="Clear all">✕</button>
 </div>
 </div>
 
@@ -1157,11 +1158,11 @@ var outcomeText=(used||isNoAnswer||isOwnerCallBack)?getLeadOutcomeText(l):'';
 var outcomeColor=(used||isNoAnswer||isOwnerCallBack)?getLeadOutcomeColor(l):'';
 if(outcomeColor)tr.style.background=outcomeColor;
 tr.innerHTML='<td>'+(count+1)+'</td>'+
-'<td><b>'+l.n+'</b>'+(l.o?'<br><span style="color:var(--v);font-size:11px;font-weight:400">👤 '+l.o+'</span>':'')+'</td>'+
+'<td><b>'+l.n+'</b></td>'+
 '<td>'+l.p+'</td>'+
 '<td>'+l.c+'</td>'+
 '<td>'+l.r+'</td>'+
-'<td>'+(l.rt>0?l.rt+'/5':'—')+'</td>'+
+'<td>'+(l.o?'<span style="color:var(--v);font-weight:600">'+l.o+'</span>':'—')+'</td>'+
 '<td><span class="'+sizeClass+'">'+l.s+'</span></td>'+
 '<td>'+(dead?'<span style="color:#EF4444;font-size:11px">Closed</span>':(used&&!isNoAnswer&&!isOwnerCallBack)?(outcomeText||'<span style="color:var(--txd)">Done</span>'):isNoAnswer?('<span style="color:var(--txd);font-size:11px">No Answer</span> <button class="leads-use" onclick="useLead('+i+',event)">Call</button>'):isOwnerCallBack?('<span style="color:#F59E0B;font-size:11px;font-weight:600">Owner Will Call Back</span>'):'<button class="leads-use" onclick="useLead('+i+',event)">Call</button><button class="leads-dead" onclick="markDead('+i+',event)">Dead</button>')+'</td>';
 b.appendChild(tr);
@@ -1175,6 +1176,7 @@ if(e)e.stopPropagation();
 var l=LEADS[i];
 document.getElementById('companyInput').value=l.n;
 document.querySelectorAll('.biz-name').forEach(function(el){el.textContent=l.n});
+document.getElementById('callerPhone').textContent=l.p;
 if(l.o){document.querySelectorAll('.owner-name').forEach(function(el){el.textContent=l.o})}
 if(usedLeads.indexOf(i)===-1){usedLeads.push(i);localStorage.setItem('nola-usedleads',JSON.stringify(usedLeads))}
 closeLeads();
