@@ -1161,6 +1161,8 @@ var used=usedLeads.indexOf(i)!==-1;
 var dead=deadLeads.indexOf(i)!==-1;
 var sizeClass=l.s==='Small'?'leads-size-s':l.s==='Medium'?'leads-size-m':'leads-size-l';
 var tr=document.createElement('tr');
+tr.style.cursor='pointer';
+tr.onclick=function(idx){return function(e){if(e.target.tagName==='BUTTON'||e.target.tagName==='SELECT'||e.target.tagName==='INPUT')return;var ll=LEADS[idx];window.open('https://www.yelp.com/search?find_desc='+encodeURIComponent(ll.n)+'&find_loc='+encodeURIComponent(ll.c+', GA'),'_blank')}}(i);
 var outcomeEntry=getLeadOutcome(l);
 var isNoAnswer=outcomeEntry&&outcomeEntry.outcome==='No Answer';
 var isOwnerCallBack=outcomeEntry&&outcomeEntry.outcome==='Owner Will Call Back';
