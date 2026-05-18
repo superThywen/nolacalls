@@ -1129,24 +1129,36 @@ sel.innerHTML+='<option value="'+c+'">'+c+'</option>';
 });
 }
 
+var leadsRendered=0;
+var leadsFiltered=[];
 function renderLeads(){
 var search=(document.getElementById('leadsSearch').value||'').toLowerCase();
 var city=document.getElementById('leadsCity').value;
 var size='';
 var b=document.getElementById('leadsBody');
 b.innerHTML='';
-var count=0;
-var max=200;
-
-for(var i=0;i<LEADS.length&&count<max;i++){
+leadsRendered=0;
+leadsFiltered=[];
+for(var i=0;i<LEADS.length;i++){
 var l=LEADS[i];
 if(search&&l.n.toLowerCase().indexOf(search)===-1&&l.p.indexOf(search)===-1&&l.c.toLowerCase().indexOf(search)===-1)continue;
 if(city&&l.c!==city)continue;
 if(size&&l.s!==size)continue;
-
-var used=usedLeads.indexOf(i)!==-1;
 var dead=deadLeads.indexOf(i)!==-1;
 if(dead&&!search){continue}
+leadsFiltered.push(i);
+}
+renderLeadsBatch();
+document.getElementById('leadsCount').textContent=countAvailableLeads();
+}
+function renderLeadsBatch(){
+var b=document.getElementById('leadsBody');
+var end=Math.min(leadsRendered+200,leadsFiltered.length);
+for(var j=leadsRendered;j<end;j++){
+var i=leadsFiltered[j];
+var l=LEADS[i];
+var used=usedLeads.indexOf(i)!==-1;
+var dead=deadLeads.indexOf(i)!==-1;
 var sizeClass=l.s==='Small'?'leads-size-s':l.s==='Medium'?'leads-size-m':'leads-size-l';
 var tr=document.createElement('tr');
 var outcomeEntry=getLeadOutcome(l);
@@ -1157,7 +1169,7 @@ else if(used&&!isNoAnswer&&!isOwnerCallBack)tr.className='used';
 var outcomeText=(used||isNoAnswer||isOwnerCallBack)?getLeadOutcomeText(l):'';
 var outcomeColor=(used||isNoAnswer||isOwnerCallBack)?getLeadOutcomeColor(l):'';
 if(outcomeColor)tr.style.background=outcomeColor;
-tr.innerHTML='<td>'+(count+1)+'</td>'+
+tr.innerHTML='<td>'+(j+1)+'</td>'+
 '<td><b>'+l.n+'</b></td>'+
 '<td>'+l.p+'</td>'+
 '<td>'+l.c+'</td>'+
@@ -1166,10 +1178,15 @@ tr.innerHTML='<td>'+(count+1)+'</td>'+
 '<td><span class="'+sizeClass+'">'+l.s+'</span></td>'+
 '<td>'+(dead?'<span style="color:#EF4444;font-size:11px">Closed</span>':(used&&!isNoAnswer&&!isOwnerCallBack)?(outcomeText||'<span style="color:var(--txd)">Done</span>'):isNoAnswer?('<span style="color:var(--txd);font-size:11px">No Answer</span> <button class="leads-use" onclick="useLead('+i+',event)">Call</button>'):isOwnerCallBack?('<span style="color:#F59E0B;font-size:11px;font-weight:600">Owner Will Call Back</span>'):'<button class="leads-use" onclick="useLead('+i+',event)">Call</button><button class="leads-dead" onclick="markDead('+i+',event)">Dead</button>')+'</td>';
 b.appendChild(tr);
-count++;
 }
-document.getElementById('leadsCount').textContent=countAvailableLeads();
+leadsRendered=end;
 }
+document.querySelector('.leads-body').addEventListener('scroll',function(){
+var el=this;
+if(el.scrollTop+el.clientHeight>=el.scrollHeight-100&&leadsRendered<leadsFiltered.length){
+renderLeadsBatch();
+}
+});
 
 function useLead(i,e){
 if(e)e.stopPropagation();
