@@ -1157,7 +1157,7 @@ var outcomeText=(used||isNoAnswer||isOwnerCallBack)?getLeadOutcomeText(l):'';
 var outcomeColor=(used||isNoAnswer||isOwnerCallBack)?getLeadOutcomeColor(l):'';
 if(outcomeColor)tr.style.background=outcomeColor;
 tr.innerHTML='<td>'+(count+1)+'</td>'+
-'<td><b>'+l.n+'</b></td>'+
+'<td><b>'+l.n+'</b>'+(l.o?'<br><span style="color:var(--v);font-size:11px;font-weight:400">👤 '+l.o+'</span>':'')+'</td>'+
 '<td>'+l.p+'</td>'+
 '<td>'+l.c+'</td>'+
 '<td>'+l.r+'</td>'+
@@ -1175,6 +1175,7 @@ if(e)e.stopPropagation();
 var l=LEADS[i];
 document.getElementById('companyInput').value=l.n;
 document.querySelectorAll('.biz-name').forEach(function(el){el.textContent=l.n});
+if(l.o){document.querySelectorAll('.owner-name').forEach(function(el){el.textContent=l.o})}
 if(usedLeads.indexOf(i)===-1){usedLeads.push(i);localStorage.setItem('nola-usedleads',JSON.stringify(usedLeads))}
 closeLeads();
 // Auto-start Work mode if not already active
