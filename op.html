@@ -199,7 +199,7 @@ body.light .tpl{background:#1a1a2e;color:#f0f0f0}
 .log-table tr:not(.locked) .cell-text{display:none}
 .log-table tr.outcome-tookdemo td{background:rgba(166,227,161,.2) !important}
 .log-table tr.outcome-noanswer td{background:rgba(150,160,180,.2) !important}
-.log-table tr.outcome-notinterested td,.log-table tr.outcome-wrongnumber td{background:rgba(239,68,68,.2) !important}
+.log-table tr.outcome-notinterested td,.log-table tr.outcome-wrongnumber td,.log-table tr.outcome-dnc td{background:rgba(239,68,68,.2) !important}
 .log-table tr.outcome-callback td{background:rgba(245,158,11,.2) !important}
 .log-table tr.outcome-gatekeeper td{background:rgba(10,10,30,.7) !important}
 .log-table tr.outcome-owneraway td{background:rgba(124,92,255,.2) !important}
@@ -1198,7 +1198,7 @@ for(var j=0;j<logData.length;j++){if(logData[j].biz===l.n&&logData[j].outcome){r
 return null;
 }
 function getLeadOutcomeColor(l){
-var bgColors={'Took Demo':'rgba(166,227,161,.2)','No Answer':'rgba(150,160,180,.2)','Not Interested':'rgba(239,68,68,.2)','Callback':'rgba(245,158,11,.2)','Gatekeeper':'rgba(10,10,30,.7)','Owner Away':'rgba(124,92,255,.2)','Owner Will Call Back':'rgba(245,158,11,.3)','Wrong Number':'rgba(239,68,68,.2)'};
+var bgColors={'Took Demo':'rgba(166,227,161,.2)','No Answer':'rgba(150,160,180,.2)','Not Interested':'rgba(239,68,68,.2)','DNC':'rgba(239,68,68,.2)','Callback':'rgba(245,158,11,.2)','Gatekeeper':'rgba(10,10,30,.7)','Owner Away':'rgba(124,92,255,.2)','Owner Will Call Back':'rgba(245,158,11,.3)','Wrong Number':'rgba(239,68,68,.2)'};
 var entry=getLeadOutcome(l);
 return entry?bgColors[entry.outcome]||'':'';
 }
@@ -1231,7 +1231,7 @@ function openLog(){document.getElementById('logOverlay').classList.add('open');r
 function closeLog(){document.getElementById('logOverlay').classList.remove('open')}
 
 function outcomeClass(o){
-var map={'No Answer':'noanswer','Not Interested':'notinterested','Callback':'callback','Gatekeeper':'gatekeeper','Owner Away':'owneraway','Wrong Number':'wrongnumber','Took Demo':'tookdemo','Owner Will Call Back':'ownercallback'};
+var map={'No Answer':'noanswer','Not Interested':'notinterested','DNC':'dnc','Callback':'callback','Gatekeeper':'gatekeeper','Owner Away':'owneraway','Wrong Number':'wrongnumber','Took Demo':'tookdemo','Owner Will Call Back':'ownercallback'};
 return map[o]?'outcome-'+map[o]:'';
 }
 
@@ -1259,7 +1259,7 @@ tr.innerHTML='<td style="text-align:center;color:var(--txd)">'+(i+1)+'</td>'+
 '<td><span class="cell-text">'+esc(r.state)+'</span><input value="'+esc(r.state)+'" onchange="updateLog('+i+',\'state\',this.value)" style="width:50px"></td>'+
 '<td><span class="cell-text">'+(esc(r.outcome)||'—')+'</span><select onchange="updateLog('+i+',\'outcome\',this.value);renderLog();renderLeads()">'+
 '<option value="">--</option>'+
-['Took Demo','No Answer','Not Interested','Callback','Gatekeeper','Owner Away','Owner Will Call Back','Wrong Number'].map(function(o){return'<option value="'+o+'"'+(r.outcome===o?' selected':'')+'>'+o+'</option>'}).join('')+
+['Took Demo','No Answer','Not Interested','DNC','Callback','Gatekeeper','Owner Away','Owner Will Call Back','Wrong Number'].map(function(o){return'<option value="'+o+'"'+(r.outcome===o?' selected':'')+'>'+o+'</option>'}).join('')+
 '</select></td>'+
 '<td>'+(r.outcome==='Owner Away'?
 (r.callbackAt?timeUntil(r.callbackAt):'<button class="row-btn" onclick="setCallback('+i+',24)" style="font-size:10px;margin:0 2px">24h</button><button class="row-btn" onclick="setCallback('+i+',48)" style="font-size:10px;margin:0 2px">48h</button><button class="row-btn" onclick="setCallbackCustom('+i+')" style="font-size:10px;margin:0 2px">Custom</button>'):
