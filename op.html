@@ -424,7 +424,7 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 
 <!-- SIDE NAV -->
 <nav class="side">
-<a href="javascript:void(0)" onclick="showObj(8);setTimeout(function(){jumpTo('ob8')},50)" style="color:#EF4444;font-weight:700">🔥 COLDCALL EVERYDAY</a>
+<a href="javascript:void(0)" onclick="showObj(8);setTimeout(function(){var el=document.querySelector('#ob8 .say');if(el){el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.remove('highlight-target');void el.offsetWidth;el.classList.add('highlight-target');setTimeout(function(){el.classList.remove('highlight-target')},2200)}},100)" style="color:#EF4444;font-weight:700">🔥 COLDCALL EVERYDAY</a>
 <a href="/meeting" class="meeting-link">📋 Meeting</a>
 <div class="side-logo"><div class="side-logo-mark"></div><span class="side-logo-name">Nola</span></div>
 <a href="#s1"><span class="ic">1️⃣</span>Verify Owner</a>
