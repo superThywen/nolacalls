@@ -1108,6 +1108,26 @@ function setName(name){
   setTimeout(function(){widget.style.boxShadow='0 8px 28px rgba(0,0,0,.3)'},1500);
 }
 
+// ===== FIREBASE SYNC =====
+var fbDb=null;
+var fbReady=false;
+function fbSave(key,data){
+localStorage.setItem(key,JSON.stringify(data));
+if(fbDb){fbDb.ref('nolacalls/'+key).set(data)}
+}
+function fbLoad(key,fallback,cb){
+var local=JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback));
+if(fbDb){
+fbDb.ref('nolacalls/'+key).once('value',function(snap){
+var val=snap.val();
+if(val!==null){
+localStorage.setItem(key,JSON.stringify(val));
+cb(val);
+}else{cb(local)}
+});
+}else{cb(local)}
+}
+
 // ===== LEADS =====
 var usedLeads=JSON.parse(localStorage.getItem('nola-usedleads')||'[]');
 var deadLeads=JSON.parse(localStorage.getItem('nola-deadleads')||'[]');
@@ -1197,7 +1217,7 @@ document.getElementById('companyInput').value=l.n;
 document.querySelectorAll('.biz-name').forEach(function(el){el.textContent=l.n});
 document.getElementById('callerPhone').textContent=l.p;
 if(l.o){document.querySelectorAll('.owner-name').forEach(function(el){el.textContent=l.o})}
-if(usedLeads.indexOf(i)===-1){usedLeads.push(i);localStorage.setItem('nola-usedleads',JSON.stringify(usedLeads))}
+if(usedLeads.indexOf(i)===-1){usedLeads.push(i);fbSave('nola-usedleads',usedLeads)}
 closeLeads();
 // Auto-start Work mode if not already active
 if(!workActive){toggleWork()}
@@ -1211,7 +1231,7 @@ saveLog();
 
 function markDead(i,e){
 if(e)e.stopPropagation();
-if(deadLeads.indexOf(i)===-1){deadLeads.push(i);localStorage.setItem('nola-deadleads',JSON.stringify(deadLeads))}
+if(deadLeads.indexOf(i)===-1){deadLeads.push(i);fbSave('nola-deadleads',deadLeads)}
 renderLeads();
 }
 
@@ -1317,7 +1337,7 @@ if(typeof LEADS!=='undefined'){
 for(var j=0;j<LEADS.length;j++){
 if(LEADS[j].n===biz){
 var idx=usedLeads.indexOf(j);
-if(idx!==-1){usedLeads.splice(idx,1);localStorage.setItem('nola-usedleads',JSON.stringify(usedLeads))}
+if(idx!==-1){usedLeads.splice(idx,1);fbSave('nola-usedleads',usedLeads)}
 break;
 }
 }
@@ -1341,7 +1361,7 @@ if(diff<=0)return'<span style="color:#39FF14;font-weight:700">READY</span>';
 var h=Math.floor(diff/3600000);var m=Math.floor((diff%3600000)/60000);
 return'<span style="color:#F59E0B;font-weight:600">'+h+'h '+m+'m</span>';
 }
-function saveLog(){localStorage.setItem('nola-calllog',JSON.stringify(logData));document.getElementById('logCount').textContent=logData.length}
+function saveLog(){fbSave('nola-calllog',logData);document.getElementById('logCount').textContent=logData.length}
 
 function openNote(i){
 editingNote=i;
@@ -1527,6 +1547,24 @@ e.preventDefault();
 var id=link.getAttribute('href').substring(1);
 jumpTo(id);
 });
+</script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+var fbApp=firebase.initializeApp({
+apiKey:"AIzaSyCeD1l2W4NdoinN_t8puapcOc6dxyPyvCU",
+authDomain:"nolacalls-34afc.firebaseapp.com",
+databaseURL:"https://nolacalls-34afc-default-rtdb.firebaseio.com",
+projectId:"nolacalls-34afc",
+storageBucket:"nolacalls-34afc.firebasestorage.app",
+messagingSenderId:"374498266874",
+appId:"1:374498266874:web:d0689d1e2ff2c672540343"
+});
+fbDb=firebase.database();
+fbReady=true;
+fbLoad('nola-usedleads',[],function(val){usedLeads=val;renderLeads()});
+fbLoad('nola-deadleads',[],function(val){deadLeads=val;renderLeads()});
+fbLoad('nola-calllog',[],function(val){logData=val;document.getElementById('logCount').textContent=logData.length});
 </script>
 </body>
 </html>
