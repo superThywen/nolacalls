@@ -1168,6 +1168,12 @@ var dead=deadLeads.indexOf(i)!==-1;
 if(dead&&!search){continue}
 leadsFiltered.push(i);
 }
+leadsFiltered.sort(function(a,b){
+var ao=LEADS[a].o?0:1;
+var bo=LEADS[b].o?0:1;
+if(ao!==bo)return ao-bo;
+return LEADS[a].r-LEADS[b].r;
+});
 renderLeadsBatch();
 document.getElementById('leadsCount').textContent=countAvailableLeads();
 }
