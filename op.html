@@ -1113,7 +1113,7 @@ var fbDb=null;
 var fbReady=false;
 function fbSave(key,data){
 localStorage.setItem(key,JSON.stringify(data));
-if(fbDb){fbDb.ref('nolacalls/'+key).set(data)}
+if(fbDb){fbDb.ref('nolacalls/'+key).set(data).catch(function(e){console.error('Firebase save error:',e)})}
 }
 function fbLoad(key,fallback,cb){
 var local=JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback));
@@ -1562,6 +1562,7 @@ appId:"1:374498266874:web:d0689d1e2ff2c672540343"
 });
 fbDb=firebase.database();
 fbReady=true;
+fbDb.ref('nolacalls/test').set('connected-'+Date.now()).then(function(){console.log('Firebase CONNECTED')}).catch(function(e){console.error('Firebase FAILED:',e)});
 fbLoad('nola-usedleads',[],function(val){usedLeads=val;renderLeads()});
 fbLoad('nola-deadleads',[],function(val){deadLeads=val;renderLeads()});
 fbLoad('nola-calllog',[],function(val){logData=val;document.getElementById('logCount').textContent=logData.length});
