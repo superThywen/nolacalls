@@ -637,6 +637,7 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <div class="obj-tab" onclick="showObj(6)">I call back</div>
 <div class="obj-tab" onclick="showObj(7)">My number?</div>
 <div class="obj-tab" onclick="showObj(8)">Rude<span style="color:var(--txd);margin:0 6px">│</span>hostile</div>
+<div class="obj-tab" onclick="showObj(9)">Contract locked</div>
 </div>
 
 <div class="obj-panel active" id="ob0">
@@ -691,6 +692,11 @@ if(localStorage.getItem('nola-auth')==='1'){document.getElementById('authWall').
 <p class="inst">If they engage → back in the pitch. If not → one more push:</p>
 <div class="say"><b>Ryan:</b> "Sir, just answer me this and I'll leave you alone — when a call comes in while you're on a job, what happens to it?"</div>
 <p class="note">If "don't call again"<span style="color:var(--txd);margin:0 6px">│</span>"take me off your list" → comply (legal). "Got it. Have a good one." DNC list.</p>
+</div>
+
+<div class="obj-panel" id="ob9">
+<div class="obj-header">"I'm locked into a contract."</div>
+<div class="say"><b>Ryan:</b> "I completely understand. Contracts can be a big commitment. The good thing is, <span class="placeholder owner-name">[Owner Name]</span>, that I can offer you a no-risk trial — so you can see how this performs alongside your current setup. If it's not a fit, you're not tied in. And it's free."</div>
 </div>
 
 <hr class="div">
